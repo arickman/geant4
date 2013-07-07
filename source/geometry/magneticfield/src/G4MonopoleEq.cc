@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: G4MonopoleEq.cc 69786 2013-05-15 09:38:51Z gcosmo $
 //
 //
 //  This is the right-hand side for equation of motion for a 

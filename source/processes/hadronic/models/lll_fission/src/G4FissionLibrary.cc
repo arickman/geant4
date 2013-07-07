@@ -53,7 +53,7 @@
 // UCRL-CODE-224807
 //
 //
-// $Id$
+// $Id: G4FissionLibrary.cc 69860 2013-05-16 14:39:02Z gcosmo $
 //
 // neutron_hp -- source file
 // J.M. Verbeke, Jan-2007

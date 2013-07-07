@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: G4PolarizedPhotoElectricEffect.hh 69847 2013-05-16 09:36:18Z gcosmo $
 //
 //
 //------------------ G4PolarizedPhotoElectricEffect physics process ------------------

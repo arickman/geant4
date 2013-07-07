@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4ErrorMatrix.hh 69766 2013-05-14 14:33:55Z gcosmo $
 //
 // Class Description:
 //

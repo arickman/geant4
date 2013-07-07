@@ -52,7 +52,7 @@
 // All rights reserved.
 // UCRL-CODE-224807
 //
-// $Id$
+// $Id: G4fissionEvent.hh 69860 2013-05-16 14:39:02Z gcosmo $
 //
 
 #include "globals.hh"

@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4ErrorMagFieldLimitProcess.cc 69766 2013-05-14 14:33:55Z gcosmo $
 //
 // ------------------------------------------------------------
 //      GEANT 4 class implementation file 

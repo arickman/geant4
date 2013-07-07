@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$ 
+// $Id: G4NystromRK4.hh 69786 2013-05-15 09:38:51Z gcosmo $ 
 //
 // class G4NystromRK4
 //

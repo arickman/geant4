@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: ExN02ChamberParameterisation.hh 69899 2013-05-17 10:05:33Z gcosmo $
 //
 //
 //  A parameterisation that describes a series of boxes along Z

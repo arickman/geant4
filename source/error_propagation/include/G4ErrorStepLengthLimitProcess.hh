@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: G4ErrorStepLengthLimitProcess.hh 69766 2013-05-14 14:33:55Z gcosmo $
 //
 //
 // Class Description:

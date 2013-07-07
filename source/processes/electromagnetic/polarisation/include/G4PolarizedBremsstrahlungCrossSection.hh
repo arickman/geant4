@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4PolarizedBremsstrahlungCrossSection.hh 69847 2013-05-16 09:36:18Z gcosmo $
 //
 // GEANT4 Class file
 //

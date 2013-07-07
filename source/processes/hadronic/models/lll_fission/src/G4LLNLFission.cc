@@ -53,7 +53,7 @@
 // UCRL-CODE-224807
 //
 //
-// $Id$
+// $Id: G4LLNLFission.cc 69860 2013-05-16 14:39:02Z gcosmo $
 //
 // This class is a copy of Fission.cc, made for use with Geant4.
 //

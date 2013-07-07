@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: ExN02MagneticField.hh 69899 2013-05-17 10:05:33Z gcosmo $
 //
 //
 //    A class for control of the Magnetic Field of the detector.

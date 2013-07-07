@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: G4tgbPlaceParamCircle.hh 69803 2013-05-15 15:24:50Z gcosmo $
 //
 //
 // class G4tgbPlaceParamCircle

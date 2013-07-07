@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id$
+// $Id: G4ScoreSplittingProcess.cc 69885 2013-05-17 07:49:30Z gcosmo $
 //
 
 #include "G4ScoreSplittingProcess.hh"

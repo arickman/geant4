@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4PolarizedPhotoElectricEffect.cc 69847 2013-05-16 09:36:18Z gcosmo $
 //
 //
 //------------------ G4PolarizedPhotoElectricEffect physics process --

@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4AdjointPhotoElectricModel.cc 69844 2013-05-16 09:19:33Z gcosmo $
 //
 #include "G4AdjointPhotoElectricModel.hh"
 #include "G4AdjointCSManager.hh"

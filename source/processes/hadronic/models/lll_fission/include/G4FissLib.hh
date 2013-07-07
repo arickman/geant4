@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4FissLib.hh 69860 2013-05-16 14:39:02Z gcosmo $
 //
 // ********************************************************************
 // !                A neutron-induced fission package                 !
