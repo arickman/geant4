@@ -76,7 +76,8 @@ public:
   void ModelDescription(std::ostream& outFile) const; 
 
 private:
-
+  G4HadFinalState* _ApplyYourself(const G4HadProjectile &aTrack, 
+				 G4Nucleus & targetNucleus );
   inline void AddNewParticle(G4ParticleDefinition* aParticle,
 			     G4ThreeVector& direction,
 			     G4double kinEnergy);

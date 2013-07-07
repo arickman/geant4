@@ -89,7 +89,31 @@ G4MuMinusCapturePrecompound::~G4MuMinusCapturePrecompound()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 G4HadFinalState* 
-G4MuMinusCapturePrecompound::ApplyYourself(const G4HadProjectile& projectile, 
+G4MuMinusCapturePrecompound::ApplyYourself(
+	const G4HadProjectile& projectile,
+	G4Nucleus& targetNucleus
+) {
+	bool passed;
+	do {
+		passed = true;
+		try {
+			return _ApplyYourself(projectile, targetNucleus);
+		} catch(int e) {
+			if(e == 9000) {
+				G4cout << "Exception: OVER 9000 !!! -- retrying!" << G4endl;
+				passed = false;
+			} else {
+				G4cout << "Unknown exception (" << e << ") -- passing along." << G4endl;
+				throw(e);
+			}
+		}
+	} while(!passed);
+	
+	return NULL;
+}
+
+G4HadFinalState* 
+G4MuMinusCapturePrecompound::_ApplyYourself(const G4HadProjectile& projectile, 
 					   G4Nucleus& targetNucleus)
 {
   result.Clear();
@@ -216,6 +240,28 @@ G4MuMinusCapturePrecompound::ApplyYourself(const G4HadProjectile& projectile,
 	G4Exception("G4MuMinusCapturePrecompound::AtRestDoIt", "had006", 
 		    FatalException, ed);        
       }
+      
+	if(reentryCount%9000 == 0) {
+		throw(9000);
+		
+		reentryCount=0;
+		vmu=muMom*G4RandomDirection();
+		aMuMom.setVect(vmu);
+
+		G4ExceptionDescription ed;
+		ed << "Call for " << GetModelName() << G4endl;
+		ed << "Target  Z= " << Z << "  A= " << A << G4endl;
+		ed << " ApplyYourself stuck in an infinite loop" << G4endl;
+		//G4Exception("G4MuMinusCapturePrecompound::AtRestDoIt", "over9000",  EventMustBeAborted, ed);
+		//G4Exception("G4MuMinusCapturePrecompound::AtRestDoIt", "over9000",  RunMustBeAborted, ed);
+		//G4Exception("G4MuMinusCapturePrecompound::AtRestDoIt", "over9000",  FatalException, ed);
+		if(reentryCount%180000 == 0) G4UniformRand();
+
+		G4cout << "Over 9000 !!!!" << G4endl;
+		//exit(9000);
+	}
+
+      
     } while(eEx <= 0.0);
 
     G4ThreeVector dir = momNu.vect().unit();
