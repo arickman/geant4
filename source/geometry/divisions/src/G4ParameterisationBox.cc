@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ParameterisationBox.cc 69784 2013-05-15 09:16:06Z gcosmo $
+// $Id: G4ParameterisationBox.cc 68040 2013-03-13 14:19:04Z gcosmo $
 //
 // class G4ParameterisationBox Implementation file
 //

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgrVolumeDivision.hh 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgrVolumeDivision.hh 68052 2013-03-13 14:38:53Z gcosmo $
 //
 //
 // class G4tgrVolumeDivision

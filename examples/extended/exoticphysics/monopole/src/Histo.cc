@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/Histo.cc
 /// \brief Implementation of the Histo class
 //
-// $Id: Histo.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: Histo.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //---------------------------------------------------------------------------
 //
@@ -49,8 +49,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 Histo::Histo()
+ : fManager(0),
+   fMessenger(0)
 {
-  fManager   = 0;
   fMessenger = new HistoMessenger(this);
  
   fHistName   = "test";

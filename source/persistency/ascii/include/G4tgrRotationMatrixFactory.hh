@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgrRotationMatrixFactory.hh 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgrRotationMatrixFactory.hh 66872 2013-01-15 01:25:57Z japost $
 //
 //
 // class G4tgrRotationMatrixFactory
@@ -76,7 +76,7 @@ class G4tgrRotationMatrixFactory
 
   private:
 
-    static G4tgrRotationMatrixFactory* theInstance;
+    static G4ThreadLocal G4tgrRotationMatrixFactory* theInstance;
    
     std::vector<G4tgrRotationMatrix*> theTgrRotMatList;
     G4mstgrrotm theTgrRotMats;

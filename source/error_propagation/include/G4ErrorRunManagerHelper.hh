@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ErrorRunManagerHelper.hh 69766 2013-05-14 14:33:55Z gcosmo $
+// $Id: G4ErrorRunManagerHelper.hh 66892 2013-01-17 10:57:59Z gunter $
 //
 //
 // Class Description:
@@ -89,7 +89,7 @@ class G4ErrorRunManagerHelper
 
  private:
 
-  static G4ErrorRunManagerHelper* fRunManagerKernel;
+  static G4ThreadLocal G4ErrorRunManagerHelper* fRunManagerKernel;
   
   G4VUserPhysicsList* theUserPhysicsList;
   G4VPhysicalVolume* theUserWorld;

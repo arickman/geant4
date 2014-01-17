@@ -24,7 +24,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4TessellatedSolid.cc 69790 2013-05-15 12:39:10Z gcosmo $
+// $Id: G4TessellatedSolid.cc 72937 2013-08-14 13:20:38Z gcosmo $
 //
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //
@@ -1102,9 +1102,21 @@ G4TessellatedSolid::DistanceToInNoVoxels (const G4ThreeVector &p,
       {
         minDist  = dist;
       }
-      else 
+      else
+      {
         if (-kCarToleranceHalf <= dist && dist <= kCarToleranceHalf)
+	{
           return 0.0;
+        }
+        else
+        {
+	  if  (distFromSurface > -kCarToleranceHalf
+            && distFromSurface <  kCarToleranceHalf)
+          {
+            minDist = dist;
+          }
+        }
+      }
     }
   }
   return minDist;
@@ -1325,9 +1337,17 @@ DistanceToInCandidates(const std::vector<G4int> &candidates,
       {
         minDistance  = dist;
       }
-      else if (-kCarToleranceHalf <= dist && dist <= kCarToleranceHalf)
+      else
       {
-        return 0.0;
+        if (-kCarToleranceHalf <= dist && dist <= kCarToleranceHalf)
+        {
+         return 0.0;
+        }
+        else if  (distFromSurface > -kCarToleranceHalf
+               && distFromSurface <  kCarToleranceHalf)
+        {
+          minDistance = dist; 
+        }
       }
     }
   }
@@ -1734,13 +1754,6 @@ G4Polyhedron *G4TessellatedSolid::CreatePolyhedron () const
   polyhedron->SetReferences();  
 
   return (G4Polyhedron*) polyhedron;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//
-G4NURBS *G4TessellatedSolid::CreateNURBS () const
-{
-  return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

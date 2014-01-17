@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: GVFlashShowerParameterisation.cc 69796 2013-05-15 13:26:12Z gcosmo $
+// $Id: GVFlashShowerParameterisation.cc 69000 2013-04-15 09:24:35Z gcosmo $
 //
 //
 // ------------------------------------------------------------
@@ -120,5 +120,5 @@ G4double GVFlashShowerParameterisation::GeneratePhi()
 G4double GVFlashShowerParameterisation::gam(G4double x, G4double a) const 
 {
   static MyGamma theG;
-  return  theG.Gamma(a, x); 
+  return theG.Gamma(a, x); 
 }

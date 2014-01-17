@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4VMscModel.cc 66590 2012-12-23 09:31:50Z vnivanch $
+// $Id: G4VMscModel.cc 71484 2013-06-17 08:12:51Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -88,6 +88,7 @@ G4VMscModel::~G4VMscModel()
 G4ParticleChangeForMSC* 
 G4VMscModel::GetParticleChangeForMSC(const G4ParticleDefinition* p)
 {
+  // recomputed for each new run
   if(!safetyHelper) {
     safetyHelper = G4TransportationManager::GetTransportationManager()
       ->GetSafetyHelper();
@@ -111,13 +112,19 @@ G4VMscModel::GetParticleChangeForMSC(const G4ParticleDefinition* p)
 
       // table is always built for low mass particles 
     } else if(p->GetPDGMass() < 4.5*GeV || ForceBuildTableFlag()) {
-      G4double emin = std::max(LowEnergyLimit(), LowEnergyActivationLimit());
-      G4double emax = std::min(HighEnergyLimit(), HighEnergyActivationLimit());
-      emin = std::max(emin, man->MinKinEnergy());
-      emax = std::min(emax, man->MaxKinEnergy());
+
+      idxTable = 0;
       G4LossTableBuilder* builder = man->GetTableBuilder();
-      xSectionTable = builder->BuildTableForModel(xSectionTable, this, p, 
-						  emin, emax, true);
+      if(IsMaster()) {
+	G4double emin = std::max(LowEnergyLimit(), LowEnergyActivationLimit());
+	G4double emax = std::min(HighEnergyLimit(), HighEnergyActivationLimit());
+	emin = std::max(emin, man->MinKinEnergy());
+	emax = std::min(emax, man->MaxKinEnergy());
+	if(emin < emax) {
+	  xSectionTable = builder->BuildTableForModel(xSectionTable, this, p, 
+						      emin, emax, true);
+	}
+      }
       theDensityFactor = builder->GetDensityFactors();
       theDensityIdx = builder->GetCoupleIndexes();
     }

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4JTPolynomialSolver.hh 69792 2013-05-15 12:59:26Z gcosmo $
+// $Id: G4JTPolynomialSolver.hh 67970 2013-03-13 10:10:06Z gcosmo $
 //
 // Class description:
 //

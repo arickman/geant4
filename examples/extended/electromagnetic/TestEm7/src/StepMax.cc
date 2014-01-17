@@ -26,7 +26,7 @@
 /// \file electromagnetic/TestEm7/src/StepMax.cc
 /// \brief Implementation of the StepMax class
 //
-// $Id: StepMax.cc 66995 2013-01-29 14:46:45Z gcosmo $
+// $Id: StepMax.cc 67268 2013-02-13 11:38:40Z ihrivnac $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -37,7 +37,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 StepMax::StepMax(const G4String& processName)
- : G4VDiscreteProcess(processName),fMaxChargedStep(DBL_MAX)
+ : G4VDiscreteProcess(processName),fMaxChargedStep(DBL_MAX),fMess(0)
 {
   fMess = new StepMaxMessenger(this);
 }

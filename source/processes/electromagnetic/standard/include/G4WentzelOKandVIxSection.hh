@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4WentzelOKandVIxSection.hh 67375 2013-02-18 18:48:34Z vnivanch $
+// $Id: G4WentzelOKandVIxSection.hh 69548 2013-05-08 10:03:12Z gcosmo $
 //
 // -------------------------------------------------------------------
 //

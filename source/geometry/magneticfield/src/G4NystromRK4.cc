@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4NystromRK4.cc 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4NystromRK4.cc 66356 2012-12-18 09:02:32Z gcosmo $
 //
 // History:
 // - Created:      I.Gavrilenko    15.05.2009   (as G4AtlasRK4)

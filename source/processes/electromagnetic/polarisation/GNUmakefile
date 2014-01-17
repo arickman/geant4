@@ -1,4 +1,4 @@
-# $Id: GNUmakefile 69847 2013-05-16 09:36:18Z gcosmo $
+# $Id: GNUmakefile 66892 2013-01-17 10:57:59Z gunter $
 # --------------------------------------------------------------------
 # GNUmakefile for electromagnetic sub-library.  John Allison, 25/6/98.
 # Modified:

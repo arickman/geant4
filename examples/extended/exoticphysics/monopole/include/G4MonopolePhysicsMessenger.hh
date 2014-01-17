@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/include/G4MonopolePhysicsMessenger.hh
 /// \brief Definition of the G4MonopolePhysicsMessenger class
 //
-// $Id: G4MonopolePhysicsMessenger.hh 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: G4MonopolePhysicsMessenger.hh 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -52,7 +52,7 @@ public:
   G4MonopolePhysicsMessenger(G4MonopolePhysics*);
   ~G4MonopolePhysicsMessenger();
     
-  void SetNewValue(G4UIcommand*, G4String);
+  virtual void SetNewValue(G4UIcommand*, G4String);
     
 private:
 

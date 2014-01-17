@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ParallelWorldProcess.cc 69966 2013-05-21 09:52:06Z gcosmo $
+// $Id: G4ParallelWorldProcess.cc 76935 2013-11-19 09:46:31Z gcosmo $
 // GEANT4 tag $Name: geant4-09-04-ref-00 $
 //
 //
@@ -49,9 +49,9 @@
 #include "G4SDManager.hh"
 #include "G4VSensitiveDetector.hh"
 
-G4Step* G4ParallelWorldProcess::fpHyperStep = 0;
-G4int   G4ParallelWorldProcess::nParallelWorlds = 0;
-G4int   G4ParallelWorldProcess::fNavIDHyp = 0;
+G4ThreadLocal G4Step* G4ParallelWorldProcess::fpHyperStep = 0;
+G4ThreadLocal G4int   G4ParallelWorldProcess::nParallelWorlds = 0;
+G4ThreadLocal G4int   G4ParallelWorldProcess::fNavIDHyp = 0;
 const G4Step* G4ParallelWorldProcess::GetHyperStep()
 { return fpHyperStep; }
 G4int G4ParallelWorldProcess::GetHypNavigatorID()
@@ -260,7 +260,7 @@ G4double G4ParallelWorldProcess::AlongStepGetPhysicalInteractionLength(
             const G4Track& track, G4double  previousStepSize, G4double  currentMinimumStep,
             G4double& proposedSafety, G4GPILSelection* selection)
 {
-  static G4FieldTrack endTrack('0');
+  static G4ThreadLocal G4FieldTrack *endTrack_G4MT_TLS_ = 0 ; if (!endTrack_G4MT_TLS_) endTrack_G4MT_TLS_ = new  G4FieldTrack ('0') ;  G4FieldTrack &endTrack = *endTrack_G4MT_TLS_;
   //static ELimited eLimited;
   ELimited eLimited;
   ELimited eLim = kUndefLimited;

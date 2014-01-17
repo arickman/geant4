@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4UniformMagField.cc 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4UniformMagField.cc 68055 2013-03-13 14:43:28Z gcosmo $
 //
 //
 // Class for creation of uniform Magnetic Field
@@ -41,6 +41,13 @@ G4UniformMagField::G4UniformMagField(const G4ThreeVector& FieldVector )
       fFieldComponents[0] = FieldVector.x();
       fFieldComponents[1] = FieldVector.y();
       fFieldComponents[2] = FieldVector.z();
+}
+
+G4UniformMagField* G4UniformMagField::Clone() const
+{
+    return new G4UniformMagField( G4ThreeVector(this->fFieldComponents[0],
+                                                this->fFieldComponents[1],
+                                                this->fFieldComponents[2]) );
 }
 
 void

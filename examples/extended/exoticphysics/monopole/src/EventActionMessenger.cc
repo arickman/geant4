@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/EventActionMessenger.cc
 /// \brief Implementation of the EventActionMessenger class
 //
-// $Id: EventActionMessenger.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: EventActionMessenger.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -40,7 +40,10 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 EventActionMessenger::EventActionMessenger(EventAction* evAct)
-  :fEventAction(evAct)
+  : G4UImessenger(),
+    fEventAction(evAct),
+    fEventDir(0),        
+    fPrintCmd(0)
 {
   fEventDir = new G4UIdirectory("/testex/event/");
   fEventDir->SetGuidance("event control");

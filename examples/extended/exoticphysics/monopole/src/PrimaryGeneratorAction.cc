@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/PrimaryGeneratorAction.cc
 /// \brief Implementation of the PrimaryGeneratorAction class
 //
-// $Id: PrimaryGeneratorAction.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: PrimaryGeneratorAction.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -41,7 +41,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
-  :fDetector(det)
+  :G4VUserPrimaryGeneratorAction(),fParticleGun(0),fDetector(det)
 {
   fParticleGun  = new G4ParticleGun(1);
   fParticleGun->SetParticleEnergy(100 * GeV);

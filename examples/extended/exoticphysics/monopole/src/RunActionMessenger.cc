@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/RunActionMessenger.cc
 /// \brief Implementation of the RunActionMessenger class
 //
-// $Id: RunActionMessenger.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: RunActionMessenger.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -40,7 +40,12 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-RunActionMessenger::RunActionMessenger(RunAction * ra): fRunAction(ra)
+RunActionMessenger::RunActionMessenger(RunAction * ra)
+ : G4UImessenger(),
+   fRunAction(ra),
+   fActDir(0),    
+   fBinSizeCmd(0),
+   fVerboseCmd(0)
 {   
   fActDir = new G4UIdirectory("/testex/run/");
   fActDir->SetGuidance("run commands");

@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/HistoMessenger.cc
 /// \brief Implementation of the HistoMessenger class
 //
-// $Id: HistoMessenger.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: HistoMessenger.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -44,7 +44,12 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 HistoMessenger::HistoMessenger(Histo* hist)
-  :fHisto(hist)
+  :G4UImessenger(),
+   fHisto(hist),
+   fHistoDir(0),   
+   fFactoryCmd(0),
+   fFileCmd(0),
+   fHistoCmd(0)
 {
   fHistoDir = new G4UIdirectory("/testem/histo/");
   fHistoDir->SetGuidance("histograms control");

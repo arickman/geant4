@@ -45,6 +45,6 @@
 
 namespace G4INCL {
 
-  G4INCL::ICoulomb* CoulombDistortion::theCoulomb = 0;
+  G4ThreadLocal ICoulomb* CoulombDistortion::theCoulomb = 0;
 
 }

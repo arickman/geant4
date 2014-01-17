@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4GoudsmitSaundersonMscModel.hh 66592 2012-12-23 09:34:55Z vnivanch $
+// $Id: G4GoudsmitSaundersonMscModel.hh 67990 2013-03-13 10:56:28Z gcosmo $
 //
 // -------------------------------------------------------------------
 //

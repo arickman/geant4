@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/include/PrimaryGeneratorAction.hh
 /// \brief Definition of the PrimaryGeneratorAction class
 //
-// $Id: PrimaryGeneratorAction.hh 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: PrimaryGeneratorAction.hh 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -49,7 +49,7 @@ public:
   PrimaryGeneratorAction(DetectorConstruction*);    
   ~PrimaryGeneratorAction();
 
-  void GeneratePrimaries(G4Event*);
+  virtual void GeneratePrimaries(G4Event*);
     
   inline G4ParticleGun* GetParticleGun() {return fParticleGun;}
     

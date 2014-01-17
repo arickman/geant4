@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgrFileReader.cc 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgrFileReader.cc 66872 2013-01-15 01:25:57Z japost $
 //
 //
 // class G4tgrFileReader
@@ -50,7 +50,7 @@
 #include "G4tgrMessenger.hh"
 
 
-G4tgrFileReader* G4tgrFileReader::theInstance = 0;
+G4ThreadLocal G4tgrFileReader* G4tgrFileReader::theInstance = 0;
 
 
 //---------------------------------------------------------------

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4PVDivisionFactory.cc 69784 2013-05-15 09:16:06Z gcosmo $
+// $Id: G4PVDivisionFactory.cc 68718 2013-04-05 09:16:24Z gcosmo $
 //
 // class G4PVDivisionFactory Implementation file
 //
@@ -54,12 +54,11 @@ G4PVDivisionFactory::~G4PVDivisionFactory()
 
 G4PVDivisionFactory* G4PVDivisionFactory::GetInstance()
 {
-  static G4PVDivisionFactory * theFactory = new G4PVDivisionFactory;
   if (!fgInstance)
   {
-    fgInstance = theFactory;
+    fgInstance =  new G4PVDivisionFactory;
   }
-  return theFactory;
+  return dynamic_cast<G4PVDivisionFactory*>(fgInstance);
 } 
 
 //_____________________________________________________________________________

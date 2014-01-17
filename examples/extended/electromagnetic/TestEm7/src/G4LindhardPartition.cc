@@ -33,7 +33,7 @@
  */
 
 //
-// $Id: G4LindhardPartition.cc 66995 2013-01-29 14:46:45Z gcosmo $
+// $Id: G4LindhardPartition.cc 68263 2013-03-20 10:16:46Z maire $
 
 #include "G4LindhardPartition.hh"
 #include "G4Material.hh"
@@ -94,9 +94,11 @@ G4double G4LindhardRobinsonPartition::PartitionNIEL(
   G4double asum=a1+a2;
         
   G4double el=30.724*z1*z2*std::sqrt(zpow)*asum/a2;
-  G4double fl=0.0793*z23[z1]*std::sqrt(z2*asum*asum*asum/(a1*a1*a1*a2))/std::pow(zpow, 0.75);
+  G4double fl=0.0793*z23[z1]*std::sqrt(z2*asum*asum*asum/(a1*a1*a1*a2))
+              /std::pow(zpow, 0.75);
   G4double eps=(energy/eV)*(1.0/el);
 
-  return 1.0/(1+fl*(3.4008*std::pow(eps, 0.16667)+0.40244*std::pow(eps, 0.75)+eps));
+  return 
+    1.0/(1+fl*(3.4008*std::pow(eps, 0.16667)+0.40244*std::pow(eps, 0.75)+eps));
 }
 

@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PolarizedPairProductionCrossSection.cc 69847 2013-05-16 09:36:18Z gcosmo $
+// $Id: G4PolarizedPairProductionCrossSection.cc 77295 2013-11-22 11:02:41Z gcosmo $
 //
 // -------------------------------------------------------------------
 //

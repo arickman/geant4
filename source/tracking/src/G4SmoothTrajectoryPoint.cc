@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4SmoothTrajectoryPoint.cc 67009 2013-01-29 16:00:21Z gcosmo $
+// $Id: G4SmoothTrajectoryPoint.cc 69003 2013-04-15 09:25:23Z gcosmo $
 //
 //
 // ---------------------------------------------------------------
@@ -45,7 +45,7 @@
 #include "G4AttCheck.hh"
 #endif
 
-G4Allocator<G4SmoothTrajectoryPoint> aSmoothTrajectoryPointAllocator;
+G4ThreadLocal G4Allocator<G4SmoothTrajectoryPoint> *aSmoothTrajectoryPointAllocator = 0;
 
 G4SmoothTrajectoryPoint::G4SmoothTrajectoryPoint()
 : fAuxiliaryPointVector(0)

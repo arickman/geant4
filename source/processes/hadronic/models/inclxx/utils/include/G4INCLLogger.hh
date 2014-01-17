@@ -43,6 +43,10 @@
 #include <string>
 #include <cstdlib>
 
+#ifdef INCLXX_IN_GEANT4_MODE
+#include "G4ios.hh"
+#endif
+
 namespace G4INCL {
 
   /**
@@ -125,116 +129,107 @@ namespace G4INCL {
       G4bool logToStdout;
   };
 
-  class Logger {
-    public:
+  namespace Logger {
       /// \brief Log a message.
-      static void logMessage(const MessageType type, std::string const &fileName, const G4int lineNumber, std::string const &s) {
-        theLoggerSlave->logMessage(type, fileName, lineNumber, s);
-      }
+      void logMessage(const MessageType type, std::string const &fileName, const G4int lineNumber, std::string const &s);
 
       /// \brief Flush the log stream
-      static void flush() { theLoggerSlave->flush(); }
+      void flush();
 
       /// \brief Log a data block.
-      static void dataBlock(const std::string &block, const std::string &fileName, const G4int lineNumber) {
-        theLoggerSlave->logDataBlock(block, fileName, lineNumber);
-      }
+      void dataBlock(const std::string &block, const std::string &fileName, const G4int lineNumber);
 
       /// \brief Set the slave Logger.
-      static void setLoggerSlave(LoggerSlave * const logger) { theLoggerSlave = logger; }
+      void setLoggerSlave(LoggerSlave * const logger);
 
       /// \brief Set the verbosity of the slave Logger.
-      static void setVerbosityLevel(G4int lvl) { theLoggerSlave->setVerbosityLevel(lvl); }
+      void setVerbosityLevel(G4int lvl);
 
       /// \brief Get the verbosity of the slave Logger.
-      static G4int getVerbosityLevel() { return theLoggerSlave->getVerbosityLevel(); }
+      G4int getVerbosityLevel();
 
       /// \brief Delete the slave Logger.
-      static void deleteLoggerSlave() {
-        delete theLoggerSlave;
-        theLoggerSlave=NULL;
-      }
+      void deleteLoggerSlave();
 
-    private:
-      static LoggerSlave *theLoggerSlave;
-  };
+  }
 
   // Macro definitions for line numbering in log files!
-#define FATAL(x) \
+#define INCL_FATAL(x) \
   if(true) {\
-    std::stringstream ss;\
-    ss << x;\
-    G4INCL::Logger::logMessage(G4INCL::FatalMsg, __FILE__,__LINE__, ss.str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    G4INCL::Logger::logMessage(G4INCL::FatalMsg, __FILE__,__LINE__, ss_.str());\
     G4INCL::Logger::flush();\
     std::exit(EXIT_FAILURE);\
   } else (void)0
-#define ERROR(x) \
+#define INCL_ERROR(x) \
   if(G4INCL::ErrorMsg <= G4INCL::Logger::getVerbosityLevel()) {\
-    std::stringstream ss;\
-    ss << x;\
-    G4INCL::Logger::logMessage(G4INCL::ErrorMsg, __FILE__,__LINE__, ss.str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    G4INCL::Logger::logMessage(G4INCL::ErrorMsg, __FILE__,__LINE__, ss_.str());\
   } else (void)0
-#define WARN(x) \
+#define INCL_WARN(x) \
   if(G4INCL::WarningMsg <= G4INCL::Logger::getVerbosityLevel()) {\
-    std::stringstream ss;\
-    ss << x;\
-    G4INCL::Logger::logMessage(G4INCL::WarningMsg, __FILE__,__LINE__, ss.str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    G4INCL::Logger::logMessage(G4INCL::WarningMsg, __FILE__,__LINE__, ss_.str());\
   } else (void)0
-#define INFO(x) \
+#define INCL_INFO(x) \
   if(G4INCL::InfoMsg <= G4INCL::Logger::getVerbosityLevel()) {\
-    std::stringstream ss;\
-    ss << x;\
-    G4INCL::Logger::logMessage(G4INCL::InfoMsg, __FILE__,__LINE__, ss.str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    G4INCL::Logger::logMessage(G4INCL::InfoMsg, __FILE__,__LINE__, ss_.str());\
   } else (void)0
-#define DEBUG(x) \
+#define INCL_DEBUG(x) \
   if(G4INCL::DebugMsg <= G4INCL::Logger::getVerbosityLevel()) {\
-    std::stringstream ss;\
-    ss << x;\
-    G4INCL::Logger::logMessage(G4INCL::DebugMsg, __FILE__,__LINE__, ss.str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    G4INCL::Logger::logMessage(G4INCL::DebugMsg, __FILE__,__LINE__, ss_.str());\
   } else (void)0
-#define DATABLOCK(x) \
+#define INCL_DATABLOCK(x) \
   if(G4INCL::DataBlockMsg <= G4INCL::Logger::getVerbosityLevel()) {\
     G4INCL::Logger::dataBlock(x,__FILE__,__LINE__);\
   } else (void)0
 
-#else
-  // Empty logger for normal (production) use:
-  class LoggerSlave {
-  public:
-    LoggerSlave(std::string const &) {};
-    LoggerSlave() {};
-    ~LoggerSlave() {};
-    void setVerbosityLevel(G4int) {};
-  };
+#else // defined(INCL_DEBUG_LOG) && !defined(INCLXX_IN_GEANT4_MODE)
+  namespace Logger {
+    void initVerbosityLevelFromEnvvar();
+    G4int getVerbosityLevel();
+  }
 
-  class Logger {
-  public:
-    Logger() {};
-    ~Logger() {};
-    static void setVerbosityLevel(G4int) {};
-    static void setLoggerSlave(LoggerSlave * const slave) { theLoggerSlave = slave; }
-    static void deleteLoggerSlave() {
-      delete theLoggerSlave;
-      theLoggerSlave=NULL;
-    }
-  private:
-    static LoggerSlave *theLoggerSlave;
-  };
-
-#define FATAL(x) \
+#define INCL_FATAL(x) \
   if(true) {\
-    std::stringstream ss;\
-    ss << x;\
-    std::stringstream location;\
-    location << __FILE__ << ":" << __LINE__;\
-    G4Exception(location.str().c_str(), "INCLXX0000", FatalException, ss.str().c_str());\
+    std::stringstream ss_;\
+    ss_ << x;\
+    std::stringstream location_;\
+    std::string fileName_(__FILE__);\
+    location_ << fileName_.substr(fileName_.find_last_of("/")+1) << ":" << __LINE__;\
+    G4Exception(location_.str().c_str(), "INCLXX0000", FatalException, ss_.str().c_str());\
   } else (void)0
-#define ERROR(x);
-#define WARN(x);
-#define INFO(x);
-#define DEBUG(x);
-#define DATABLOCK(x);
+#define INCL_ERROR(x) \
+  if(G4INCL::ErrorMsg <= G4INCL::Logger::getVerbosityLevel()) {\
+    std::string fileName_(__FILE__);\
+    std::stringstream ss_;\
+    ss_ << "INCL++ error [" << fileName_.substr(fileName_.find_last_of("/")+1) << ":" << __LINE__ << "] " << x;\
+    G4cout << ss_.str() << std::endl;\
+  } else (void)0
+#define INCL_WARN(x) \
+  if(G4INCL::WarningMsg <= G4INCL::Logger::getVerbosityLevel()) {\
+    std::string fileName_(__FILE__);\
+    std::stringstream ss_;\
+    ss_ << "INCL++ warning [" << fileName_.substr(fileName_.find_last_of("/")+1) << ":" << __LINE__ << "] " << x;\
+    G4cout << ss_.str() << std::endl;\
+  } else (void)0
+#define INCL_INFO(x);
+#define INCL_DEBUG(x) \
+  if(G4INCL::DebugMsg <= G4INCL::Logger::getVerbosityLevel()) {\
+    std::string fileName_(__FILE__);\
+    std::stringstream ss_;\
+    ss_ << "INCL++ debug [" << fileName_.substr(fileName_.find_last_of("/")+1) << ":" << __LINE__ << "] " << x;\
+    G4cout << ss_.str() << std::endl;\
+  } else (void)0
+#define INCL_DATABLOCK(x);
 
-#endif
+#endif // defined(INCL_DEBUG_LOG) && !defined(INCLXX_IN_GEANT4_MODE)
 }
 #endif

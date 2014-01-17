@@ -32,7 +32,7 @@
  *
  */
 
-// $Id: G4LindhardPartition.hh 66995 2013-01-29 14:46:45Z gcosmo $
+// $Id: G4LindhardPartition.hh 66586 2012-12-21 10:48:39Z ihrivnac $
 //
 
 #include "globals.hh"

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4VTwistSurface.cc 69790 2013-05-15 12:39:10Z gcosmo $
+// $Id: G4VTwistSurface.cc 72937 2013-08-14 13:20:38Z gcosmo $
 //
 // 
 // --------------------------------------------------------------------
@@ -168,7 +168,7 @@ G4int G4VTwistSurface::AmIOnLeftSide(const G4ThreeVector &me,
    //  of me.cross(vec).)
    // If me is on boundary of vec, return 0.
 
-   static const G4double kAngTolerance
+   const G4double kAngTolerance
      = G4GeometryTolerance::GetInstance()->GetAngularTolerance();
 
    G4RotationMatrix unitrot;

@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4GoudsmitSaundersonMscModel.cc 66592 2012-12-23 09:34:55Z vnivanch $
+// $Id: G4GoudsmitSaundersonMscModel.cc 75582 2013-11-04 12:13:01Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -777,12 +777,11 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
 
   G4String pathString(path);
   G4String dirFile = pathString + "/msc_GS/" + filename;
-  FILE *infile;
-  infile = fopen(dirFile,"r"); 
+  FILE *infile = fopen(dirFile,"r"); 
   if (infile == 0)
     {
       G4ExceptionDescription ed;
-      ed << "Data file <" + dirFile + "> is not opened!" << G4endl;
+      ed << "Data file <" + dirFile + "> is not opened!";
       G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		  "em0003",FatalException,ed);
       return;
@@ -796,7 +795,7 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
       else            { aRead = 0.0; }
     } else {
       G4ExceptionDescription ed;
-      ed << "Error reading <" + dirFile + "> loop #1 i= " << i << G4endl;
+      ed << "Error reading <" + dirFile + "> loop #1 i= " << i;
       G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		  "em0003",FatalException,ed);
       return;
@@ -811,7 +810,7 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
       } else {
 	G4ExceptionDescription ed;
 	ed << "Error reading <" + dirFile + "> loop #2 j= " << j 
-	   << "; i= " << i << G4endl;
+	   << "; i= " << i;
 	G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		    "em0003",FatalException,ed);
 	return;
@@ -827,7 +826,7 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
       } else {
 	G4ExceptionDescription ed;
 	ed << "Error reading <" + dirFile + "> loop #3 j= " << j 
-	   << "; i= " << i << G4endl;
+	   << "; i= " << i;
 	G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		    "em0003",FatalException,ed);
 	return;
@@ -843,7 +842,7 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
       } else {
 	G4ExceptionDescription ed;
 	ed << "Error reading <" + dirFile + "> loop #4 j= " << j 
-	   << "; i= " << i << G4endl;
+	   << "; i= " << i;
 	G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		    "em0003",FatalException,ed);
 	return;
@@ -859,7 +858,7 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
       } else {
 	G4ExceptionDescription ed;
 	ed << "Error reading <" + dirFile + "> loop #5 j= " << j 
-	   << "; i= " << i << G4endl;
+	   << "; i= " << i;
 	G4Exception("G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()",
 		    "em0003",FatalException,ed);
 	return;
@@ -869,7 +868,6 @@ void G4GoudsmitSaundersonMscModel::LoadELSEPAXSections()
   }
 
   fclose(infile);
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

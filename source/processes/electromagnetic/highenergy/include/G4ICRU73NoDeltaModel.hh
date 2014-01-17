@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4ICRU73NoDeltaModel.hh 66996 2013-01-29 14:50:52Z gcosmo $
+// $Id: G4ICRU73NoDeltaModel.hh 66241 2012-12-13 18:34:42Z gunter $
 //
 // -------------------------------------------------------------------
 //

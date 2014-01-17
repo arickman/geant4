@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/TrackingAction.cc
 /// \brief Implementation of the TrackingAction class
 //
-// $Id: TrackingAction.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: TrackingAction.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -37,7 +37,9 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-TrackingAction::TrackingAction(RunAction* run): fRunAction(run)
+TrackingAction::TrackingAction(RunAction* run)
+ : G4UserTrackingAction(), 
+   fRunAction(run)
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

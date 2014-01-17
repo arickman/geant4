@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4TrackingManager.cc 67009 2013-01-29 16:00:21Z gcosmo $
+// $Id: G4TrackingManager.cc 77241 2013-11-22 09:55:47Z gcosmo $
 //
 //---------------------------------------------------------------
 //
@@ -102,6 +102,7 @@ void G4TrackingManager::ProcessOneTrack(G4Track* apValueG4Track)
     case 1: fpTrajectory = new G4Trajectory(fpTrack); break;
     case 2: fpTrajectory = new G4SmoothTrajectory(fpTrack); break;
     case 3: fpTrajectory = new G4RichTrajectory(fpTrack); break;
+    case 4: fpTrajectory = new G4RichTrajectory(fpTrack); break;
     }
   }
 #endif

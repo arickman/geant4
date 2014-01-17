@@ -59,13 +59,13 @@ namespace G4INCL {
   {
     G4double previousAbundance = 0.;
     // Cumulate the abundances
-    for(IsotopeIter i=theIsotopes.begin(); i!=theIsotopes.end(); ++i) {
+    for(IsotopeIter i=theIsotopes.begin(), e=theIsotopes.end(); i!=e; ++i) {
       i->theAbundance += previousAbundance;
       previousAbundance = i->theAbundance;
     }
     // Normalize the abundances to 1
     const G4double normalisation = 1./theIsotopes.back().theAbundance;
-    for(IsotopeIter i=theIsotopes.begin(); i!=theIsotopes.end(); ++i)
+    for(IsotopeIter i=theIsotopes.begin(), e=theIsotopes.end(); i!=e; ++i)
       i->theAbundance *= normalisation;
   }
 
@@ -87,7 +87,7 @@ namespace G4INCL {
     if(i!=theDistributions.end())
       return i->second;
     else {
-      FATAL("Requested natural isotopic distribution for synthetic element Z = " << Z << std::endl);
+      INCL_FATAL("Requested natural isotopic distribution for synthetic element Z = " << Z << std::endl);
       return theDistributions.begin()->second;
     }
   }

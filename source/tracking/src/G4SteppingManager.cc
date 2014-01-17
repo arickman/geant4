@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4SteppingManager.cc 67009 2013-01-29 16:00:21Z gcosmo $
+// $Id: G4SteppingManager.cc 77790 2013-11-28 09:52:16Z gcosmo $
 //
 //---------------------------------------------------------------
 //
@@ -97,7 +97,7 @@ G4SteppingManager::G4SteppingManager()
 G4SteppingManager::~G4SteppingManager()
 ///////////////////////////////////////
 {
-
+   fTouchableHandle = 0;
 // Destruct simple 'has-a' objects
    fStep->DeleteSecondaryVector();
 ///////////////////////////   delete fSecondary;

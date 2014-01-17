@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4PolarizedCompton.cc 69847 2013-05-16 09:36:18Z gcosmo $
+// $Id: G4PolarizedCompton.cc 76244 2013-11-08 11:12:59Z gcosmo $
 // 
 //
 // File name:     G4PolarizedCompton
@@ -89,7 +89,6 @@ G4PolarizedCompton::G4PolarizedCompton(const G4String& processName,
 G4PolarizedCompton::~G4PolarizedCompton()
 {
   if (theAsymmetryTable) {
-    theAsymmetryTable->clearAndDestroy();
     delete theAsymmetryTable;
   }
 }

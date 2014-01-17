@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id$
+// $Id: G4AdjointPosOnPhysVolGenerator.hh 68047 2013-03-13 14:32:59Z gcosmo $
 //
 /////////////////////////////////////////////////////////////////////////////////
 //      Class Name:	G4AdjointPosOnPhysVolGenerator
@@ -108,9 +108,10 @@ class G4AdjointPosOnPhysVolGenerator
 //---------   
    private: //attributes
 //---------   
-   static G4AdjointPosOnPhysVolGenerator* theInstance;
+   static G4ThreadLocal G4AdjointPosOnPhysVolGenerator* theInstance;
    G4VSolid* theSolid;
    G4VPhysicalVolume* thePhysicalVolume;
+
    G4bool UseSphere;
    G4String ModelOfSurfaceSource;
    G4AffineTransform theTransformationFromPhysVolToWorld;

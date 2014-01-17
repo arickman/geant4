@@ -11,7 +11,7 @@
 #
 # Generated on : 24/9/2010
 #
-# $Id: sources.cmake 67044 2013-01-30 08:50:06Z gcosmo $
+# $Id: sources.cmake 75129 2013-10-28 10:04:19Z gcosmo $
 #
 #------------------------------------------------------------------------------
 
@@ -42,6 +42,8 @@ GEANT4_DEFINE_MODULE(NAME G4materials
         G4IonStoppingData.hh
         G4Isotope.hh
         G4IsotopeVector.hh
+	G4LatticeLogical.hh
+	G4LatticePhysical.hh
         G4Material.hh
         G4MaterialPropertiesTable.hh
         G4MaterialPropertiesTable.icc
@@ -66,6 +68,8 @@ GEANT4_DEFINE_MODULE(NAME G4materials
         G4IonisParamMat.cc
         G4IonStoppingData.cc
         G4Isotope.cc
+	G4LatticeLogical.cc
+	G4LatticePhysical.cc
         G4Material.cc
         G4MaterialPropertiesTable.cc
         G4NistElementBuilder.cc

@@ -63,7 +63,7 @@ namespace G4INCL {
     IAvatar(G4double time);
     virtual ~IAvatar();
 
-    virtual G4INCL::IChannel* getChannel() const = 0;
+    virtual G4INCL::IChannel* getChannel() = 0;
     G4INCL::FinalState *getFinalState();
     virtual void preInteraction() = 0;
     virtual FinalState *postInteraction(FinalState *) = 0;
@@ -84,13 +84,14 @@ namespace G4INCL {
   private:
     long ID;
     AvatarType type;
-    static long nextID;
+    static G4ThreadLocal long nextID;
   protected:
     G4double theTime;
   };
 
-  typedef std::list<IAvatar*> IAvatarList;
-  typedef std::list<IAvatar*>::const_iterator IAvatarIter;
+  typedef UnorderedVector<IAvatar*> IAvatarList;
+  typedef UnorderedVector<IAvatar*>::const_iterator IAvatarIter;
+  typedef UnorderedVector<IAvatar*>::iterator IAvatarMutableIter;
 }
 
 #endif /* IAVATAR_HH_ */

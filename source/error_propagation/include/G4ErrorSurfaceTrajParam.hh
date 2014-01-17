@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ErrorSurfaceTrajParam.hh 69766 2013-05-14 14:33:55Z gcosmo $
+// $Id: G4ErrorSurfaceTrajParam.hh 69014 2013-04-15 09:42:51Z gcosmo $
 //
 //
 // Class Description:

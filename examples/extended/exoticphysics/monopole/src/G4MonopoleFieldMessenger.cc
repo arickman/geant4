@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4MonopoleFieldMessenger.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: G4MonopoleFieldMessenger.cc 68036 2013-03-13 14:13:45Z gcosmo $
 //
 /// \file exoticphysics/monopole/src/G4MonopoleFieldMessenger.cc
 /// \brief Implementation of the G4MonopoleFieldMessenger class
@@ -45,7 +45,11 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4MonopoleFieldMessenger::G4MonopoleFieldMessenger(G4MonopoleFieldSetup * fld)
-:fField(fld)
+:G4UImessenger(),
+ fField(fld),
+ fFieldDir(0),
+ fSetFieldCmd(0)
+ 
 { 
   fFieldDir = new G4UIdirectory("/testex/fld/");
   fFieldDir->SetGuidance("field setup commands");

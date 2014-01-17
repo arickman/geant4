@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ErrorPropagator.hh 69766 2013-05-14 14:33:55Z gcosmo $
+// $Id: G4ErrorPropagator.hh 68050 2013-03-13 14:36:39Z gcosmo $
 //
 //
 // Class Description:

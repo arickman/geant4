@@ -49,17 +49,17 @@ namespace G4INCL {
   class Geant4RandomGenerator : public G4INCL::IRandomGenerator {
   public:
     Geant4RandomGenerator() {};
-    Geant4RandomGenerator(const SeedVector &) {};
+    Geant4RandomGenerator(const Random::SeedVector &) {};
     virtual ~Geant4RandomGenerator() {};
 
-    SeedVector getSeeds() const {
-      WARN("getSeeds not supported.");
-      SeedVector sv;
+    Random::SeedVector getSeeds() {
+      INCL_WARN("getSeeds not supported.");
+      Random::SeedVector sv;
       return sv;
     }
 
-    void setSeeds(const SeedVector &) {
-      WARN("setSeeds not supported.");
+    void setSeeds(const Random::SeedVector &) {
+      INCL_WARN("setSeeds not supported.");
     }
 
     G4double flat() {

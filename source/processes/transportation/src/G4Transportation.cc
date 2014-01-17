@@ -63,8 +63,10 @@
 #include "G4SystemOfUnits.hh"
 #include "G4ProductionCutsTable.hh"
 #include "G4ParticleTable.hh"
-#include "G4ChordFinder.hh"
-#include "G4SafetyHelper.hh"
+
+#include "G4ChargeState.hh"
+#include "G4EquationOfMotion.hh"
+
 #include "G4FieldManagerStore.hh"
 
 class G4VSensitiveDetector;
@@ -86,7 +88,7 @@ G4Transportation::G4Transportation( G4int verbosity )
     fGeometryLimitedStep(true),
     fPreviousSftOrigin( 0.,0.,0. ),
     fPreviousSafety( 0.0 ),
-    // fParticleChange(), 
+    // fParticleChange(),
     fEndPointDistance( -1.0 ), 
     fThreshold_Warning_Energy( 100 * MeV ),  
     fThreshold_Important_Energy( 250 * MeV ), 
@@ -115,8 +117,10 @@ G4Transportation::G4Transportation( G4int verbosity )
   //  field and this process. That order is not guaranted.
   // Instead later the method DoesGlobalFieldExist() is called
 
-  static G4TouchableHandle nullTouchableHandle;  // Points to (G4VTouchable*) 0
-  fCurrentTouchableHandle = nullTouchableHandle;
+  static G4ThreadLocal G4TouchableHandle* pNullTouchableHandle = 0;
+  if ( !pNullTouchableHandle)  { pNullTouchableHandle = new G4TouchableHandle; }
+  fCurrentTouchableHandle = *pNullTouchableHandle;
+    // Points to (G4VTouchable*) 0
 
 #ifdef G4VERBOSE
   if( fVerboseLevel > 0) 
@@ -299,11 +303,20 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
      G4double       momentumMagnitude = pParticle->GetTotalMomentum() ;
      G4ThreeVector  EndUnitMomentum ;
      G4double       lengthAlongCurve ;
- 
-     fFieldPropagator->SetChargeMomentumMass( particleCharge,    // in e+ units
-                                              momentumMagnitude, // in Mev/c 
-                                              restMass           ) ;  
 
+     G4ChargeState chargeState(particleCharge,             // The charge can change (dynamic)
+                               pParticleDef->GetPDGSpin(),
+                               magneticMoment); 
+
+     G4EquationOfMotion* equationOfMotion = 
+     (fFieldPropagator->GetChordFinder()->GetIntegrationDriver()->GetStepper())
+     ->GetEquationOfMotion();
+
+//     equationOfMotion->SetChargeMomentumMass( particleCharge,
+     equationOfMotion->SetChargeMomentumMass( chargeState,
+                                              momentumMagnitude,
+                                              restMass);
+      
      G4ThreeVector spin        = track.GetPolarization() ;
      G4FieldTrack  aFieldTrack = G4FieldTrack( startPosition, 
                                                track.GetMomentumDirection(),
@@ -378,7 +391,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
         G4double  startEnergy= track.GetKineticEnergy();
         G4double  endEnergy= fTransportEndKineticEnergy; 
 
-        static G4int no_inexact_steps=0, no_large_ediff;
+        static G4ThreadLocal G4int no_inexact_steps=0, no_large_ediff;
         G4double absEdiff = std::fabs(startEnergy- endEnergy);
         if( absEdiff > perMillion * endEnergy )
         {
@@ -389,7 +402,8 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
         {
           if( std::fabs(startEnergy- endEnergy) > perThousand * endEnergy )
           {
-            static G4int no_warnings= 0, warnModulo=1, moduloFactor= 10; 
+            static G4ThreadLocal G4int no_warnings= 0, warnModulo=1,
+                                       moduloFactor= 10; 
             no_large_ediff ++;
             if( (no_large_ediff% warnModulo) == 0 )
             {
@@ -491,7 +505,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
 G4VParticleChange* G4Transportation::AlongStepDoIt( const G4Track& track,
                                                     const G4Step&  stepData )
 {
-  static G4int noCalls=0;
+  static G4ThreadLocal G4int noCalls=0;
   noCalls++;
 
   fParticleChange.Initialize(track) ;

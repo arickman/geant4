@@ -1,4 +1,4 @@
-$Id: History 69970 2013-05-21 10:14:30Z gcosmo $
+$Id: History 76946 2013-11-19 11:33:13Z gcosmo $
 -------------------------------------------------------------------
 
      =========================================================
@@ -17,14 +17,67 @@ committal in the CVS repository !
      * Reverse chronological order (last date on top), please *
      ----------------------------------------------------------
 
-May 10th, 2013 P.Gumplinger - field-V09-05-09
----------------------------
-- Changed numerical value of the neutron anomaly to -2.9156797 in
-  G4Mag_SpinEqRhs constructor. For details see:
-  http://hypernews.slac.stanford.edu/HyperNews/geant4/get/emfields/203/1.html
+                                            field-V09-06-13 - same as
+Nov 18, 2013 P.Gumplinger                 - field-V09-06-12
+-------------------------
+- fix Coverity warning in G4RepleteEofM
 
-February 22nd, 2013 G.Cosmo - field-V09-05-08
+Nov 17, 2013 J.Apostolakis                
+--------------------------
+- Fixed and improved HelixMixed Stepper:
+    Corrected the default stepper for small steps to be ClassicalRK4.
+    Added Angle-threshold parameter. (Default remains 0.33 radians.)
+    Added more Steppers, including G4NystromRK4.
+    Revised Id numbers of Steppers, to make the best more visible.
+    More comments in Stepper().
+
+Nov 05, 2013 P.Gumplinger                 - field-V09-06-11
+-------------------------
+- remove writing out-of-bounds dydx[8] = 0. in G4RepleteEofM.cc
+
+Nov 04, 2013 P.Gumplinger                 - field-V09-06-10
+-------------------------
+- add G4RepleteEofM to sources.cmake
+                                            field-V09-06-09 - same as
+Nov 01st, 2013 P.Gumplinger               - field-V09-06-08
 ---------------------------
+- add G4RepleteEofM: EofM that includes force due to B, E, and gravity field
+  as well as mu*grad(B) and spin tracking.
+
+May 10th, 2013 P.Gumplinger/J.Apostolakis - field-V09-06-07
+-----------------------------------------
+- Revised number of field components (to allow up to 24).
+   18 are required for new applications (B, E, Gravity, B-gradients)
+- Fixes for initialisation errors found by Coverity.
+
+May 10th, 2013 P.Gumplinger - field-V09-06-06
+---------------------------
+- prevent divided by zero and shortcut spin tracking for spin == 0
+  particles: G4Mag_SpinEqRhs.cc, G4EqEMFieldWithSpin.cc and
+  G4EqEMFieldWithEDM.cc
+                                            field-V09-06-05 - same 
+May 8th,  2013 P.Gumplinger/J.Apostolakis - field-V09-06-04
+-----------------------------------------
+- Introduced new class G4ChargeState to hold charge, spin, magnetic moment
+     (promoted from internal class of G4FieldTrack).
+- Changed the signature of EquationOfMotion::SetChargeMomentumMass to
+ take G4ChargeState in place of G4double (charge) as first argument.
+- Deleted SetChargeMomentumMass from G4ChordFinder, G4PropagatorInField,
+   G4MagInt_Driver
+
+- Migrated testPropagateMagField and testPropagateSpin.
+
+March 19th, 2013 G.Cosmo - field-V09-06-03, field-V09-06-02
+-------------------------
+- Cleanup of MT changes in G4FieldManagerStore.
+
+February 26th, 2013 A.Dotti - field-V09-06-01
+---------------------------
+- First implementation of Cloning mechanism (needed for MT)
+
+February 22nd, 2013 G.Cosmo - field-V09-06-00
+---------------------------
+- Cleanup of unnecessary changes for multi-threading in G4QuadrupoleMagField.
 - Removed unused private data-members in G4Mag_UsualEqRhs and G4RKG3_Stepper.
 
 November 14th, 2012 P.Mato - field-V09-05-07

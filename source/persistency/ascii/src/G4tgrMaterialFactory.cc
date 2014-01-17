@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgrMaterialFactory.cc 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgrMaterialFactory.cc 66872 2013-01-15 01:25:57Z japost $
 //
 //
 // class G4tgrMaterialFactory
@@ -43,7 +43,7 @@
 #include "G4tgrMessenger.hh"
 
 
-G4tgrMaterialFactory* G4tgrMaterialFactory::theInstance = 0;
+G4ThreadLocal G4tgrMaterialFactory* G4tgrMaterialFactory::theInstance = 0;
 
 
 //-------------------------------------------------------------

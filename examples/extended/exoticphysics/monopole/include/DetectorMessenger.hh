@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/include/DetectorMessenger.hh
 /// \brief Definition of the DetectorMessenger class
 //
-// $Id: DetectorMessenger.hh 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: DetectorMessenger.hh 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -53,7 +53,7 @@ public:
   DetectorMessenger(DetectorConstruction* );
   ~DetectorMessenger();
     
-  void SetNewValue(G4UIcommand*, G4String);
+  virtual void SetNewValue(G4UIcommand*, G4String);
     
 private:
   

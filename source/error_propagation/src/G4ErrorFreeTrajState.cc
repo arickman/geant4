@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4ErrorFreeTrajState.cc 69766 2013-05-14 14:33:55Z gcosmo $
+// $Id: G4ErrorFreeTrajState.cc 71874 2013-06-27 13:39:59Z gunter $
 //
 // ------------------------------------------------------------
 //      GEANT 4 class implementation file 
@@ -333,7 +333,7 @@ G4int G4ErrorFreeTrajState::PropagateError( const G4Track* aTrack )
     if( iverbose >= 2 ) {
       G4cout << " G4EP: gam " << gam << " alphaSqr " << alphaSqr
              << " diffHSqr " << diffHSqr << G4endl;
-      G4cout << " alpha= " << sqrt(alphaSqr) << G4endl;
+      G4cout << " alpha= " << std::sqrt(alphaSqr) << G4endl;
     }
 #endif
     if( diffHSqr * alphaSqr > delhp6Sqr ) return 3;

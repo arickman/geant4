@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/include/DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
 //
-// $Id: DetectorConstruction.hh 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: DetectorConstruction.hh 68036 2013-03-13 14:13:45Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -52,7 +52,7 @@ public:
   DetectorConstruction();
   ~DetectorConstruction();
 
-  G4VPhysicalVolume* Construct();
+  virtual G4VPhysicalVolume* Construct();
 
   // set geometry and field parameters
   void SetSizeX(G4double);

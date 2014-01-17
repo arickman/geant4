@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4Mag_UsualEqRhs.cc 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4Mag_UsualEqRhs.cc 69699 2013-05-13 08:50:30Z gcosmo $
 //
 //
 //  This is the 'standard' right-hand side for the equation of motion
@@ -67,7 +67,7 @@ G4Mag_UsualEqRhs::EvaluateRhsGivenB( const G4double y[],
 
 void
 G4Mag_UsualEqRhs::
- SetChargeMomentumMass( G4double particleCharge, // in e+ units
+ SetChargeMomentumMass( G4ChargeState particleCharge,
                         G4double MomentumXc,
 			G4double mass)
 

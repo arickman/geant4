@@ -27,7 +27,7 @@
 // *                                                                  *
 // ********************************************************************
 //
-// $Id: G4Tet.cc 69790 2013-05-15 12:39:10Z gcosmo $
+// $Id: G4Tet.cc 76263 2013-11-08 11:41:52Z gcosmo $
 //
 // class G4Tet
 //
@@ -56,7 +56,9 @@
 
 #include "G4Tet.hh"
 
-const char G4Tet::CVSVers[]="$Id: G4Tet.cc 69790 2013-05-15 12:39:10Z gcosmo $";
+#if !defined(G4GEOM_USE_UTET)
+
+const char G4Tet::CVSVers[]="$Id: G4Tet.cc 76263 2013-11-08 11:41:52Z gcosmo $";
 
 #include "G4VoxelLimits.hh"
 #include "G4AffineTransform.hh"
@@ -67,8 +69,6 @@ const char G4Tet::CVSVers[]="$Id: G4Tet.cc 69790 2013-05-15 12:39:10Z gcosmo $";
 
 #include "G4VGraphicsScene.hh"
 #include "G4Polyhedron.hh"
-#include "G4NURBS.hh"
-#include "G4NURBSbox.hh"
 #include "G4VisExtent.hh"
 
 #include "G4ThreeVector.hh"
@@ -421,7 +421,7 @@ G4ThreeVector G4Tet::SurfaceNormal( const G4ThreeVector& p) const
   G4double r142=std::fabs(p.dot(fNormal142)-fCdotN142);
   G4double r234=std::fabs(p.dot(fNormal234)-fCdotN234);
 
-  static const G4double delta = 0.5*kCarTolerance;
+  const G4double delta = 0.5*kCarTolerance;
   G4ThreeVector sumnorm(0., 0., 0.);
   G4int noSurfaces=0; 
 
@@ -847,15 +847,6 @@ G4Polyhedron* G4Tet::CreatePolyhedron () const
 
 ////////////////////////////////////////////////////////////////////////
 //
-// CreateNURBS
-
-G4NURBS* G4Tet::CreateNURBS () const 
-{
-  return new G4NURBSbox (fDx, fDy, fDz);
-}
-
-////////////////////////////////////////////////////////////////////////
-//
 // GetPolyhedron
 
 G4Polyhedron* G4Tet::GetPolyhedron () const
@@ -869,3 +860,5 @@ G4Polyhedron* G4Tet::GetPolyhedron () const
     }
   return fpPolyhedron;
 }
+
+#endif

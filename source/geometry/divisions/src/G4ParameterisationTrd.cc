@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ParameterisationTrd.cc 69784 2013-05-15 09:16:06Z gcosmo $
+// $Id: G4ParameterisationTrd.cc 68040 2013-03-13 14:19:04Z gcosmo $
 //
 // class G4ParameterisationTrd Implementation file
 //

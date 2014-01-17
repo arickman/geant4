@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4Para.hh 69788 2013-05-15 12:06:57Z gcosmo $
+// $Id: G4Para.hh 66356 2012-12-18 09:02:32Z gcosmo $
 //
 //
 // --------------------------------------------------------------------
@@ -145,7 +145,6 @@ class G4Para : public G4CSGSolid
 
     void          DescribeYourselfTo (G4VGraphicsScene& scene) const;
     G4Polyhedron* CreatePolyhedron   () const;
-    G4NURBS*      CreateNURBS        () const;
 
   public:  // without description
 

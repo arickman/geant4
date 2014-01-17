@@ -64,10 +64,11 @@ namespace G4INCL {
   }
 
   FinalState* ParticleEntryAvatar::postInteraction(FinalState *fs) {
+    theParticle->rpCorrelate();
     return fs;
   }
 
-  IChannel* ParticleEntryAvatar::getChannel() const {
+  IChannel* ParticleEntryAvatar::getChannel() {
     return new ParticleEntryChannel(theNucleus, theParticle);
   }
 }

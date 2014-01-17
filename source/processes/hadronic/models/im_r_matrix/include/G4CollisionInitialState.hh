@@ -24,8 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4CollisionInitialState.hh 69856 2013-05-16 13:32:36Z gcosmo $
-// GEANT4 tag $Name: not supported by cvs2svn $
+// $Id: G4CollisionInitialState.hh 66892 2013-01-17 10:57:59Z gunter $
 //
 // $Id: G4CollisionInitialState.hh,v 1.0 1998/06/30
 // -----------------------------------------------------------------------------

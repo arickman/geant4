@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: HepPolyhedron.h 69794 2013-05-15 13:17:48Z gcosmo $
+// $Id: HepPolyhedron.h 66872 2013-01-15 01:25:57Z japost $
 //
 //
 // Class Description:
@@ -196,7 +196,7 @@ class HepPolyhedron {
   friend std::ostream& operator<<(std::ostream&, const HepPolyhedron &ph);
 
  protected:
-  static G4int fNumberOfRotationSteps;
+  static G4ThreadLocal G4int fNumberOfRotationSteps;
   G4int nvert, nface;
   G4Point3D  *pV;
   G4Facet    *pF;

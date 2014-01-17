@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PolarizationMessenger.cc 69847 2013-05-16 09:36:18Z gcosmo $
+// $Id: G4PolarizationMessenger.cc 68046 2013-03-13 14:31:38Z gcosmo $
 //
 //
 // GEANT4 Class file

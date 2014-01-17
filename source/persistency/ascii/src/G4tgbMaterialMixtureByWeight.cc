@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgbMaterialMixtureByWeight.cc 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgbMaterialMixtureByWeight.cc 66363 2012-12-18 09:12:54Z gcosmo $
 //
 //
 // class G4tgbMaterialMixtureByWeight

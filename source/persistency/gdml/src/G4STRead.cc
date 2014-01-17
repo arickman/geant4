@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4STRead.cc 69813 2013-05-15 15:44:33Z gcosmo $
+// $Id: G4STRead.cc 68053 2013-03-13 14:39:51Z gcosmo $
 //
 // class G4STRead Implementation
 //

@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/src/G4Monopole.cc
 /// \brief Implementation of the G4Monopole class
 //
-// $Id: G4Monopole.cc 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: G4Monopole.cc 66817 2013-01-12 16:16:08Z gcosmo $
 //
 //---------------------------------------------------------------------------
 //

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4tgrUtils.hh 69803 2013-05-15 15:24:50Z gcosmo $
+// $Id: G4tgrUtils.hh 66872 2013-01-15 01:25:57Z japost $
 //
 //
 // class G4tgrUtils
@@ -105,7 +105,7 @@ class G4tgrUtils
 
   private:
 
-    static G4tgrEvaluator* theEvaluator;
+    static G4ThreadLocal G4tgrEvaluator* theEvaluator;
 };
 
 #endif 

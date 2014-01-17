@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4DELPHIMagField.hh 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4DELPHIMagField.hh 68055 2013-03-13 14:43:28Z gcosmo $
 //
 //
 // class G4DELPHIMagField
@@ -56,6 +56,7 @@ class G4DELPHIMagField : public G4MagneticField
 
     void GetFieldValue(const G4double yTrack[],
                              G4double B[]     ) const;
+    G4DELPHIMagField* Clone() const;
 };
 
 #endif

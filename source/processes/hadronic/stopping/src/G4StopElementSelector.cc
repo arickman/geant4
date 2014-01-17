@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4StopElementSelector.cc 69960 2013-05-21 09:26:16Z gcosmo $
+// $Id: G4StopElementSelector.cc 69573 2013-05-08 13:35:53Z gcosmo $
 //
 // File: G4StopElementSelector
 //

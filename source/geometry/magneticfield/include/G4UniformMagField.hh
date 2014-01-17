@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4UniformMagField.hh 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4UniformMagField.hh 68055 2013-03-13 14:43:28Z gcosmo $
 //
 // 
 // class G4UniformMagField
@@ -69,7 +69,9 @@ class G4UniformMagField : public G4MagneticField
     void SetFieldValue(const G4ThreeVector& newFieldValue);
 
     G4ThreeVector GetConstantFieldValue() const;
-      // Return the field value  
+      // Return the field value
+    
+    virtual G4UniformMagField* Clone() const;
 
   private:
 

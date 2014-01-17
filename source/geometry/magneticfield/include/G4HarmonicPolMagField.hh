@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4HarmonicPolMagField.hh 69786 2013-05-15 09:38:51Z gcosmo $
+// $Id: G4HarmonicPolMagField.hh 68055 2013-03-13 14:43:28Z gcosmo $
 //
 // class G4HarmonicPolMagField
 //
@@ -55,6 +55,7 @@ class G4HarmonicPolMagField : public G4MagneticField
      
     void GetFieldValue(const G4double yTrack[] ,
                              G4double B[]      ) const  ;
+    G4HarmonicPolMagField* Clone() const;
 };
 
 #endif

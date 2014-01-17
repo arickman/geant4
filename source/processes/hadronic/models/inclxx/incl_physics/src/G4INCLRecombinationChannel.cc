@@ -52,8 +52,7 @@
 
 namespace G4INCL {
 
-  RecombinationChannel::RecombinationChannel(Nucleus *n, Particle *p1, Particle *p2)
-    :theNucleus(n)
+  RecombinationChannel::RecombinationChannel(Particle *p1, Particle *p2)
   {
     if(p1->isDelta()) {
 // assert(p2->isNucleon());
@@ -94,7 +93,7 @@ namespace G4INCL {
         theNucleon->setType(Neutron);
         break;
       default:
-        ERROR("Unknown particle type in RecombinationChannel" << std::endl);
+        INCL_ERROR("Unknown particle type in RecombinationChannel" << std::endl);
         break;
     }
 

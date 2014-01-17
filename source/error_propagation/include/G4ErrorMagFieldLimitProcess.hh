@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ErrorMagFieldLimitProcess.hh 69766 2013-05-14 14:33:55Z gcosmo $
+// $Id: G4ErrorMagFieldLimitProcess.hh 66892 2013-01-17 10:57:59Z gunter $
 //
 // Class description:
 //

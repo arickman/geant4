@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4EmCaptureCascade.cc 69256 2013-04-24 14:59:10Z vnivanch $
+// $Id: G4EmCaptureCascade.cc 69573 2013-05-08 13:35:53Z gcosmo $
 //
 //-----------------------------------------------------------------------------
 //

@@ -45,8 +45,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 G4ComponentAntiNuclNuclearXS::G4ComponentAntiNuclNuclearXS() 
-: G4VComponentCrossSection("AntiAGlauber"), fUpperLimit(10000*GeV),
-  fLowerLimit(10*MeV), fRadiusEff(0.0), fRadiusNN2(0.0),
+: G4VComponentCrossSection("AntiAGlauber"),
+// fUpperLimit(10000*GeV), fLowerLimit(10*MeV),
+  fRadiusEff(0.0), fRadiusNN2(0.0),
   fTotalXsc(0.0), fElasticXsc(0.0), fInelasticXsc(0.0),
   fAntiHadronNucleonTotXsc(0.0), fAntiHadronNucleonElXsc(0.0),
   Elab(0.0), S(0.0), SqrtS(0) 
@@ -63,7 +64,7 @@ G4ComponentAntiNuclNuclearXS::G4ComponentAntiNuclNuclearXS()
  b2       = 0.3036;               // GeV^(-2)
  SqrtS0   = 20.74;                // GeV
  S0       = 33.0625;              // GeV^2
-
+ R0       = 1.0;                  // default value (V.Ivanchenko)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

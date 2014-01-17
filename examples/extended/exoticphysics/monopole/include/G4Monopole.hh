@@ -26,7 +26,7 @@
 /// \file exoticphysics/monopole/include/G4Monopole.hh
 /// \brief Definition of the G4Monopole class
 //
-// $Id: G4Monopole.hh 66994 2013-01-29 14:34:08Z gcosmo $
+// $Id: G4Monopole.hh 66817 2013-01-12 16:16:08Z gcosmo $
 //
 
 #ifndef G4Monopole_h

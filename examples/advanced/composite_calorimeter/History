@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-$Id: History 70121 2013-05-23 14:14:07Z gcosmo $
+$Id: History 72399 2013-07-17 15:47:58Z gcosmo $
 -------------------------------------------------------------------
 
      =========================================================
@@ -9,7 +9,10 @@ $Id: History 70121 2013-05-23 14:14:07Z gcosmo $
                       Example History file
                       ---------------------
 
-23.05.2013 - G.Cosmo Tag (ccal-V09-05-06)
+17.07.2013 - A.Dotti Tag (ccal-V09-06-01)
+- Fixed correct search of AIDA
+
+23.05.2013 - G.Cosmo Tag (ccal-V09-06-00)
 - Fixed compilation error in main() for missing inclusion of of G4UImanager
   header. Fixed compilation warnings for variables/parameters shadowing.
 

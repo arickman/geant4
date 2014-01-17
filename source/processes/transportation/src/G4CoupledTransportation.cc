@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4CoupledTransportation.cc 69887 2013-05-17 08:17:02Z gcosmo $
+// $Id: G4CoupledTransportation.cc 74729 2013-10-21 08:51:35Z gcosmo $
 //
 // ------------------------------------------------------------
 //  GEANT 4 class implementation
@@ -67,6 +67,11 @@ G4CoupledTransportation::G4CoupledTransportation( G4int verbosity )
     fPreviousSftOrigin( 0.,0.,0. ),
     fPreviousMassSafety( 0.0 ),
     fPreviousFullSafety( 0.0 ),
+
+    fMassGeometryLimitedStep( false ), 
+    fAnyGeometryLimitedStep( false ), 
+    endpointDistance( -1.0 ),  // fEndPointDistance( -1.0 ), 
+
     fThreshold_Warning_Energy( 100 * MeV ),  
     fThreshold_Important_Energy( 250 * MeV ), 
     fThresholdTrials( 10 ), 
@@ -97,8 +102,13 @@ G4CoupledTransportation::G4CoupledTransportation( G4int verbosity )
   fpSafetyHelper = transportMgr->GetSafetyHelper();  // New 
 
   // Following assignment is to fix small memory leak from simple use of 'new'
-  static G4TouchableHandle nullTouchableHandle;  // Points to (G4VTouchable*) 0
-  fCurrentTouchableHandle = nullTouchableHandle; 
+  static G4ThreadLocal G4TouchableHandle* pNullTouchableHandle = 0;
+  if ( !pNullTouchableHandle)  { pNullTouchableHandle = new G4TouchableHandle; }
+  fCurrentTouchableHandle = *pNullTouchableHandle;
+    // Points to (G4VTouchable*) 0
+
+  G4FieldManager  *globalFieldMgr= transportMgr->GetFieldManager();
+  fGlobalFieldExists= globalFieldMgr ? globalFieldMgr->GetDetectorField() : 0 ; 
 
   fEndGlobalTimeComputed  = false;
   fCandidateEndGlobalTime = 0;
@@ -240,12 +250,46 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
      }
   }
   G4double momentumMagnitude = pParticle->GetTotalMomentum() ;
- 
-  fFieldPropagator->SetChargeMomentumMass( particleCharge,    // in e+ units
-                                           momentumMagnitude, // in Mev/c 
-                                           restMass           ) ;  
-  // This should be obsolete - the call to SetChargeAndMoments below should do the work
 
+  if( fieldExertsForce )
+  {
+     G4EquationOfMotion*    equationOfMotion = 0; 
+
+     // equationOfMotion = 
+     //     (fFieldPropagator->GetChordFinder()->GetIntegrationDriver()->GetStepper())
+     //      ->GetEquationOfMotion();
+
+     // Consolidate into auxiliary method G4EquationOfMotion* GetEquationOfMotion() 
+     G4MagIntegratorStepper*  pStepper= 0;
+
+     G4ChordFinder*    pChordFinder= fFieldPropagator->GetChordFinder();
+     if( pChordFinder ) 
+     {
+        G4MagInt_Driver*  pIntDriver= 0; 
+
+        pIntDriver= pChordFinder->GetIntegrationDriver(); 
+        if( pIntDriver )
+        {
+           pStepper= pIntDriver->GetStepper(); 
+        }
+        if( pStepper )
+        {
+           equationOfMotion= pStepper->GetEquationOfMotion();
+        }
+     }
+
+     G4ChargeState chargeState(particleCharge,             // The charge can change (dynamic)
+                               pParticleDef->GetPDGSpin(),
+                               magneticMoment); 
+
+     // End of proto GetEquationOfMotion() 
+     if( equationOfMotion )
+     {
+        equationOfMotion->SetChargeMomentumMass( chargeState,
+                                                 momentumMagnitude,
+                                                 restMass );
+     }
+  }
   G4ThreeVector spin        = track.GetPolarization() ;
   G4FieldTrack  theFieldTrack = G4FieldTrack( startPosition, 
                                             track.GetMomentumDirection(),
@@ -256,7 +300,6 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
                                             track.GetGlobalTime(), // Lab.
                                             track.GetProperTime(), // Part.
                                             &spin                  ) ;
-  theFieldTrack.SetChargeAndMoments( particleCharge ); // EM moments -- future extension 
 
   G4int stepNo= track.GetCurrentStepNumber(); 
 
@@ -403,7 +446,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
           G4double  startEnergy= track.GetKineticEnergy();
           G4double  endEnergy= fTransportEndKineticEnergy; 
       
-          static G4int no_inexact_steps=0; // , no_large_ediff;
+          static G4ThreadLocal G4int no_inexact_steps=0; // , no_large_ediff;
           G4double absEdiff = std::fabs(startEnergy- endEnergy);
           if( absEdiff > perMillion * endEnergy )
           {
@@ -499,7 +542,7 @@ G4VParticleChange*
 G4CoupledTransportation::AlongStepDoIt( const G4Track& track,
                                         const G4Step&  stepData )
 {
-  static G4int noCalls=0;
+  static G4ThreadLocal G4int noCalls=0;
   noCalls++;
 
   fParticleChange.Initialize(track) ;
@@ -906,7 +949,7 @@ void
 G4CoupledTransportation::
 ReportInexactEnergy(G4double startEnergy, G4double endEnergy)
 {
-  static G4int no_warnings= 0, warnModulo=1,  moduloFactor= 10, no_large_ediff= 0; 
+  static G4ThreadLocal G4int no_warnings= 0, warnModulo=1,  moduloFactor= 10, no_large_ediff= 0; 
 
   if( std::fabs(startEnergy- endEnergy) > perThousand * endEnergy )
   {

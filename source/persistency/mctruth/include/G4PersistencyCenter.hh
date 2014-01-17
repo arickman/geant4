@@ -70,7 +70,7 @@ class G4PersistencyCenter
       void SelectSystem(std::string systemName);
       // Select the persistency package
 
-      const std::string CurrentSystem() { return f_currentSystemName; }
+      const std::string CurrentSystem() { return f_currentSystemName; };
       // returns the current persistent package name
 
       void SetHepMCObjyReaderFile(std::string file);
@@ -121,7 +121,7 @@ class G4PersistencyCenter
       void PrintAll();
       // prints the current G4PersistencyCenter settings.
 
-      G4PersistencyManager* CurrentPersistencyManager() { return f_currentManager; }
+      G4PersistencyManager* CurrentPersistencyManager() { return f_currentManager; };
       // returns the pointer of the currnet G4PersistencyManager.
 
       void SetPersistencyManager(G4PersistencyManager* pm, std::string name);
@@ -139,10 +139,10 @@ class G4PersistencyCenter
       void SetVerboseLevel(int v);
       // Set verbose level.
 
-      int VerboseLevel() { return m_verbose; }
+      int VerboseLevel() { return m_verbose; };
       // Return verbose level.
 
-    public: // Without description
+    private:
 
       G4PersistencyCenter();
       // Constructor
@@ -150,16 +150,14 @@ class G4PersistencyCenter
       ~G4PersistencyCenter();
       // Destructor
 
-    private:
-
       std::string PadString(std::string name, unsigned int width);
       // truncate or pad a string up to the width.
 
     private:
       G4PersistencyCenterMessenger* f_theMessenger;
-      static G4PersistencyCenter*   f_thePointer;
+      static G4ThreadLocal G4PersistencyCenter* f_thePointer;
       G4PersistencyManager*         f_currentManager;
-      std::string                   f_currentSystemName;
+      std::string                 f_currentSystemName;
       PMap                          f_theCatalog;
       ObjMap                        f_wrObj;
       ObjMap                        f_rdObj;

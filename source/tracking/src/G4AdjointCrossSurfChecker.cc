@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4AdjointCrossSurfChecker.cc 67009 2013-01-29 16:00:21Z gcosmo $
+// $Id: G4AdjointCrossSurfChecker.cc 66872 2013-01-15 01:25:57Z japost $
 //
 /////////////////////////////////////////////////////////////////////////////
 //      Class Name:	G4AdjointCrossSurfChecker
@@ -44,7 +44,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 // 
-G4AdjointCrossSurfChecker* G4AdjointCrossSurfChecker::instance = 0;
+G4ThreadLocal G4AdjointCrossSurfChecker* G4AdjointCrossSurfChecker::instance = 0;
 
 //////////////////////////////////////////////////////////////////////////////
 //

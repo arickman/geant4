@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4SurfaceProperty.hh 67044 2013-01-30 08:50:06Z gcosmo $
+// $Id: G4SurfaceProperty.hh 70822 2013-06-06 08:25:05Z gcosmo $
 //
 // 
 ////////////////////////////////////////////////////////////////////////
@@ -67,6 +67,7 @@ enum G4SurfaceType
    dielectric_metal,            // dielectric-metal interface
    dielectric_dielectric,       // dielectric-dielectric interface
    dielectric_LUT,              // dielectric-Look-Up-Table interface
+   dielectric_dichroic,         // dichroic filter interface
    firsov,                      // for Firsov Process
    x_ray                        // for x-ray mirror process
 };

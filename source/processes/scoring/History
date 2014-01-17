@@ -1,4 +1,4 @@
-$Id: History 69966 2013-05-21 09:52:06Z gcosmo $
+$Id: History 76935 2013-11-19 09:46:31Z gcosmo $
 -------------------------------------------------------------------
 
      =========================================================
@@ -17,12 +17,18 @@ committal in the CVS repository !
      * Reverse chronological order (last date on top), please *
      ----------------------------------------------------------
 
-March 17, 2013, M.Asai (procscore-V09-05-07)
+November 18, 2013, M.Asai (procscore-V09-06-03)
+- Remove unnecessary G4cout.
+
+May 28, 2013, M.Asai (procscore-V09-06-02)
+- Tests migrated to multi-thread.
+
+March 17, 2013, M.Asai (procscore-V09-06-01)
 - G4ParallelWorldProcess now sets G4Navigator::SetPushVerbosity(false)
   for the navigator of the mass world to reduce the warning message
   GeomNav1002.
 
-March 27, 2013, M.Asai (procscore-V09-05-06)
+March 27, 2013, M.Asai (procscore-V09-06-00)
 - G4ParallelWorldProcess now sets G4Navigator::SetPushVerbosity(false) 
   for the navigator of the parallel world to reduce the warning message
   GeomNav1002.
