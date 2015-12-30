@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 // 
-// $Id: G4PropagatorInField.hh 81577 2014-06-03 10:13:36Z gcosmo $
+// $Id: G4PropagatorInField.hh 89287 2015-03-31 08:26:25Z gcosmo $
 //
 //
 // Class G4PropagatorInField 
