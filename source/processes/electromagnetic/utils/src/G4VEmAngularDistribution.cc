@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4VEmAngularDistribution.cc 90579 2015-06-04 10:00:26Z gcosmo $
+// $Id: G4VEmAngularDistribution.cc 92921 2015-09-21 15:06:51Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -58,10 +58,10 @@ G4VEmAngularDistribution::~G4VEmAngularDistribution()
 {}
 
 G4ThreeVector& G4VEmAngularDistribution::SampleDirectionForShell(
-					 const G4DynamicParticle* dp,
-					 G4double finalTotalEnergy,
-					 G4int Z, G4int,
-					 const G4Material* mat)
+                                         const G4DynamicParticle* dp,
+                                         G4double finalTotalEnergy,
+                                         G4int Z, G4int,
+                                         const G4Material* mat)
 {
   return SampleDirection(dp, finalTotalEnergy, Z, mat); 
 }

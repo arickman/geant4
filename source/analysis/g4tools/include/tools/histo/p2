@@ -89,7 +89,7 @@ public:
     m_max_v = a_from.m_max_v;
   }
   pd_t get_histo_data() const {
-    pd_t hd(parent::base_get_data());
+    pd_t hd(parent::dac());
     hd.m_is_profile = true;
     hd.m_bin_Svw = m_bin_Svw;
     hd.m_bin_Sv2w = m_bin_Sv2w;
@@ -136,6 +136,9 @@ public:
   
     parent::m_all_entries++;
     if(inRange) {
+      parent::m_in_range_plane_Sxyw[0] += aX * aY * aWeight;
+
+      // fast getters :
       parent::m_in_range_entries++;
       parent::m_in_range_Sw += aWeight;
       parent::m_in_range_Sw2 += aWeight*aWeight;

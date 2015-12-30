@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4VScoreColorMap.cc 89175 2015-03-23 15:22:54Z gcosmo $
+// $Id: G4VScoreColorMap.cc 89185 2015-03-23 16:11:02Z gcosmo $
 //
 
 #include "G4VScoreColorMap.hh"

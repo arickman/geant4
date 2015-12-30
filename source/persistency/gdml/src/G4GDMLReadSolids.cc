@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4GDMLReadSolids.cc 90766 2015-06-09 10:13:41Z gcosmo $
+// $Id: G4GDMLReadSolids.cc 93151 2015-10-08 11:53:10Z gcosmo $
 //
 // class G4GDMLReadSolids Implementation
 //
@@ -536,16 +536,21 @@ void G4GDMLReadSolids::HypeRead(const xercesc::DOMElement* const hypeElement)
    new G4Hype(name,rmin,rmax,inst,outst,z);
 }
 
-void G4GDMLReadSolids::
-MultiUnionNodeRead(const xercesc::DOMElement* const unionNodeElement,
-                   G4MultiUnion* const multiUnionSolid)
-{
 #if !defined(G4GEOM_USE_USOLIDS)
+void G4GDMLReadSolids::
+MultiUnionNodeRead(const xercesc::DOMElement* const,
+                   G4MultiUnion* const)
+{
    G4Exception("G4GDMLReadSolids::MultiUnionNodeRead()",
                "InvalidSetup", FatalException,
                "Installation with USolids primitives required!");
    return;
-#endif
+}
+#else
+void G4GDMLReadSolids::
+MultiUnionNodeRead(const xercesc::DOMElement* const unionNodeElement,
+                   G4MultiUnion* const multiUnionSolid)
+{
    G4String name;
    G4String solid;
    G4ThreeVector position(0.0,0.0,0.0);
@@ -610,16 +615,21 @@ MultiUnionNodeRead(const xercesc::DOMElement* const unionNodeElement,
    G4Transform3D transform(GetRotationMatrix(rotation),position);
    multiUnionSolid->AddNode(*solidNode, transform);
 }
+#endif
 
-void G4GDMLReadSolids::
-MultiUnionRead(const xercesc::DOMElement* const unionElement)
-{
 #if !defined(G4GEOM_USE_USOLIDS)
+void G4GDMLReadSolids::
+MultiUnionRead(const xercesc::DOMElement* const)
+{
    G4Exception("G4GDMLReadSolids::MultiUnionRead()",
                "InvalidSetup", FatalException,
                "Installation with USolids primitives required!");
    return;
-#endif
+}
+#else
+void G4GDMLReadSolids::
+MultiUnionRead(const xercesc::DOMElement* const unionElement)
+{
    G4String name;
 
    const xercesc::DOMNamedNodeMap* const attributes
@@ -675,6 +685,7 @@ MultiUnionRead(const xercesc::DOMElement* const unionElement)
    }
    multiUnion->Voxelize();
 }
+#endif
 
 void G4GDMLReadSolids::OrbRead(const xercesc::DOMElement* const orbElement)
 {

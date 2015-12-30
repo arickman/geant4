@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4MuonMinusBoundDecay.cc 88993 2015-03-17 11:17:13Z gcosmo $
+// $Id: G4MuonMinusBoundDecay.cc 91836 2015-08-07 07:25:54Z gcosmo $
 //
 //-----------------------------------------------------------------------------
 //
@@ -56,6 +56,7 @@
 #include "G4Electron.hh"
 #include "G4NeutrinoMu.hh"
 #include "G4AntiNeutrinoE.hh"
+#include "G4Log.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -90,7 +91,7 @@ G4MuonMinusBoundDecay::ApplyYourself(const G4HadProjectile& projectile,
   // ===  but muon is capruted by the nucleus with some delay
 
   G4HadProjectile* p = const_cast<G4HadProjectile*>(&projectile);
-  G4double time = p->GetGlobalTime() - std::log(G4UniformRand())/lambda;
+  G4double time = p->GetGlobalTime() - G4Log(G4UniformRand())/lambda;
   p->SetGlobalTime(time);
     
   //G4cout << "lambda= " << lambda << " lambdac= " << lambdac 
@@ -143,6 +144,7 @@ G4MuonMinusBoundDecay::ApplyYourself(const G4HadProjectile& projectile,
       //
       NN = MU - EL;
       ecm = NN.mag2();
+      // Loop checking, 06-Aug-2015, Vladimir Ivanchenko
     } while (Eelect < 0.0 || ecm < 0.0);
 
     //
@@ -317,7 +319,7 @@ G4double G4MuonMinusBoundDecay::GetMuonCaptureRate(G4int Z, G4int A)
     G4double r2 = 1.0 - xmu;
     lambda = t1 * zeff2 * zeff2 * (r2 * r2) * (1.0 - (1.0 - xmu) * .75704) *
       (a2ze * b0a + 1.0 - (a2ze - 1.0) * b0b -
-       G4double(2 * (A - Z)  + std::fabs(a2ze - 1.) ) * b0c / G4double(A * 4) );
+       G4double(2 * (A - Z)  + std::abs(a2ze - 1.) ) * b0c / G4double(A * 4) );
 
   }
 

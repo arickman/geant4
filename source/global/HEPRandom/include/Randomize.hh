@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: Randomize.hh 90717 2015-06-08 14:19:29Z gcosmo $
+// $Id: Randomize.hh 91902 2015-08-10 12:04:22Z gcosmo $
 //
 #ifndef randomize_h
 #define randomize_h 1
@@ -39,7 +39,7 @@
 #endif
 
 #if (defined(G4MULTITHREADED) && \
-    (!defined(G4USE_STD11) || (defined(CLANG_NOSTDTLS))))
+    (!defined(G4USE_STD11) || (defined(CLANG_NOSTDTLS) || defined(__INTEL_COMPILER))))
 
 // MT needs special Random Number distribution classes
 //
@@ -64,7 +64,11 @@
 #define G4Random G4MTHepRandom
 
 #define G4UniformRand() G4MTHepRandom::getTheEngine()->flat()
-
+//
+//#include "G4UniformRandPool.hh"
+//#define G4UniformRand() G4UniformRandPool::flat()
+// Currently not be used in G4 source
+//
 #define G4RandFlatArray G4MTRandFlat::shootArray
 #define G4RandFlatInt G4MTRandFlat::shootInt
 #define G4RandGeneralTmp G4MTRandGeneral

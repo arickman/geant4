@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4FTFParticipants.hh 90572 2015-06-04 09:32:32Z gcosmo $
+// $Id: G4FTFParticipants.hh 89632 2015-04-23 12:19:33Z gcosmo $
 //
 
 #ifndef G4FTFParticipants_h

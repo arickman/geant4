@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PreCompoundModel.cc 90591 2015-06-04 13:45:29Z gcosmo $
+// $Id: G4PreCompoundModel.cc 91837 2015-08-07 07:27:08Z gcosmo $
 //
 // by V. Lara
 //
@@ -181,13 +181,10 @@ G4ReactionProductVector* G4PreCompoundModel::DeExcite(G4Fragment& aFragment)
   
   // main loop  
   G4int count = 0;
-  const G4int countmax = 10000;
+  const G4int countmax = 1000;
   for (;;) {
     //G4cout << "### PreCompound loop over fragment" << G4endl;
     //G4cout << aFragment << G4endl;
-
-    theEmission->Initialize(aFragment);
-    
     G4int EquilibriumExcitonNumber = 
       G4lrint(std::sqrt(aFragment.GetExcitationEnergy()
 			*aFragment.GetA_asInt()*fLevelDensity));
@@ -246,11 +243,6 @@ G4ReactionProductVector* G4PreCompoundModel::DeExcite(G4Fragment& aFragment)
 	}
       else 
 	{
-	  G4double TotalEmissionProbability = 
-	    theEmission->GetTotalProbability(aFragment);
-	  //
-	  //G4cout<<"#1 TotalEmissionProbability="<<TotalEmissionProbability
-	  // <<" Nex= " <<aFragment.GetNumberOfExcitons()<<G4endl;
 	  //
 	  // Check if number of excitons is greater than 0
 	  // else perform equilibrium emission
@@ -260,6 +252,11 @@ G4ReactionProductVector* G4PreCompoundModel::DeExcite(G4Fragment& aFragment)
 	      return Result;
 	    }
 	    
+	  G4double TotalEmissionProbability = 
+	    theEmission->GetTotalProbability(aFragment);
+	  //
+	  //G4cout<<"#1 TotalEmissionProbability="<<TotalEmissionProbability
+	  // <<" Nex= " <<aFragment.GetNumberOfExcitons()<<G4endl;
 	  //J.M.Quesada (May 08) this has already been done in order to decide  
 	  //                     what to do (preeq-eq) 
 	  // Sum of all probabilities
@@ -283,14 +280,18 @@ G4ReactionProductVector* G4PreCompoundModel::DeExcite(G4Fragment& aFragment)
 	      Result->push_back(theEmission->PerformEmission(aFragment));
 	    }
 	}
+      // Loop checking, 05-Aug-2015, Vladimir Ivanchenko
     } while (ThereIsTransition);   // end of do loop
+
+    // stop if too many iterations
     if(count >= countmax) {
       G4ExceptionDescription ed;
       ed << "G4PreCompoundModel loop over " << countmax << " iterations; "
 	 << "current G4Fragment: \n" << aFragment;
       G4Exception("G4PreCompoundModel::DeExcite()","had0034",JustWarning,
 		  ed,"");
-      count = 0;
+      PerformEquilibriumEmission(aFragment, Result);
+      return Result;
     }
   } // end of for (;;) loop
   return Result;

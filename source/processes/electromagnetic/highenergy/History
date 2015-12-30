@@ -1,4 +1,4 @@
-$Id: History 90577 2015-06-04 09:49:57Z gcosmo $
+$Id: History 94080 2015-11-05 15:04:02Z gcosmo $
 -------------------------------------------------------------------
 
      =========================================================
@@ -17,14 +17,21 @@ committal in the CVS repository !
      * Reverse chronological order (last date on top), please *
      ----------------------------------------------------------
 
-28 April 2015: V.Ivant (emhighenergy-V10-00-07)
+05 Now 2015: G.Cosmo (emhighenergy-V10-01-04)
+- Replaced use of variable 'L' in G4eeToHadronsModel.cc to avoid
+  shadowing of new volumetric units.
+
+07 Apr 2015: V.Ivant (emhighenergy-V10-01-03)
+- Added checks to do/while loops
+
+28 Apr 2015: V.Ivant (emhighenergy-V10-01-02)
 - G4eeTo3PiModel - do not use default constructor of G4LorentzVector
 
-20 Feb 2015: V.Ivant (emhighenergy-V10-00-06)
+20 Feb 2015: V.Ivant (emhighenergy-V10-01-01)
 - G4eeTo3PiModel - increased majoranta for sampling of 3-body final
     state; fixed bug in sampling
 
-20 Feb 2015: V.Ivant
+20 Feb 2015: V.Ivant (emhighenergy-V10-01-00)
 - G4eeToHadronsModel - fixed kinematics in ISR gamma emission
     (problem #1716); added check on energy balance
 

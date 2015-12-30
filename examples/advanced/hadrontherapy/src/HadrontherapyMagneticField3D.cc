@@ -23,13 +23,8 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-//    *************************************
-//    *                                   *
-//    *    HadrontherapyMagneticField3D.cc     *
-//    *                                   *
-//    *************************************
-//
-//
+// Hadrontherapy advanced example for Geant4
+// See more at: https://twiki.cern.ch/twiki/bin/view/Geant4/AdvancedExamplesHadrontherapy
 
 #include "HadrontherapyMagneticField3D.hh"
 #include "G4SystemOfUnits.hh"

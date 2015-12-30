@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4TrackingInformation.cc 90769 2015-06-09 10:33:41Z gcosmo $
+// $Id: G4TrackingInformation.cc 88348 2015-02-16 08:43:34Z gcosmo $
 //
 // Author: Mathieu Karamitros (kara (AT) cenbg . in2p3 . fr) 
 //

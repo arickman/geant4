@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PathFinder.hh 89289 2015-03-31 08:35:38Z gcosmo $
+// $Id: G4PathFinder.hh 87869 2015-01-16 08:24:36Z gcosmo $
 // 
 // class G4PathFinder 
 //

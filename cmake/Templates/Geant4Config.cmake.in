@@ -66,6 +66,7 @@
 # -------------------
 #  gdml              (GDML support)
 #  g3tog4            (Geant3 geometry call list reader library)
+#  freetype          (G4analysis library has freetype support)
 #
 #  ui_tcsh           (TCsh Style Application Command Line Interface)
 #  ui_win32          (WIN32 Style Application Command Line Interface)
@@ -92,11 +93,10 @@
 # components being available.
 #
 # You can also query whether the Geant4 found uses the builtin versions
-# of CLHEP, ZLIB, Expat and USolids after calling find_package via the variables
+# of CLHEP, ZLIB, or Expat after calling find_package via the variables
 #
 #  Geant4_builtin_clhep_FOUND   (TRUE if Geant4 built with internal CLHEP)
 #  Geant4_builtin_expat_FOUND   (TRUE if Geant4 built with internal Expat)
-#  Geant4_builtin_usolids_FOUND (TRUE if Geant4 built with internal USolids)
 #  Geant4_builtin_zlib_FOUND    (TRUE if Geant4 built with internal Zlib)
 #
 # These are not used via components as they do not, in general, affect
@@ -166,7 +166,7 @@ get_filename_component(_thisdir "${CMAKE_CURRENT_LIST_FILE}" PATH)
 @GEANT4_COMPILER_FLAG_HINTS@
 
 # - Provide variable indicating C++ Standard we were compiled against
-set(Geant4_CXXSTD "@GEANT4_BUILD_CXXSTD@")
+set(Geant4_CXXSTD "c++@GEANT4_BUILD_CXXSTD@")
 
 #-----------------------------------------------------------------------
 # Set the base compile definitions required to use Geant4 if the variable
@@ -230,11 +230,14 @@ set(Geant4_INCLUDE_DIRS
 @GEANT4_THIRD_PARTY_IMPORT_SETUP@
 
 #-----------------------------------------------------------------------
-# Include the file listing all the imported targets.
+# Include the files listing all the imported targets and configuring
+# Intel Compile Features
 # (Not needed if used in the same Geant4 project, or if we have run before)
 # This is always installed in the same location as us...
 #
 if(NOT CMAKE_PROJECT_NAME STREQUAL Geant4)
+  include("${_thisdir}/Modules/IntelCompileFeatures.cmake")
+
   if(NOT Geant4_LIBDEPS_LOADED)
     include("${_thisdir}/Geant4LibraryDepends.cmake")
     set(Geant4_LIBDEPS_LOADED 1)
@@ -274,13 +277,6 @@ endif()
 
 set(Geant4_builtin_expat_FOUND @GEANT4_USE_BUILTIN_EXPAT@)
 set(Geant4_builtin_zlib_FOUND @GEANT4_USE_BUILTIN_ZLIB@)
-set(Geant4_builtin_usolids_FOUND @GEANT4_USE_BUILTIN_USOLIDS@)
-
-# - Usolids replacement
-set(Geant4_usolids_FOUND @GEANT4_USE_USOLIDS@)
-if(Geant4_usolids_FOUND)
-  list(REMOVE_ITEM Geant4_FIND_COMPONENTS usolids)
-endif()
 
 # - Multithreading
 set(Geant4_multithreaded_FOUND @GEANT4_BUILD_MULTITHREADED@)
@@ -305,6 +301,18 @@ if(Geant4_g3tog4_FOUND)
     set(_geant4_use_g3tog4_library ON)
   endif()
   list(REMOVE_ITEM Geant4_FIND_COMPONENTS g3tog4)
+endif()
+
+# - Usolids
+set(Geant4_usolids_FOUND @GEANT4_USE_USOLIDS@)
+if(Geant4_usolids_FOUND)
+  list(REMOVE_ITEM Geant4_FIND_COMPONENTS usolids)
+endif()
+
+# - Freetype
+set(Geant4_freetype_FOUND @GEANT4_USE_FREETYPE@)
+if(Geant4_freetype_FOUND)
+  list(REMOVE_ITEM Geant4_FIND_COMPONENTS freetype)
 endif()
 
 # - UI : TCSH

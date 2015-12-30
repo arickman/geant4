@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4VoxelNavigation.cc 90836 2015-06-10 09:31:06Z gcosmo $
+// $Id: G4VoxelNavigation.cc 93289 2015-10-15 10:01:15Z gcosmo $
 //
 //
 // class G4VoxelNavigation Implementation
@@ -367,8 +367,17 @@ G4VoxelNavigation::ComputeStep( const G4ThreeVector& localPoint,
               if (rot)
               {
                 exitNormal *= rot->inverse();
+#ifdef G4VERBOSE
+                if( fCheck )
+                   fLogger->CheckAndReportBadNormal(exitNormal,        // rotated
+                                                    motherExitNormal,  // original 
+                                                    *rot,
+                                                    // motherPhysical, 
+                                                    "From RotationMatrix" );
+
+#endif                
               }
-            }  
+            }
           }
           else
           {

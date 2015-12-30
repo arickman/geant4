@@ -51,6 +51,5 @@ private:
 
     void ConstructUCN();
 
-    void AddBetaDecay();
 };
 #endif

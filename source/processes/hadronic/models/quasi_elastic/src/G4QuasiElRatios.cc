@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4QuasiElRatios.cc 90573 2015-06-04 09:38:49Z gcosmo $
+// $Id: G4QuasiElRatios.cc 93888 2015-11-03 08:30:20Z gcosmo $
 //
 //
 // G4 Physics class: G4QuasiElRatios for N+A elastic cross sections
@@ -50,6 +50,9 @@
 #include "G4Alpha.hh"
 #include "G4ThreeVector.hh"
 #include "G4CrossSectionDataSetRegistry.hh"
+#include "G4Pow.hh"
+#include "G4Log.hh"
+#include "G4Exp.hh"
 
 namespace  {
     const G4int    nps=150;        // Number of steps in the R(s) LinTable
@@ -60,10 +63,10 @@ namespace  {
     const G4int    mls=nls+1;      // Number of elements in the R(lns) logTable
     const G4double lsi=5.;         // The min ln(s) logTabEl(s=148.4 < sma=150.)
     const G4double lsa=9.;         // The max ln(s) logTabEl(s=148.4 - 8103. mb)
-    const G4double mi=std::exp(lsi);// The min s of logTabEl(~ 148.4 mb)
-    const G4double min_s=std::exp(lsa);// The max s of logTabEl(~ 8103. mb)
+    const G4double mi=G4Exp(lsi);// The min s of logTabEl(~ 148.4 mb)
+    const G4double min_s=G4Exp(lsa);// The max s of logTabEl(~ 8103. mb)
     const G4double dls=(lsa-lsi)/nls;// Step of the logarithmic Table
-    const G4double edls=std::exp(dls);// Multiplication step of the logarithmic Table
+    const G4double edls=G4Exp(dls);// Multiplication step of the logarithmic Table
     const G4double toler=.01;      // The tolarence mb defining the same cross-section
     const G4double C=1.246;
     const G4double lmi=3.5;       // min of (lnP-lmi)^2 parabola
@@ -75,10 +78,10 @@ namespace  {
     const G4int    mlp=nlp+1;       // Number of elements in the S(lnp) logTable
     const G4double lpi=-5.;         // The min ln(p) logTabEl(p=6.7 MeV/c - 22. TeV/c)
     const G4double lpa=10.;         // The max ln(p) logTabEl(p=6.7 MeV/c - 22. TeV/c)
-    const G4double mip=std::exp(lpi);// The min p of logTabEl(~ 6.7 MeV/c)
-    const G4double map=std::exp(lpa);// The max p of logTabEl(~ 22. TeV)
+    const G4double mip=G4Exp(lpi);// The min p of logTabEl(~ 6.7 MeV/c)
+    const G4double map=G4Exp(lpa);// The max p of logTabEl(~ 22. TeV)
     const G4double dlp=(lpa-lpi)/nlp;// Step of the logarithmic Table
-    const G4double edlp=std::exp(dlp);// Multiplication step of the logarithmic Table
+    const G4double edlp=G4Exp(dlp);// Multiplication step of the logarithmic Table
 }
 
 
@@ -116,14 +119,19 @@ G4QuasiElRatios::~G4QuasiElRatios()
     for(pos=vT->begin(); pos<vT->end(); pos++)
     { delete [] *pos; }
     vT->clear();
+    delete vT;
+
     for(pos=vL->begin(); pos<vL->end(); pos++)
     { delete [] *pos; }
     vL->clear();
+    delete vL;
     
     std::vector<std::pair<G4double,G4double>*>::iterator pos2;
     for(pos2=vX->begin(); pos2<vX->end(); pos2++)
     { delete [] *pos2; }
     vX->clear();
+    delete vX;
+
 }
 
 // Calculation of pair(QuasiFree/Inelastic,QuasiElastic/QuasiFree)
@@ -187,7 +195,7 @@ G4double G4QuasiElRatios::GetQF2IN_Ratio(G4double m_s, G4int A)
         lastLRatio=new G4double[mls];            // Create the logarithmic Table
         if(m_s>sma)                           // Initialize the logarithmic Table
         {
-	  G4double ls=std::log(m_s);
+	  G4double ls=G4Log(m_s);
             lastKRatio = static_cast<int>((ls-lsi)/dls)+1; // MaxBin to be initialized in LogTaB
             if(lastKRatio>nls)
             {
@@ -255,8 +263,8 @@ G4double G4QuasiElRatios::GetQF2IN_Ratio(G4double m_s, G4int A)
             if(!lastKRatio) nextK=0;
             if(m_s>sma && lastKRatio<nls)             // LogTab must be updated
             {
-                G4double sv=std::exp(lastMRatio+lsi); // Define starting poit (lastM will be changed)
-                G4double ls=std::log(m_s);
+                G4double sv=G4Exp(lastMRatio+lsi); // Define starting poit (lastM will be changed)
+                G4double ls=G4Log(m_s);
                 lastKRatio = static_cast<int>((ls-lsi)/dls)+1; // MaxBin to be initialized in LogTaB
                 if(lastKRatio>nls)
                 {
@@ -287,7 +295,7 @@ G4double G4QuasiElRatios::GetQF2IN_Ratio(G4double m_s, G4int A)
     }
     else                                  // Use log table
     {
-        G4double ls=std::log(m_s)-lsi;        // ln(s)-l_min
+        G4double ls=G4Log(m_s)-lsi;        // ln(s)-l_min
         G4int n=static_cast<int>(ls/dls);    // Low edge number of the bin
         G4double d=ls-n*dls;                 // Log shift
         G4double v=lastLRatio[n];                // Base
@@ -305,9 +313,9 @@ G4double G4QuasiElRatios::CalcQF2IN_Ratio(G4double m_s, G4int A)
     G4double s4=s2*s2;
     G4double ss=std::sqrt(std::sqrt(m_s));
     G4double P=7.48e-5*s2/(1.+8.77e12/s4/s4/s2);
-    G4double E=.2644+.016/(1.+std::exp((29.54-m_s)/2.49));
-    G4double F=ss*.1526*std::exp(-s2*ss*.0000859);
-    return C*std::exp(-E*std::pow(G4double(A-1.),F))/std::pow(G4double(A),P);
+    G4double E=.2644+.016/(1.+G4Exp((29.54-m_s)/2.49));
+    G4double F=ss*.1526*G4Exp(-s2*ss*.0000859);
+    return C*G4Exp(-E*G4Pow::GetInstance()->powA(G4double(A-1.),F))/G4Pow::GetInstance()->powA(G4double(A),P);
 } // End of CalcQF2IN_Ratio
 
 // Calculatio pair(hN_el,hN_tot) (mb): p in GeV/c, index(PDG,F) (see FetchElTot)
@@ -332,7 +340,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         }
         else if(p>pma)
         {
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             El=pbe*lp2+6.72;
             To=pbt*lp2+38.2;
@@ -341,7 +349,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         {
             G4double p2=p*p;
             G4double LE=1./(.00012+p2*.2);
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             G4double rp2=1./p2;
             El=LE+(pbe*lp2+6.72+32.6/p)/(1.+rp2/p);
@@ -358,7 +366,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         }
         else if(p>pma)
         {
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             El=pbe*lp2+6.72;
             To=pbt*lp2+38.2;
@@ -367,7 +375,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         {
             G4double p2=p*p;
             G4double LE=1./(.00012+p2*(.051+.1*p2));
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             G4double rp2=1./p2;
             El=LE+(pbe*lp2+6.72+30./p)/(1.+.49*rp2/p);
@@ -376,7 +384,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
     }
     else if(I==2)                        // pimp/pipn
     {
-        G4double lp=std::log(p);
+        G4double lp=G4Log(p);
         if(p<pmi)
         {
             G4double lr=lp+1.27;
@@ -410,7 +418,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
     }
     else if(I==3)                        // pipp/pimn
     {
-        G4double lp=std::log(p);
+        G4double lp=G4Log(p);
         if(p<pmi)
         {
             G4double lr=lp+1.27;
@@ -453,14 +461,14 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         }
         else if(p>pma)
         {
-            G4double ld=std::log(p)-lmi;
+            G4double ld=G4Log(p)-lmi;
             G4double ld2=ld*ld;
             El=pbe*ld2+2.23;
             To=pbt*ld2+19.5;
         }
         else
         {
-            G4double ld=std::log(p)-lmi;
+            G4double ld=G4Log(p)-lmi;
             G4double ld2=ld*ld;
             G4double sp=std::sqrt(p);
             G4double psp=p*sp;
@@ -486,14 +494,14 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         }
         else if(p>pma)
         {
-            G4double ld=std::log(p)-lmi;
+            G4double ld=G4Log(p)-lmi;
             G4double ld2=ld*ld;
             El=pbe*ld2+2.23;
             To=pbt*ld2+19.5;
         }
         else
         {
-            G4double ld=std::log(p)-lmi;
+            G4double ld=G4Log(p)-lmi;
             G4double ld2=ld*ld;
             G4double lr=p-.38;
             G4double LE=.7/(lr*lr+.0676);
@@ -516,7 +524,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         }
         else if(p>pma)
         {
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             G4double sp=std::sqrt(p);
             El=(pbe*lp2+6.72)/(1.+2./sp);
@@ -526,7 +534,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
         {
             G4double p2=p*p;
             G4double LE=1./(.002+p2*(.12+p2));
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             G4double p4=p2*p2;
             G4double sp=std::sqrt(p);
@@ -538,16 +546,16 @@ std::pair<G4double,G4double> G4QuasiElRatios::CalcElTot(G4double p, G4int I)
     {
         if(p>pma)
         {
-            G4double lp=std::log(p)-lmi;
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             El=pbe*lp2+6.72;
             To=pbt*lp2+38.2;
         }
         else
         {
-            G4double ye=std::pow(p,1.25);
-            G4double yt=std::pow(p,.35);
-            G4double lp=std::log(p)-lmi;
+            G4double ye=G4Pow::GetInstance()->powA(p,1.25);
+            G4double yt=G4Pow::GetInstance()->powA(p,.35);
+            G4double lp=G4Log(p)-lmi;
             G4double lp2=lp*lp;
             El=80./(ye+1.)+pbe*lp2+6.72;
             To=(80./yt+.3)/yt+pbt*lp2+38.2;
@@ -631,7 +639,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::FetchElTot(G4double p, G4int PDG, 
         found=true;                                 // The index is found
         break;
     }
-    G4double lp=std::log(p);
+    G4double lp=G4Log(p);
     if(!nDB || !found)                            // Create new line in the AMDB
     {
         lastXtot = new std::pair<G4double,G4double>[mlp]; // Create logarithmic Table for ElTot
@@ -672,7 +680,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::FetchElTot(G4double p, G4int PDG, 
                 lastMtot=lpa-lpi;
             }
             else lastMtot = lastKtot*dlp;           // Calculate max initialized ln(p)-lpi for LogTab
-            G4double pv=std::exp(lpM);       // momentum of the last calculated beam
+            G4double pv=G4Exp(lpM);       // momentum of the last calculated beam
             for(G4int j=nextK; j<=lastKtot; j++)// Calculate LogTab values
             {
                 pv*=edlp;
@@ -741,7 +749,7 @@ std::pair<G4double,G4double> G4QuasiElRatios::GetChExFactor(G4double pIU, G4int 
     G4double mult=1.;  // Factor of increasing multiplicity ( ? @@)
     if(pGeV>.5)
     {
-        mult=1./(1.+std::log(pGeV+pGeV))/pGeV;
+        mult=1./(1.+G4Log(pGeV+pGeV))/pGeV;
         if(mult>1.) mult=1.;
     }
     if(pf)
@@ -1000,7 +1008,7 @@ G4double G4QuasiElRatios::ChExElCoef(G4double p, G4int Z, G4int N, G4int pPDG)
     G4double sp=std::sqrt(p);
     G4double p2=p*p;            
     G4double p4=p2*p2;
-    G4double dl1=std::log(p)-5.;
+    G4double dl1=G4Log(p)-5.;
     G4double T=(6.75+.14*dl1*dl1+13./p)/(1.+.14/p4)+.6/(p4+.00013);
     G4double U=(6.25+8.33e-5/p4/p)*(p*sp+.34)/p2/p; 
     G4double R=U/T;

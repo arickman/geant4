@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4GDMLWriteSolids.cc 90766 2015-06-09 10:13:41Z gcosmo $
+// $Id: G4GDMLWriteSolids.cc 93151 2015-10-08 11:53:10Z gcosmo $
 //
 // class G4GDMLWriteSolids Implementation
 //
@@ -78,6 +78,17 @@ G4GDMLWriteSolids::~G4GDMLWriteSolids()
 {
 }
 
+#if !defined(G4GEOM_USE_USOLIDS)
+void G4GDMLWriteSolids::
+MultiUnionWrite(xercesc::DOMElement*,
+                const G4MultiUnion* const)
+{
+   G4Exception("G4GDMLWriteSolids::MultiUnionWrite()",
+               "InvalidSetup", FatalException,
+               "Installation with USolids primitives required!");
+   return;
+}
+#else
 void G4GDMLWriteSolids::
 MultiUnionWrite(xercesc::DOMElement* solElement,
                 const G4MultiUnion* const munionSolid)
@@ -136,6 +147,7 @@ MultiUnionWrite(xercesc::DOMElement* solElement,
    solElement->appendChild(multiUnionElement);
      // Add the multiUnion solid AFTER the constituent nodes!
 }
+#endif
 
 void G4GDMLWriteSolids::
 BooleanWrite(xercesc::DOMElement* solElement,

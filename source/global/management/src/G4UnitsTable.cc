@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4UnitsTable.cc 90717 2015-06-08 14:19:29Z gcosmo $
+// $Id: G4UnitsTable.cc 94074 2015-11-05 14:56:40Z gcosmo $
 // 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //
@@ -219,6 +219,11 @@ void G4UnitDefinition::BuildUnitsTable()
  new G4UnitDefinition(     "meter3","m3"     ,"Volume",meter3);
  new G4UnitDefinition("centimeter3","cm3"    ,"Volume",centimeter3); 
  new G4UnitDefinition("millimeter3","mm3"    ,"Volume",millimeter3);
+ 
+ new G4UnitDefinition(      "liter","L"      ,"Volume",liter);
+ new G4UnitDefinition(        "dL","dL"      ,"Volume",dL);
+ new G4UnitDefinition(        "cL","cL"      ,"Volume",cL);
+ new G4UnitDefinition(        "mL","mL"      ,"Volume",mL);    
 
  //Angle
  new G4UnitDefinition(     "radian","rad"    ,"Angle",radian);

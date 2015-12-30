@@ -43,6 +43,9 @@
 #define G4UTrap_HH
 
 #include "G4USolid.hh"
+
+#if defined(G4GEOM_USE_USOLIDS)
+
 #include "UTrap.hh"
 
 class G4Polyhedron;
@@ -215,5 +218,7 @@ inline void G4UTrap::SetPlanes(const G4ThreeVector pt[8])
   GetShape()->SetPlanes(upt);
   fRebuildPolyhedron = true;
 }
+
+#endif  // G4GEOM_USE_USOLIDS
 
 #endif

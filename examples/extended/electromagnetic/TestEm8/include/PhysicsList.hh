@@ -26,7 +26,7 @@
 /// \file electromagnetic/TestEm8/include/PhysicsList.hh
 /// \brief Definition of the PhysicsList class
 //
-// $Id: PhysicsList.hh 90770 2015-06-09 12:12:47Z gcosmo $
+// $Id: PhysicsList.hh 92047 2015-08-14 07:23:37Z gcosmo $
 //
 //---------------------------------------------------------------------------
 //
@@ -46,8 +46,8 @@
 #include "globals.hh"
 
 class G4VPhysicsConstructor;
-class StepMax;
 class PhysicsListMessenger;
+class StepMax;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -69,20 +69,12 @@ public:
 
 private:
 
-  void  AddPAIModel(const G4String&);
-  void  NewPAIModel(const G4ParticleDefinition*, const G4String& modname, 
-                    const G4String& procname);
-
   G4VPhysicsConstructor*  fEmPhysicsList;
   G4VPhysicsConstructor*  fDecayPhysicsList;
-  std::vector<G4VPhysicsConstructor*> fHadronPhys;
   G4String fEmName;
     
-  StepMax* fStepMaxProcess;
-    
   PhysicsListMessenger* fMessenger;
-  G4bool fPAI;
-
+  static G4ThreadLocal StepMax* fStepMaxProcess;  
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

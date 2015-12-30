@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4NeutronRadCapture.cc 91067 2015-06-17 09:22:30Z gcosmo $
+// $Id: G4NeutronRadCapture.cc 88191 2015-02-02 17:27:37Z gcosmo $
 //
 //
 // Physics model class G4NeutronRadCapture 
@@ -42,7 +42,7 @@
 #include "G4NucleiProperties.hh"
 #include "G4VEvaporationChannel.hh"
 #include "G4PhotonEvaporation.hh"
-#include "G4PromptPhotonEvaporation.hh"
+#include "G4PhotonEvaporationOLD.hh"
 #include "G4DynamicParticle.hh"
 #include "G4ParticleTable.hh"
 #include "G4IonTable.hh"
@@ -60,7 +60,9 @@ G4NeutronRadCapture::G4NeutronRadCapture()
   SetMinEnergy( 0.0*GeV );
   SetMaxEnergy( 100.*TeV );
 
-  photonEvaporation = new G4PhotonEvaporation(); 
+  char* env = getenv("G4UsePhotonEvaporationOLD"); 
+  if(!env) { photonEvaporation = new G4PhotonEvaporation(); } 
+  else     { photonEvaporation = new G4PhotonEvaporationOLD(); }
   photonEvaporation->SetICM(true);
  
   theTableOfIons = G4ParticleTable::GetParticleTable()->GetIonTable();
@@ -150,7 +152,7 @@ G4HadFinalState* G4NeutronRadCapture::ApplyYourself(
     // protection against wrong kinematic 
     if(M < mass) {
       G4double etot = std::max(mass, lab4mom.e());
-      G4double ptot = sqrt((etot - mass)*(etot + mass));
+      G4double ptot = std::sqrt((etot - mass)*(etot + mass));
       G4ThreeVector v = lab4mom.vect().unit();
       lab4mom.set(v.x()*ptot,v.y()*ptot,v.z()*ptot,etot);
     }

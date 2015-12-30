@@ -47,6 +47,9 @@
 #define G4UTET_HH
 
 #include "G4USolid.hh"
+
+#if defined(G4GEOM_USE_USOLIDS)
+
 #include "UTet.hh"
 
 class G4UTet : public G4USolid
@@ -100,5 +103,7 @@ inline std::vector<G4ThreeVector> G4UTet::GetVertices() const
   }
   return vertices;
 }
+
+#endif  // G4GEOM_USE_USOLIDS
 
 #endif

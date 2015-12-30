@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4GEMProbability.cc 88987 2015-03-17 10:39:50Z gcosmo $
+// $Id: G4GEMProbability.cc 91834 2015-08-07 07:24:22Z gcosmo $
 //
 //---------------------------------------------------------------------
 //
@@ -55,11 +55,9 @@
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4Log.hh"
-#include "G4Exp.hh"
 
 G4GEMProbability:: G4GEMProbability(G4int anA, G4int aZ, G4double aSpin) : 
   theA(anA), theZ(aZ), Spin(aSpin), theCoulombBarrierPtr(0)
-  //  Normalization(1.0)
 {
   theEvapLDPptr = new G4EvaporationLevelDensityParameter;
   fG4pow = G4Pow::GetInstance(); 
@@ -144,7 +142,7 @@ G4double G4GEMProbability::CalcProbability(const G4Fragment & fragment,
   //                       ***PARENT***
   //JMQ (September 2009) the following quantities refer to the PARENT:
      
-  G4double deltaCN = fPairCorr->GetPairingCorrection(A, Z);				       
+  G4double deltaCN = fPairCorr->GetPairingCorrection(A, Z); 
   G4double aCN     = theEvapLDPptr->LevelDensityParameter(A, Z, U-deltaCN);
   G4double UxCN    = (2.5 + 150.0/G4double(A))*MeV;
   G4double ExCN    = UxCN + deltaCN;
@@ -179,13 +177,13 @@ G4double G4GEMProbability::CalcProbability(const G4Fragment & fragment,
     //}
   }
   
-  //JMQ 14/07/2009 BIG BUG : NuclearMass is in MeV => hbarc instead of hbar_planck must be used
+  //JMQ 14/07/2009 BIG BUG : NuclearMass is in MeV => hbarc instead of 
+  //                         hbar_planck must be used
   //    G4double g = (2.0*Spin+1.0)*NuclearMass/(pi2* hbar_Planck*hbar_Planck);
   G4double gg = (2.0*Spin+1.0)*NuclearMass/(pi2* hbarc*hbarc);
   
-  //JMQ 190709 fix on Rb and  geometrical cross sections according to Furihata's paper 
-  //                      (JAERI-Data/Code 2001-105, p6)
-  //    G4double RN = 0.0;
+  //JMQ 190709 fix on Rb and  geometrical cross sections according to 
+  //           Furihata's paper (JAERI-Data/Code 2001-105, p6)
   G4double Rb = 0.0;
   if (theA > 4) 
     {
@@ -205,7 +203,6 @@ G4double G4GEMProbability::CalcProbability(const G4Fragment & fragment,
       G4double Ad = fG4pow->Z13(ResidualA);
       Rb = 1.5*Ad*fermi;
     }
-  //   G4double GeometricalXS = pi*RN*RN*std::pow(ResidualA,2./3.); 
   G4double GeometricalXS = pi*Rb*Rb; 
   //end of JMQ fix on Rb by 190709
   

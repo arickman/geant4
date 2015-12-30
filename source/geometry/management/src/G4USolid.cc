@@ -33,6 +33,9 @@
 // --------------------------------------------------------------------
 
 #include "G4USolid.hh"
+
+#if defined(G4GEOM_USE_USOLIDS)
+
 #include "G4AffineTransform.hh"
 #include "G4VoxelLimits.hh"
 #include "G4VGraphicsScene.hh"
@@ -587,3 +590,5 @@ G4VisExtent G4USolid:: GetExtent() const
   extent.SetZmax(vmax);
   return extent;
 }
+
+#endif  // G4GEOM_USE_USOLIDS

@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4eeTo3PiModel.cc 90577 2015-06-04 09:49:57Z gcosmo $
+// $Id: G4eeTo3PiModel.cc 91869 2015-08-07 15:21:02Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -167,7 +167,7 @@ void G4eeTo3PiModel::SampleSecondaries(std::vector<G4DynamicParticle*>* newp,
 	     << gg << " > " << gmax << " (majoranta)" << G4endl;
       gmax = gg;
     }
-    
+    // Loop checking, 07-Aug-2015, Vladimir Ivanchenko
   } while( gmax*G4UniformRand() > gg || nn < nmax);
 
   w0.rotateUz(direction);

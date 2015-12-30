@@ -39,6 +39,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "TestParameters.hh"
+#include "Randomize.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -50,6 +51,7 @@ Run::Run()
     = fStepGas = fCluster = fMaxEnergy = 0.0; 
   fEvt = fNbins = 0;
   fFactorALICE = fParam->GetFactorALICE();
+  fWidthALICE = fParam->GetEnergySmear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -65,6 +67,9 @@ void Run::BeginOfRun()
   fTotStepGas = fTotCluster = fMeanCluster = fOverflow = fTotEdep 
     = fStepGas = fCluster = 0.0; 
   fEvt = 0;
+
+  fFactorALICE = fParam->GetFactorALICE();
+  fWidthALICE = fParam->GetEnergySmear();
  
   SetVerbose(1);
 
@@ -78,6 +83,9 @@ void Run::BeginOfRun()
     G4int binsCluster = fParam->GetNumberBinsCluster();
     G4cout << " BinsCluster= " << binsCluster << "    BinsE= " <<  fNbins
            << "   Emax(keV)= " << fMaxEnergy/keV << G4endl;
+    G4cout << " WidthALICE= " << fWidthALICE 
+           << "      FactorALICE= " << fFactorALICE << G4endl;
+
   }
 }
 
@@ -142,14 +150,12 @@ void Run::EndOfRun()
   }
   G4cout.precision(prec);
  
-  G4AnalysisManager* fAnalysisManager = G4AnalysisManager::Instance();
+  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   // normalize histograms
-  fAnalysisManager->ScaleH1(1,norm);
-  fAnalysisManager->ScaleH1(2,norm);
-  fAnalysisManager->ScaleH1(3,0.1);
-  //  fAnalysisManager->SetH1Ascii(1,true);
-  //  fAnalysisManager->SetH1Ascii(2,true);
-  //  fAnalysisManager->SetH1Ascii(3,true);
+  G4double normf = fParam->GetNormFactor();
+  analysisManager->ScaleH1(1,norm);
+  analysisManager->ScaleH1(2,norm);
+  analysisManager->ScaleH1(3,norm*normf);
  
   G4cout << " ================== run end ==========================" << G4endl;
 }
@@ -171,17 +177,23 @@ void Run::EndOfEvent()
   fTotStepGas += fStepGas;
   fTotCluster += fCluster;
 
+  if(fWidthALICE > 0.0) {
+    G4double x = G4RandGauss::shoot(1.,fWidthALICE);
+    if(x <= 0.0) { x = 1.0; }
+    fTotEdep *= x;
+  }
+
   G4int idx = G4int(fTotEdep*fNbins/fMaxEnergy);
 
   if(idx < 0) { fEgas[0] += 1.0; }
   if(idx >= fNbins) { fOverflow += 1.0; }
   else { fEgas[idx] += 1.0; }
   
-  G4AnalysisManager* fAnalysisManager = G4AnalysisManager::Instance();
+  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   // fill histo
-  fAnalysisManager->FillH1(1,fTotEdep/keV,1.0);
-  fAnalysisManager->FillH1(2,fCluster,1.0);
-  fAnalysisManager->FillH1(3,fTotEdep*fFactorALICE/keV,1.0);
+  analysisManager->FillH1(1,fTotEdep/keV,1.0);
+  analysisManager->FillH1(2,fCluster,1.0);
+  analysisManager->FillH1(3,fTotEdep*fFactorALICE,1.0);
   fEdep.fill(fTotEdep, 1.0);
 }
 

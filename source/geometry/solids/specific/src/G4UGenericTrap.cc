@@ -32,6 +32,9 @@
 
 #include "G4GenericTrap.hh"
 #include "G4UGenericTrap.hh"
+
+#if defined(G4GEOM_USE_USOLIDS)
+
 #include "G4Polyhedron.hh"
 #include "G4PolyhedronArbitrary.hh"
 
@@ -190,3 +193,5 @@ G4Polyhedron* G4UGenericTrap::CreatePolyhedron() const
 
   return (G4Polyhedron*) polyhedron;
 }
+
+#endif  // G4GEOM_USE_USOLIDS

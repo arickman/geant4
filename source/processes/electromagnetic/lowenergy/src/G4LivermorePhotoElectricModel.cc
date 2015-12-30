@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4LivermorePhotoElectricModel.cc 90578 2015-06-04 09:55:07Z gcosmo $
+// $Id: G4LivermorePhotoElectricModel.cc 89826 2015-04-30 15:18:18Z gcosmo $
 //
 //
 // Author: Sebastien Incerti

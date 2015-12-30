@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4VGammaDeexcitation.cc 88987 2015-03-17 10:39:50Z gcosmo $
+// $Id: G4VGammaDeexcitation.cc 94676 2015-12-02 09:51:20Z gunter $
 //
 // -------------------------------------------------------------------
 //      GEANT 4 class file 
@@ -76,7 +76,7 @@
 G4VGammaDeexcitation::G4VGammaDeexcitation(): _transition(0), _verbose(0),
 					      _electronO (0), _vSN(-1)
 { 
-  _tolerance = 2*CLHEP::keV;
+  _tolerance = 0.1*CLHEP::keV;
   _timeLimit = DBL_MAX;
 }
 
@@ -193,7 +193,7 @@ G4Fragment* G4VGammaDeexcitation::GenerateGamma(G4Fragment* aNucleus)
     G4double P2= (E - Mass)*(E + Mass);
     G4ThreeVector v = lv.vect().unit();
     G4double p = 0.0;
-    if(P2 > 0.0) { p = sqrt(P2); } 
+    if(P2 > 0.0) { p = std::sqrt(P2); } 
     else { E = Mass; }
     lv.set(v.x()*p, v.y()*p, v.z()*p, E);  
   }

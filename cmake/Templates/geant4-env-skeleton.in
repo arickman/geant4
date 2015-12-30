@@ -31,8 +31,11 @@
 
 #-----------------------------------------------------------------------
 # Resource file paths
-#
+# - Datasets
 @GEANT4_ENV_DATASETS@
+
+# - Fonts for Freetype
+@GEANT4_ENV_TOOLS_FONT_PATH@
 
 #----------------------------------------------------------------------
 @GEANT4_TC_ENDIF_SELFLOCATED@

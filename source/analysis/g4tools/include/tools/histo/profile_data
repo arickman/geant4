@@ -70,12 +70,6 @@ public:
   }
 
 public:
-  bool cut_v() const {return m_cut_v;}
-  TV min_v() const {return m_min_v;}
-  TV max_v() const {return m_max_v;}
-  const vs_t& bins_sum_vw() const {return m_bin_Svw;}
-  const vs_t& bins_sum_v2w() const {return m_bin_Sv2w;}
-public:
   bool m_is_profile; //for Rio_THistogram.
   std::vector<TV> m_bin_Svw;
   std::vector<TV> m_bin_Sv2w;

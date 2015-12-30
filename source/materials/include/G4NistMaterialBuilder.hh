@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4NistMaterialBuilder.hh 88957 2015-03-16 16:46:05Z gcosmo $
+// $Id: G4NistMaterialBuilder.hh 91920 2015-08-11 09:50:13Z gcosmo $
 
 #ifndef G4NistMaterialBuilder_h
 #define G4NistMaterialBuilder_h 1
@@ -80,6 +80,11 @@ public:
 				   G4bool isotopes=true,
 				   G4bool warning =true);
 					    
+
+  // Find or build a simple material via atomic number
+  //
+  G4Material* FindOrBuildSimpleMaterial(G4int Z, G4bool warning);
+
   // construct a G4Material from scratch by atome count
   // 
   G4Material* ConstructNewMaterial (const G4String& name,
@@ -144,15 +149,17 @@ public:
   //
   const std::vector<G4String>& GetMaterialNames() const;
 
-  // access to the NIST mean ionisation potentials
+  // access to the NIST mean ionisation potentials and nominal densities
   //
   inline G4double GetMeanIonisationEnergy(G4int index) const;
+  inline G4double GetNominalDensity(G4int index) const;
 
 private:
 
   void Initialise();
   void NistSimpleMaterials();
   void NistCompoundMaterials();
+  void NistCompoundMaterials2();
   void HepAndNuclearMaterials();
   void SpaceMaterials();
   void BioChemicalMaterials();
@@ -225,6 +232,14 @@ G4NistMaterialBuilder::GetMeanIonisationEnergy(G4int index) const
 {
   G4double res = 10*index;
   if(index >= 0 && index < nMaterials) { res = ionPotentials[index]; }
+  return res;
+}
+
+inline G4double 
+G4NistMaterialBuilder::GetNominalDensity(G4int index) const
+{
+  G4double res = 0.0;
+  if(index >= 0 && index < nMaterials) { res = densities[index]; }
   return res;
 }
 

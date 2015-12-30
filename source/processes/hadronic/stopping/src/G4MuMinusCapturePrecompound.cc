@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4MuMinusCapturePrecompound.cc 88993 2015-03-17 11:17:13Z gcosmo $
+// $Id: G4MuMinusCapturePrecompound.cc 91836 2015-08-07 07:25:54Z gcosmo $
 //
 //-----------------------------------------------------------------------------
 //
@@ -224,6 +224,7 @@ G4MuMinusCapturePrecompound::ApplyYourself(const G4HadProjectile& projectile,
 	momResidual.set(0.0, 0.0, 0.0, residualMass);
 	eEx = 0.0;
       }
+      // Loop checking, 06-Aug-2015, Vladimir Ivanchenko
     } while(eEx <= 0.0);
 
     G4ThreeVector dir = momNu.vect().unit();

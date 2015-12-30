@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ChipsNeutronElasticXS.cc 88983 2015-03-17 10:24:43Z gcosmo $
+// $Id: G4ChipsNeutronElasticXS.cc 93080 2015-10-02 14:45:31Z gcosmo $
 //
 //
 // G4 Physics class: G4ChipsNeutronElasticXS for nA elastic cross sections
@@ -139,6 +139,15 @@ G4ChipsNeutronElasticXS::~G4ChipsNeutronElasticXS()
   for (pos=B4T.begin(); pos<B4T.end(); pos++)
   { delete [] *pos; }
   B4T.clear(); 
+}
+
+void
+G4ChipsNeutronElasticXS::CrossSectionDescription(std::ostream& outFile) const
+{
+    outFile << "G4ChipsNeutronElasticXS provides the elastic cross\n"
+            << "section for neutron nucleus scattering as a function of incident\n"
+            << "momentum. The cross section is calculated using M. Kossov's\n"
+            << "CHIPS parameterization of cross section data.\n";
 }
 
 G4bool G4ChipsNeutronElasticXS::IsIsoApplicable(const G4DynamicParticle*, G4int, G4int,    

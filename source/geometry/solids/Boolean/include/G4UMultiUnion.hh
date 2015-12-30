@@ -45,6 +45,8 @@
 
 #include <CLHEP/Vector/Rotation.h>
 
+#if defined(G4GEOM_USE_USOLIDS)
+
 #include "G4USolid.hh"
 #include "UMultiUnion.hh"
 #include "G4Transform3D.hh"
@@ -136,4 +138,7 @@ inline void G4UMultiUnion::Voxelize()
 {
   GetShape()->Voxelize();
 }
+
+#endif  // G4GEOM_USE_USOLIDS
+
 #endif

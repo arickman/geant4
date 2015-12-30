@@ -26,7 +26,7 @@
 /// \file medical/electronScattering/include/DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
 //
-// $Id: DetectorConstruction.hh 89056 2015-03-18 09:53:57Z gcosmo $
+// $Id: DetectorConstruction.hh 88035 2015-01-26 10:22:08Z gcosmo $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

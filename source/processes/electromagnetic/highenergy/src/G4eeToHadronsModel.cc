@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4eeToHadronsModel.cc 88977 2015-03-17 10:03:17Z gcosmo $
+// $Id: G4eeToHadronsModel.cc 94080 2015-11-05 15:04:02Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -242,10 +242,10 @@ void G4eeToHadronsModel::ComputeCMCrossSectionPerElectron()
     G4double e  = crossPerElectron->Energy(i);
     G4double cs = 0.0;
     if(i > 0) {
-      G4double L   = 2.0*G4Log(e/electron_mass_c2);
-      G4double bt  = 2.0*fine_structure_const*(L - 1.0)/pi;
+      G4double LL   = 2.0*G4Log(e/electron_mass_c2);
+      G4double bt  = 2.0*fine_structure_const*(LL - 1.0)/pi;
       G4double btm1= bt - 1.0;
-      G4double del = 1. + fine_structure_const*(1.5*L + pi*pi/3. -2.)/pi;
+      G4double del = 1. + fine_structure_const*(1.5*LL + pi*pi/3. -2.)/pi;
       G4double s1  = crossBornPerElectron->Value(e);
       G4double e1  = crossPerElectron->Energy(i-1);
       G4double x1  = 1. - e1/e;
@@ -280,10 +280,10 @@ G4DynamicParticle* G4eeToHadronsModel::GenerateCMPhoton(G4double e)
 {
   G4double x;
   G4DynamicParticle* gamma = 0;
-  G4double L   = 2.0*G4Log(e/electron_mass_c2);
-  G4double bt  = 2.0*fine_structure_const*(L - 1.)/pi;
+  G4double LL   = 2.0*G4Log(e/electron_mass_c2);
+  G4double bt  = 2.0*fine_structure_const*(LL - 1.)/pi;
   G4double btm1= bt - 1.0;
-  G4double del = 1. + fine_structure_const*(1.5*L + pi*pi/3. -2.)/pi;
+  G4double del = 1. + fine_structure_const*(1.5*LL + pi*pi/3. -2.)/pi;
 
   G4double s0 = crossBornPerElectron->Value(e);
   G4double de = (emax - emin)/(G4double)nbins;
@@ -325,6 +325,8 @@ G4DynamicParticle* G4eeToHadronsModel::GenerateCMPhoton(G4double e)
       //G4cout << "epeak= " << epeak << " s2= " << s2 << " w2= " << w2 
       //     << " grej= " << grej << G4endl;
     }
+    G4int ii = 0;
+    const G4int iimax = 1000;
     do {
       x = xmin + G4UniformRand()*(xmax - xmin);
       
@@ -340,6 +342,8 @@ G4DynamicParticle* G4eeToHadronsModel::GenerateCMPhoton(G4double e)
 	       << f << " > " << grej << " majorant is`small!" 
 	       << G4endl; 
       }
+      if(++ii >= iimax) { break; }
+      // Loop checking, 07-Aug-2015, Vladimir Ivanchenko
     } while (f < grej*G4UniformRand());
   }
 

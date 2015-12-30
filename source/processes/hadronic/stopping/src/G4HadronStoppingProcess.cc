@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4HadronStoppingProcess.cc 88993 2015-03-17 11:17:13Z gcosmo $
+// $Id: G4HadronStoppingProcess.cc 94351 2015-11-12 15:35:32Z gcosmo $
 //
 //---------------------------------------------------------------------
 //
@@ -81,7 +81,7 @@ G4HadronStoppingProcess::G4HadronStoppingProcess(const G4String& name)
 
 G4HadronStoppingProcess::~G4HadronStoppingProcess()
 {
-  G4HadronicProcessStore::Instance()->DeRegisterExtraProcess(this);
+  //G4HadronicProcessStore::Instance()->DeRegisterExtraProcess(this);
   delete fElementSelector;
   // NOTE: fEmCascade and fEmBoundDecay owned by registry, not locally
 }
@@ -238,8 +238,8 @@ G4VParticleChange* G4HadronStoppingProcess::AtRestDoIt(const G4Track& track,
 	G4Exception("G4HadronStoppingProcess::AtRestDoIt", "had006", 
 		    FatalException, ed);  
       }
-    }
-    while(!resultNuc);
+      // Loop checking, 06-Aug-2015, Vladimir Ivanchenko
+    } while(!resultNuc);
 
     edep = resultNuc->GetLocalEnergyDeposit();
     size_t nnuc = resultNuc->GetNumberOfSecondaries();

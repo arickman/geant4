@@ -143,8 +143,11 @@
 
 #-----------------------------------------------------------------------
 # Resource file paths
-#
+# - Datasets
 @GEANT4_TC_DATASETS@
+
+# - Fonts for Freetype
+@GEANT4_TC_TOOLS_FONT_PATH@
 
 #-----------------------------------------------------------------------
 # Optional components.

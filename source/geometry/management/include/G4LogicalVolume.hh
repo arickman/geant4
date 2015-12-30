@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4LogicalVolume.hh 90701 2015-06-08 09:43:16Z gcosmo $
+// $Id: G4LogicalVolume.hh 93287 2015-10-15 09:50:22Z gcosmo $
 //
 // 
 // class G4LogicalVolume
@@ -208,7 +208,7 @@ class G4LogicalVolume
       // Destructor. Removes the logical volume from the logical volume Store.
       // NOT virtual, since not meant to act as base class.
 
-    inline G4String GetName() const;
+    inline const G4String& GetName() const;
     inline void SetName(const G4String& pName);
       // Returns and sets the name of the logical volume.
 
@@ -429,6 +429,7 @@ class G4LogicalVolume
     G4VSolid* fSolid;
     G4VSensitiveDetector* fSensitiveDetector;
     G4FieldManager* fFieldManager;
+    G4LVData* lvdata;  // For use of object persistency
 };
 
 #include "G4LogicalVolume.icc"

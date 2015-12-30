@@ -68,9 +68,11 @@ prepend-path @DYNAMIC_LOADER_PATHNAME@ $geant4_install_libdir
 
 #
 # Resource paths
-#
+# - Datasets
 array set G4DATASETS [list @G4DATASET_TCLLIST@]
 foreach {key value} [array get G4DATASETS] {
   setenv $key $value
 }
+
+# - Fonts
 

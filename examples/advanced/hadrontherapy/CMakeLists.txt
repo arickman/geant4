@@ -19,7 +19,7 @@ endif()
 #----------------------------------------------------------------------------
 # Find ROOT variables if the variable G4ANALYSIS_USE_ROOT is set
 #
-find_package(ROOT)
+find_package(ROOT QUIET)
 
 
 #----------------------------------------------------------------------------

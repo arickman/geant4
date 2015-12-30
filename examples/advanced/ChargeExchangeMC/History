@@ -7,7 +7,7 @@ cirrone@lns.infn.it
              History file of the ChargeExchangeMC application
          ====================================================
 
-09.12.2014 - A. Radkov, Tag ChargeExchangeMC-V10-00-02
+09.12.2014 - A. Radkov, Tag ChargeExchangeMC-V10-01-00
              CERN ROOT histograming binding. Bug fix for online histogram 
              redrawing and easy online histogram showing from a dedicated 
              menu bar (in graphical mode).

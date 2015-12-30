@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4HadronStoppingProcess.hh 88993 2015-03-17 11:17:13Z gcosmo $
+// $Id: G4HadronStoppingProcess.hh 87563 2014-12-10 14:56:22Z gcosmo $
 //
 //---------------------------------------------------------------------
 //

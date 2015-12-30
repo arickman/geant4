@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4MultiNavigator.hh 89289 2015-03-31 08:35:38Z gcosmo $
+// $Id: G4MultiNavigator.hh 87869 2015-01-16 08:24:36Z gcosmo $
 //
 //
 // class G4MultiNavigator

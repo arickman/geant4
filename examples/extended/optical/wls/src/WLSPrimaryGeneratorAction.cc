@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: WLSPrimaryGeneratorAction.cc 89119 2015-03-20 09:09:45Z gcosmo $
+// $Id: WLSPrimaryGeneratorAction.cc 88760 2015-03-09 12:21:59Z gcosmo $
 //
 /// \file optical/wls/src/WLSPrimaryGeneratorAction.cc
 /// \brief Implementation of the WLSPrimaryGeneratorAction class

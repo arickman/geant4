@@ -11,7 +11,7 @@
 #
 # Generated on : 24/9/2010
 #
-# $Id: sources.cmake 90769 2015-06-09 10:33:41Z gcosmo $
+# $Id: sources.cmake 94218 2015-11-09 08:24:48Z gcosmo $
 #
 #------------------------------------------------------------------------------
 
@@ -44,11 +44,13 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4AllITFinder.hh
         G4FastList.hh
         G4FastList.icc
+        G4IosFlagsSaver.hh
         G4ITBox.hh
         G4IT.hh
         G4ITGun.hh
         G4ITFinder.hh
         G4ITFinder.icc
+        G4ITLeadingTracks.hh
         G4ITModelHandler.hh
         G4ITModelManager.hh
         G4ITModelProcessor.hh
@@ -65,6 +67,7 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4ITSafetyHelper.hh
         G4ITStepProcessor.hh
         G4ITStepStatus.hh
+        G4ITSteppingVerbose.hh
         G4ITTrackHolder.hh
         G4ITTrackingInteractivity.hh
         G4ITTrackingManager.hh
@@ -73,6 +76,7 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4ITTransportationManager.hh
         G4ITTransportationManager.icc
         G4ITType.hh
+        G4ITStepProcessorState_Lock.hh
         G4KDMap.hh
         G4KDNode.hh
         G4KDNode.icc
@@ -90,11 +94,13 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4TrackList.hh
         G4TrackState.hh
         G4UserTimeStepAction.hh
+        G4VITDiscreteProcess.hh
         G4VITProcess.hh
         G4VITReactionProcess.hh
         G4VITRestDiscreteProcess.hh
         G4VITRestProcess.hh
         G4VITStepModel.hh
+        G4VITSteppingVerbose.hh
         G4VITTimeStepComputer.hh
         G4VITTrackHolder.hh
         G4VScheduler.hh
@@ -104,6 +110,7 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4IT.cc
         G4ITGun.cc
         G4ITFinder.cc
+        G4ITLeadingTracks.cc
         G4ITModelHandler.cc
         G4ITModelManager.cc
         G4ITModelProcessor.cc
@@ -118,6 +125,7 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4ITSafetyHelper.cc
         G4ITStepProcessor2.cc
         G4ITStepProcessor.cc
+        G4ITSteppingVerbose.cc
         G4ITTrackHolder.cc
         G4ITTrackingInteractivity.cc
         G4ITTrackingManager.cc
@@ -135,11 +143,13 @@ GEANT4_DEFINE_MODULE(NAME G4emdna-man
         G4TrackList.cc
         G4TrackState.cc
         G4UserTimeStepAction.cc
+        G4VITDiscreteProcess.cc
         G4VITProcess.cc
         G4VITReactionProcess.cc
         G4VITRestDiscreteProcess.cc
         G4VITRestProcess.cc
         G4VITStepModel.cc
+        G4VITSteppingVerbose.cc
         G4VITTimeStepComputer.cc
         G4VITTrackHolder.cc
         G4VScheduler.cc

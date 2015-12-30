@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4VEmFluctuationModel.cc 88981 2015-03-17 10:14:15Z gcosmo $
+// $Id: G4VEmFluctuationModel.cc 92921 2015-09-21 15:06:51Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -58,8 +58,6 @@ G4VEmFluctuationModel::G4VEmFluctuationModel(const G4String& nam)
 {
   fManager = G4LossTableManager::Instance();
   fManager->Register(this);
-
-  rndmEngineF = G4Random::getTheEngine();
 }
 
 G4VEmFluctuationModel::~G4VEmFluctuationModel() 
@@ -71,7 +69,7 @@ void G4VEmFluctuationModel::InitialiseMe(const G4ParticleDefinition*)
 {}
 
 void G4VEmFluctuationModel::SetParticleAndCharge(const G4ParticleDefinition*, 
-						 G4double)
+                                                 G4double)
 {}
 
 

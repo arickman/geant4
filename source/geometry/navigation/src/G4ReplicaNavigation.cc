@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ReplicaNavigation.cc 90836 2015-06-10 09:31:06Z gcosmo $
+// $Id: G4ReplicaNavigation.cc 89897 2015-05-04 08:19:32Z gcosmo $
 //
 //
 // class G4ReplicaNavigation Implementation

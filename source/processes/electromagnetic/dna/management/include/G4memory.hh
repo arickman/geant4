@@ -26,7 +26,7 @@
 #ifndef G4SHARED_PTR_HH_
 #define G4SHARED_PTR_HH_
 
-#if __cplusplus >= 201103L
+//#if __cplusplus >= 201103L
 #include <memory>
 
 #define G4shared_ptr std::shared_ptr
@@ -36,7 +36,7 @@
 #define G4dynamic_pointer_cast std::dynamic_pointer_cast
 #define G4enable_shared_from_this std::enable_shared_from_this
 #define G4enable_shared_from_this2 std::enable_shared_from_this
-
+/*
 #else
 #include "CLHEP/Utility/memory.h"
 
@@ -231,5 +231,6 @@ namespace G4
 	using CLHEP::enable_shared_from_this2;
 }
 #endif
+*/
 
 #endif /* G4SHARED_PTR_HH_ */

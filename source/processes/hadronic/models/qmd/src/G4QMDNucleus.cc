@@ -28,6 +28,7 @@
 #include <numeric>
 
 #include "G4QMDNucleus.hh"
+#include "G4Pow.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4Proton.hh"
 #include "G4Neutron.hh"
@@ -119,8 +120,8 @@ G4double G4QMDNucleus::GetNuclearMass()
       G4double Asym = 23*MeV; 
 
       G4double BE = Av * A 
-                  - As * std::pow ( G4double ( A ) , 2.0/3.0 ) 
-                  - Ac * Z*Z/std::pow ( G4double ( A ) , 1.0/3.0 )
+                  - As * G4Pow::GetInstance()->A23 ( G4double ( A ) ) 
+                  - Ac * Z*Z/G4Pow::GetInstance()->A13 ( G4double ( A ) )
                   - Asym * ( N - Z )* ( N - Z ) / A; 
 
       mass = Z * G4Proton::Proton()->GetPDGMass() 
@@ -178,7 +179,7 @@ void G4QMDNucleus::CalEnergyAndAngularMomentumInCM()
       G4ThreeVector ri = GetParticipant( i )->GetPosition();
       G4double trans = gamma / ( gamma + 1.0 ) * ri * beta; 
 
-      es[i] = std::sqrt ( std::pow ( GetParticipant( i )->GetMass() , 2 ) + pcm[i]*pcm[i] );
+      es[i] = std::sqrt ( G4Pow::GetInstance()->powN ( GetParticipant( i )->GetMass() , 2 ) + pcm[i]*pcm[i] );
 
       rcm[i] = ri + trans*beta;
 

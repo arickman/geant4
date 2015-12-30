@@ -141,7 +141,7 @@ void G4EmExtraPhysics::ConstructProcess()
   if(gnActivated) {
     theGNPhysics = new G4BertiniElectroNuclearBuilder();
     theGNPhysics->Build();
-    G4AutoDelete::Register(theGNPhysics);
+    //G4AutoDelete::Register(theGNPhysics);
   }
   if(munActivated) {
     G4MuonNuclearProcess* muNucProcess = new G4MuonNuclearProcess();
@@ -154,7 +154,7 @@ void G4EmExtraPhysics::ConstructProcess()
     theSynchRad = new G4SynchrotronRadiation();
     ph->RegisterProcess( theSynchRad, electron);
     ph->RegisterProcess( theSynchRad, positron);
-    G4AutoDelete::Register(theSynchRad);
+    //G4AutoDelete::Register(theSynchRad);
     if(synActivatedForAll) {
       aParticleIterator->reset();
       G4ParticleDefinition* particle=0;

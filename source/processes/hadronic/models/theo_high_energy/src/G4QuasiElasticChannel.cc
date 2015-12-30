@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4QuasiElasticChannel.cc 90783 2015-06-09 14:55:15Z gcosmo $
+// $Id: G4QuasiElasticChannel.cc 91859 2015-08-07 13:58:30Z gcosmo $
 //
 
 // Author : Gunter Folger March 2007
@@ -107,7 +107,7 @@ G4KineticTrackVector * G4QuasiElasticChannel::Scatter(G4Nucleus &theNucleus,
   G4int index;
   do {
     index=G4lrint((A-1)*G4UniformRand());
-  } while (index < 0 || index >= static_cast<G4int>(nucleons.size()));
+  } while (index < 0 || index >= static_cast<G4int>(nucleons.size()));  /* Loop checking, 07.08.2015, A.Ribon */
 
   const G4ParticleDefinition * pDef= nucleons[index].GetDefinition();
 

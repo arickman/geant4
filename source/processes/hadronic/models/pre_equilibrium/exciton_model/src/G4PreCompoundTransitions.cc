@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PreCompoundTransitions.cc 90591 2015-06-04 13:45:29Z gcosmo $
+// $Id: G4PreCompoundTransitions.cc 89523 2015-04-16 09:56:35Z gcosmo $
 //
 // -------------------------------------------------------------------
 //

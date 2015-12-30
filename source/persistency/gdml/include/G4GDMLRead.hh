@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4GDMLRead.hh 90766 2015-06-09 10:13:41Z gcosmo $
+// $Id: G4GDMLRead.hh 89493 2015-04-14 09:22:54Z gcosmo $
 //
 // class G4GDMLRead
 //
@@ -48,6 +48,7 @@
 #include "G4Types.hh"
 
 #include "G4GDMLEvaluator.hh"
+#include "G4GDMLAuxStructType.hh"
 
 class G4LogicalVolume;
 class G4VPhysicalVolume;
@@ -108,6 +109,11 @@ class G4GDMLRead
      // inheriting from G4GDMLReadStructure and being registered
      // as argument to G4GDMLParser.
 
+   virtual void UserinfoRead(const xercesc::DOMElement* const);
+     //
+     // Customisable by user to handle "userinfo" extensions to the
+     // GDML schema, identified by the tag "userinfo".
+
    virtual G4LogicalVolume* GetVolume(const G4String&) const=0;
    virtual G4String GetSetup(const G4String&)=0;
      //
@@ -126,6 +132,9 @@ class G4GDMLRead
    void OverlapCheck(G4bool);
      //
      // Activate/de-activate surface check for overlaps (default is off)
+
+   const G4GDMLAuxListType* GetAuxList() const;
+
   
  protected:
 
@@ -139,6 +148,8 @@ class G4GDMLRead
    void LoopRead(const xercesc::DOMElement* const,
                  void(G4GDMLRead::*)(const xercesc::DOMElement* const));
 
+   G4GDMLAuxStructType AuxiliaryRead(const xercesc::DOMElement* const auxElem);
+
  protected:
 
    G4GDMLEvaluator eval;
@@ -149,6 +160,7 @@ class G4GDMLRead
  private:
 
    G4int inLoop, loopCount;
+   G4GDMLAuxListType auxGlobalList;
 
 };
 

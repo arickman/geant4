@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4LogicalVolume.cc 90701 2015-06-08 09:43:16Z gcosmo $
+// $Id: G4LogicalVolume.cc 93287 2015-10-15 09:50:22Z gcosmo $
 //
 // 
 // class G4LogicalVolume Implementation
@@ -163,6 +163,12 @@ G4LogicalVolume::G4LogicalVolume( G4VSolid* pSolid,
   SetName(name);
   SetSensitiveDetector(pSDetector);
   SetUserLimits(pULimits);    
+
+  // Initialize 'Shadow' data structure - for use by object persistency
+  lvdata = new G4LVData();
+  lvdata->fSolid = pSolid;
+  lvdata->fMaterial = pMaterial;
+
   //
   // Add to store
   //
@@ -179,7 +185,7 @@ G4LogicalVolume::G4LogicalVolume( __void__& )
    fName(""), fUserLimits(0),
    fVoxel(0), fOptimise(true), fRootRegion(false), fLock(false),
    fSmartless(2.), fVisAttributes(0), fRegion(0), fBiasWeight(1.),
-   fSolid(0), fSensitiveDetector(0), fFieldManager(0)
+   fSolid(0), fSensitiveDetector(0), fFieldManager(0), lvdata(0)
 {
   instanceID = subInstanceManager.CreateSubInstance();
   
@@ -205,6 +211,7 @@ G4LogicalVolume::~G4LogicalVolume()
   {                           // and flagged as root logical-volume
     fRegion->RemoveRootLogicalVolume(this, true);
   }
+  delete lvdata;
   G4LogicalVolumeStore::DeRegister(this);
 }
 

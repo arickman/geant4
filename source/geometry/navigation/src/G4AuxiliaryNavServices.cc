@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4AuxiliaryNavServices.cc 90836 2015-06-10 09:31:06Z gcosmo $
+// $Id: G4AuxiliaryNavServices.cc 90009 2015-05-08 07:42:39Z gcosmo $
 //
 // --------------------------------------------------------------------
 

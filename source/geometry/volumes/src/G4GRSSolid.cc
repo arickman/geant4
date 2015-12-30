@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4GRSSolid.cc 88950 2015-03-16 16:31:29Z gcosmo $
+// $Id: G4GRSSolid.cc 87615 2014-12-12 15:23:11Z gcosmo $
 //
 // 
 // class G4GRSSolid Implementation

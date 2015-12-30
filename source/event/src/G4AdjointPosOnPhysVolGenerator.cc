@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4AdjointPosOnPhysVolGenerator.cc 90695 2015-06-08 09:02:07Z gcosmo $
+// $Id: G4AdjointPosOnPhysVolGenerator.cc 89370 2015-04-08 07:50:11Z gcosmo $
 //
 /////////////////////////////////////////////////////////////////////////////
 //      Class Name:	G4AdjointCrossSurfChecker

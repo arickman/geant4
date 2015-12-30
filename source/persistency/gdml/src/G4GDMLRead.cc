@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4GDMLRead.cc 90766 2015-06-09 10:13:41Z gcosmo $
+// $Id: G4GDMLRead.cc 89819 2015-04-30 14:53:35Z gcosmo $
 //
 // class G4GDMLRead Implementation
 //
@@ -258,6 +258,99 @@ void G4GDMLRead::LoopRead(const xercesc::DOMElement* const element,
    if (!inLoop) { loopCount = 0; }
 }
 
+G4GDMLAuxStructType G4GDMLRead::
+AuxiliaryRead(const xercesc::DOMElement* const auxiliaryElement)
+{
+   G4GDMLAuxStructType auxstruct = {"","","",0};
+   G4GDMLAuxListType* auxList=0;
+  
+   const xercesc::DOMNamedNodeMap* const attributes
+         = auxiliaryElement->getAttributes();
+   XMLSize_t attributeCount = attributes->getLength();
+
+   for (XMLSize_t attribute_index=0;
+        attribute_index<attributeCount; attribute_index++)
+   {
+      xercesc::DOMNode* attribute_node = attributes->item(attribute_index);
+
+      if (attribute_node->getNodeType() != xercesc::DOMNode::ATTRIBUTE_NODE)
+      { continue; }
+
+      const xercesc::DOMAttr* const attribute
+            = dynamic_cast<xercesc::DOMAttr*>(attribute_node);   
+      if (!attribute)
+      {
+        G4Exception("G4GDMLRead::AuxiliaryRead()",
+                    "InvalidRead", FatalException, "No attribute found!");
+        return auxstruct;
+      }
+      const G4String attName = Transcode(attribute->getName());
+      const G4String attValue = Transcode(attribute->getValue());
+
+      if (attName=="auxtype") { auxstruct.type = attValue; } else
+      if (attName=="auxvalue") { auxstruct.value = attValue; } else
+      if (attName=="auxunit") { auxstruct.unit = attValue; }
+   }
+
+   for (xercesc::DOMNode* iter = auxiliaryElement->getFirstChild();
+        iter != 0; iter = iter->getNextSibling())
+   {
+      if (iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)  { continue; }
+       
+      const xercesc::DOMElement* const child
+        = dynamic_cast<xercesc::DOMElement*>(iter);
+      if (!child)
+      {
+         G4Exception("G4GDMLRead::AuxiliaryRead()",
+                     "InvalidRead", FatalException, "No child found!");
+         break;
+      }
+      const G4String tag = Transcode(child->getTagName());
+       
+      if (tag=="auxiliary")
+      {
+         if(!auxList) { auxList = new G4GDMLAuxListType; }
+         auxList->push_back(AuxiliaryRead(child));
+      }
+   }
+   
+   if (auxList) { auxstruct.auxList = auxList; }
+
+   return auxstruct;
+}
+
+void G4GDMLRead::UserinfoRead(const xercesc::DOMElement* const userinfoElement)
+{
+   G4cout << "G4GDML: Reading userinfo..." << G4endl;
+
+   for (xercesc::DOMNode* iter = userinfoElement->getFirstChild();
+        iter != 0; iter = iter->getNextSibling())
+   {
+      if (iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)  { continue; }
+
+      const xercesc::DOMElement* const child
+            = dynamic_cast<xercesc::DOMElement*>(iter);
+      if (!child)
+      {
+        G4Exception("G4GDMLRead::UserinfoRead()",
+                    "InvalidRead", FatalException, "No child found!");
+        return;
+      }
+      const G4String tag = Transcode(child->getTagName());
+
+      if (tag=="auxiliary")
+      {
+        auxGlobalList.push_back(AuxiliaryRead(child));
+      }
+      else
+      {
+        G4String error_msg = "Unknown tag in structure: " + tag;
+        G4Exception("G4GDMLRead::UserinfoRead()",
+                    "ReadError", FatalException, error_msg);
+      }
+   }
+}
+
 void G4GDMLRead::ExtensionRead(const xercesc::DOMElement* const)
 {
    G4String error_msg = "No handle to user-code for parsing extensions!";
@@ -350,6 +443,7 @@ void G4GDMLRead::Read(const G4String& fileName,
       if (tag=="solids")    { SolidsRead(child);    } else
       if (tag=="setup")     { SetupRead(child);     } else
       if (tag=="structure") { StructureRead(child); } else
+      if (tag=="userinfo")  { UserinfoRead(child);  } else
       if (tag=="extension") { ExtensionRead(child); }
       else
       {
@@ -371,4 +465,9 @@ void G4GDMLRead::Read(const G4String& fileName,
       G4cout << "G4GDML: Reading '" << fileName << "' done!" << G4endl;
       if (strip)  { StripNames(); }
    }
+}
+
+const G4GDMLAuxListType* G4GDMLRead::GetAuxList() const
+{
+   return &auxGlobalList;
 }

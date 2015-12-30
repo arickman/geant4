@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4ITTransportation.cc 90769 2015-06-09 10:33:41Z gcosmo $
+// $Id: G4ITTransportation.cc 94289 2015-11-11 08:33:40Z gcosmo $
 //
 /// \brief This class is a slightly modified version of G4Transportation
 ///        initially written by John Apostolakis and colleagues
@@ -56,6 +56,8 @@
 // -------------------------------------------------------------------
 
 #include "G4ITTransportation.hh"
+#include "G4IT.hh"
+#include "G4TrackingInformation.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4TransportationManager.hh"
 #include "G4ITTransportationManager.hh"
@@ -171,9 +173,9 @@ G4ITTransportation::G4ITTransportation(const G4ITTransportation& right) :
   fInstantiateProcessState = right.fInstantiateProcessState;
 }
 
-G4ITTransportation& G4ITTransportation::operator=(const G4ITTransportation& right)
+G4ITTransportation& G4ITTransportation::operator=(const G4ITTransportation& /*right*/)
 {
-  if (this == &right) return *this;
+//  if (this == &right) return *this;
   return *this;
 }
 

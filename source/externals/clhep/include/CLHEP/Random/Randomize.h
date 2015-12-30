@@ -27,6 +27,7 @@
 
 #include "CLHEP/Random/DualRand.h"
 #include "CLHEP/Random/JamesRandom.h"
+#include "CLHEP/Random/MixMaxRng.h"
 #include "CLHEP/Random/MTwistEngine.h"
 #include "CLHEP/Random/RanecuEngine.h"
 #include "CLHEP/Random/RanluxEngine.h"

@@ -11,7 +11,7 @@
 #
 # Generated on : 24/9/2010
 #
-# $Id: sources.cmake 89001 2015-03-17 11:47:01Z gcosmo $
+# $Id: sources.cmake 93026 2015-09-30 16:07:07Z gcosmo $
 #
 #------------------------------------------------------------------------------
 
@@ -57,7 +57,6 @@ GEANT4_DEFINE_MODULE(NAME G4vis_management
         G4SceneHandlerList.hh
         G4SceneList.hh
         G4VGraphicsSystem.hh
-        G4VGraphicsSystem.icc
         G4VSceneHandler.hh
         G4VSceneHandler.icc
         G4VUserVisAction.hh
@@ -74,6 +73,7 @@ GEANT4_DEFINE_MODULE(NAME G4vis_management
         G4VisCommandsGeometry.hh
         G4VisCommandsGeometrySet.hh
         G4VisCommandsListManager.hh
+        G4VisCommandsMultithreading.hh
         G4VisCommandsSet.hh
         G4VisCommandsScene.hh
         G4VisCommandsSceneAdd.hh
@@ -106,6 +106,7 @@ GEANT4_DEFINE_MODULE(NAME G4vis_management
         G4VisCommandsCompound.cc
         G4VisCommandsGeometry.cc
         G4VisCommandsGeometrySet.cc
+        G4VisCommandsMultithreading.cc
         G4VisCommandsSet.cc
         G4VisCommandsScene.cc
         G4VisCommandsSceneAdd.cc

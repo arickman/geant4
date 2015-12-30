@@ -43,7 +43,7 @@ class file : public virtual ifile {
   static uint32 START_BIG_FILE() {return 2000000000;}
 public: //ifile
   virtual bool verbose() const {return m_verbose;}
-  virtual std::ostream& out() {return m_out;}
+  virtual std::ostream& out() const {return m_out;}
 
   virtual bool byte_swap() const {return is_little_endian();}
   virtual bool set_pos(seek a_offset = 0,from a_from = begin){
@@ -115,7 +115,7 @@ public: //ifile
     if(siz!=(ssize_t)a_length) {
       m_out << "tools::wroot::file::write_buffer :"
            << "error writing all requested bytes to file " << sout(m_path)
-           << ", wrote " << long2s(siz) << " of " << a_length
+           << ", wrote " << long_out(siz) << " of " << a_length
            << std::endl;
       return false;
     }
@@ -138,7 +138,7 @@ public: //ifile
     // Synchornize a file's in-core and on-disk states.
 #ifdef _MSC_VER
     if(::_commit(m_file)) {
-      m_out << "inlib::wroot::file::synchronize :"
+      m_out << "tools::wroot::file::synchronize :"
             << " in _commit() for file " << sout(m_path) << "."
             << std::endl;
       return false;
@@ -147,7 +147,7 @@ public: //ifile
     return true;
 #else
     if (::fsync(m_file) < 0) {
-      m_out << "inlib::wroot::file::synchronize :"
+      m_out << "tools::wroot::file::synchronize :"
             << " error in fsync() for file " << sout(m_path) << "."
             << std::endl;
       return false;
@@ -156,8 +156,8 @@ public: //ifile
     return true;
   }
 
-  virtual bool ziper(char a_key,zip_func& a_func) const {
-    std::map<char,zip_func>::const_iterator it = m_zipers.find(a_key);
+  virtual bool ziper(char a_key,compress_func& a_func) const {
+    std::map<char,compress_func>::const_iterator it = m_zipers.find(a_key);
     if(it==m_zipers.end()) {
       a_func = 0;
       return false;
@@ -177,7 +177,7 @@ public: //ifile
     uint32 nbytes = a_buffer.length();
     uint32 cxlevel = m_compress;
     if(cxlevel && (nbytes>256)) {
-      tools::zip_func func;
+      tools::compress_func func;
       if(!ziper('Z',func)) {
         //m_out << "tools::wroot::directory::write_object :" 
         //      << " zlib ziper not found."
@@ -445,8 +445,8 @@ public:
     return true;
   }
 
-  bool add_ziper(char a_key,zip_func a_func){
-    std::map<char,zip_func>::const_iterator it = m_zipers.find(a_key);
+  bool add_ziper(char a_key,compress_func a_func){
+    std::map<char,compress_func>::const_iterator it = m_zipers.find(a_key);
     if(it!=m_zipers.end()) {
       //(*it).second = a_func; //override ?
       return false;
@@ -476,7 +476,7 @@ protected:
     // false in case of failure.
     struct stat finfo;
     if (::stat(a_path.c_str(),&finfo) < 0) return false;
-#ifdef _MSC_VER
+#ifdef _MSC_VER 
     if (finfo.st_mode & S_IFDIR)
       return (::_rmdir(a_path.c_str())==-1 ? false : true);
     else
@@ -495,9 +495,6 @@ protected:
 #else
      return ::open(a_name,a_flags,a_mode);
 #endif
-  }
-  static std::string sout(const std::string& a_string) {
-    return std::string("\"")+a_string+"\"";
   }
   bool write_header() {
     const char root[] = "root";
@@ -537,7 +534,7 @@ protected:
     }
     if(!wb.write(m_nbytes_info)) return false;
     if(!set_pos()) return false; //BOF
-    uint32 nbytes = pos - psave;
+    uint32 nbytes = uint32(pos - psave);
     //::printf("debug : write_header : %d\n",nbytes);
     if(!write_buffer(psave,nbytes)) return false;
     if(!synchronize()) return false;
@@ -697,7 +694,7 @@ protected:
   }
 
   static bool zip(std::ostream& a_out,
-                         tools::zip_func a_func,
+                         tools::compress_func a_func,
                          int a_level,
                          uint32 a_srcsize,char* a_src,
                          uint32 a_tgtsize,char* a_tgt,
@@ -775,7 +772,7 @@ protected:
   //uint64 m_bytes_write; //Number of bytes write in this file
   std::string m_title; //must be before the below.
   directory m_root_directory;
-  std::map<char,zip_func> m_zipers;
+  std::map<char,compress_func> m_zipers;
   std::list<free_seg*> m_free_segs; //Free segments linked list table
   // begin of record :
   // "root"

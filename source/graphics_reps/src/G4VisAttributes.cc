@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4VisAttributes.cc 88954 2015-03-16 16:40:05Z gcosmo $
+// $Id: G4VisAttributes.cc 88083 2015-01-28 08:31:34Z gcosmo $
 //
 // 
 // John Allison  23rd October 1996

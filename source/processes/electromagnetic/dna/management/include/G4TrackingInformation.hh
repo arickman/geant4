@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4TrackingInformation.hh 90769 2015-06-09 10:33:41Z gcosmo $
+// $Id: G4TrackingInformation.hh 94218 2015-11-09 08:24:48Z gcosmo $
 //
 // Author: Mathieu Karamitros, kara@cenbg.in2p3.fr
 
@@ -55,6 +55,7 @@
 #include "G4TouchableHandle.hh"
 #include "G4TrackState.hh"
 #include "G4memory.hh"
+#include "G4ITStepProcessorState_Lock.hh"
 
 class G4ITStepProcessor;
 
@@ -69,16 +70,6 @@ struct G4ProcessState_Lock;
 class G4TrackingInformation;
 class G4SaveNavigatorState_Lock;
 struct G4ITNavigatorState_Lock;
-
-class G4ITStepProcessorState_Lock
-{
-  friend class G4TrackingInformation;
-protected:
-  inline virtual ~G4ITStepProcessorState_Lock()
-  {
-    ;
-  }
-};
 
 /** The class G4TrackingInformation (hold by G4IT)
  *  emcompasses processes informations computed
@@ -144,8 +135,6 @@ public:
    }
    */
 
-  G4TrackStateManager fTrackStateManager;
-
   G4TrackStateManager& GetTrackStateManager()
   {
     return fTrackStateManager;
@@ -182,6 +171,8 @@ protected:
   G4bool fStepLeader;
   //_______________________________________________________
   G4Trajectory_Lock* fpTrajectory_Lock;
+
+  G4TrackStateManager fTrackStateManager;
 
   //_______________________________________________________
   G4ThreeVector fRecordedTrackPosition;

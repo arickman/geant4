@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4DiffuseElastic.hh 88985 2015-03-17 10:30:14Z gcosmo $
+// $Id: G4DiffuseElastic.hh 94676 2015-12-02 09:51:20Z gunter $
 //
 // Author: V. Grichine (Vladimir,Grichine@cern.ch)
 //
@@ -49,7 +49,8 @@
 #include "G4HadProjectile.hh"
 #include "G4Nucleus.hh"
 
-using namespace std;
+#include "G4Pow.hh"
+
 
 class G4ParticleDefinition;
 class G4PhysicsTable;
@@ -278,7 +279,7 @@ inline G4double G4DiffuseElastic::BesselJzero(G4double value)
 {
   G4double modvalue, value2, fact1, fact2, arg, shift, bessel;
 
-  modvalue = fabs(value);
+  modvalue = std::fabs(value);
 
   if ( value < 8.0 && value > -8.0 )
   {
@@ -316,7 +317,7 @@ inline G4double G4DiffuseElastic::BesselJzero(G4double value)
                               + value2*(0.7621095161e-6
                               - value2*0.934945152e-7    ) ) );
 
-    bessel = sqrt(0.636619772/modvalue)*(cos(shift)*fact1 - arg*sin(shift)*fact2 );
+    bessel = std::sqrt(0.636619772/modvalue)*(std::cos(shift)*fact1 - arg*std::sin(shift)*fact2 );
   }
   return bessel;
 }
@@ -330,7 +331,7 @@ inline G4double G4DiffuseElastic::BesselJone(G4double value)
 {
   G4double modvalue, value2, fact1, fact2, arg, shift, bessel;
 
-  modvalue = fabs(value);
+  modvalue = std::fabs(value);
 
   if ( modvalue < 8.0 ) 
   {
@@ -367,7 +368,7 @@ inline G4double G4DiffuseElastic::BesselJone(G4double value)
                           + value2*(-0.88228987e-6
                           + value2*0.105787412e-6       ) ) );
 
-    bessel = sqrt( 0.636619772/modvalue)*(cos(shift)*fact1 - arg*sin(shift)*fact2);
+    bessel = std::sqrt( 0.636619772/modvalue)*(std::cos(shift)*fact1 - arg*std::sin(shift)*fact2);
 
     if (value < 0.0) bessel = -bessel;
   }
@@ -451,7 +452,7 @@ inline  G4double G4DiffuseElastic::CalculateAm( G4double momentum, G4double n, G
 {
   G4double k   = momentum/CLHEP::hbarc;
   G4double ch  = 1.13 + 3.76*n*n;
-  G4double zn  = 1.77*k*std::pow(Z,-1./3.)*CLHEP::Bohr_radius;
+  G4double zn  = 1.77*k*(1.0/G4Pow::GetInstance()->A13(Z))*CLHEP::Bohr_radius;
   G4double zn2 = zn*zn;
   fAm          = ch/zn2;
 
@@ -490,18 +491,18 @@ std::abs(A-4.) < 0.5) return 1.68*CLHEP::fermi; // He4
     else if(  // std::abs(Z-4.) < 0.5 
 std::abs(A-9.) < 0.5)                         return 2.51*CLHEP::fermi; // Be9
 
-    else if( 10.  < A && A <= 16. ) r0  = a11*( 1 - std::pow(A, -2./3.) )*CLHEP::fermi;   // 1.08CLHEP::fermi;
-    else if( 15.  < A && A <= 20. ) r0  = a12*( 1 - std::pow(A, -2./3.) )*CLHEP::fermi;
-    else if( 20.  < A && A <= 30. ) r0  = a13*( 1 - std::pow(A, -2./3.) )*CLHEP::fermi;
+    else if( 10.  < A && A <= 16. ) r0  = a11*( 1 - (1.0/G4Pow::GetInstance()->A23(A)) )*CLHEP::fermi;   // 1.08CLHEP::fermi;
+    else if( 15.  < A && A <= 20. ) r0  = a12*( 1 - (1.0/G4Pow::GetInstance()->A23(A)) )*CLHEP::fermi;
+    else if( 20.  < A && A <= 30. ) r0  = a13*( 1 - (1.0/G4Pow::GetInstance()->A23(A)) )*CLHEP::fermi;
     else                            r0  = a2*CLHEP::fermi;
 
-    R = r0*std::pow( A, 1./3. );
+    R = r0*G4Pow::GetInstance()->A13(A);
   }
   else
   {
     r0 = a3*CLHEP::fermi;
 
-    R  = r0*std::pow(A, 0.27);
+    R  = r0*G4Pow::GetInstance()->powA(A, 0.27);
   }
   fNuclearRadius = R;
   return R;
@@ -509,14 +510,14 @@ std::abs(A-9.) < 0.5)                         return 2.51*CLHEP::fermi; // Be9
   G4double r0;
   if( A < 50. )
   {
-    if( A > 10. ) r0  = 1.16*( 1 - std::pow(A, -2./3.) )*CLHEP::fermi;   // 1.08CLHEP::fermi;
+    if( A > 10. ) r0  = 1.16*( 1 - (1.0/G4Pow::GetInstance()->A23(A)) )*CLHEP::fermi;   // 1.08CLHEP::fermi;
     else          r0  = 1.1*CLHEP::fermi;
-    fNuclearRadius = r0*std::pow(A, 1./3.);
+    fNuclearRadius = r0*G4Pow::GetInstance()->A13(A);
   }
   else
   {
     r0 = 1.7*CLHEP::fermi;   // 1.7*CLHEP::fermi;
-    fNuclearRadius = r0*std::pow(A, 0.27); // 0.27);
+    fNuclearRadius = r0*G4Pow::GetInstance()->powA(A, 0.27); // 0.27);
   }
   return fNuclearRadius;
   */

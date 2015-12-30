@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4ITModelProcessor.hh 90769 2015-06-09 10:33:41Z gcosmo $
+// $Id: G4ITModelProcessor.hh 94010 2015-11-05 10:08:33Z gcosmo $
 //
 // Author: Mathieu Karamitros, kara@cenbg.in2p3.fr
 
@@ -51,11 +51,15 @@
 #include "G4ITReactionChange.hh"
 #include "G4ITType.hh"
 #include "G4ITModelHandler.hh"
+#include "G4ITStepStatus.hh"
 
 class G4VITTimeStepComputer;
 class G4VITReactionProcess;
 class G4ITModelHandler;
 class G4ITReactionSet;
+class G4UserTimeStepAction;
+class G4ITTrackingManager;
+class G4ITTrackHolder;
 
 //#ifndef compTrackPerID__
 //#define compTrackPerID__
@@ -84,17 +88,38 @@ public:
 
   inline void SetModelHandler(G4ITModelHandler*);
   void Initialize();
+  //void Initialize(G4MIWorkspace* /*workspace*/);
+
+  void RegisterModel(double time, G4VITStepModel*);
 
   /**
-   * Restaure original state of the modelProcessor.
+   * Restore original state of the modelProcessor.
    * This method should be call only by the G4Scheduler
    */
   inline void CleanProcessor();
 
+  G4double CalculateMinTimeStep(G4double currentGlobalTime,
+                                G4double definedMinTimeStep);
+
+  void ComputeTrackReaction(G4ITStepStatus fITStepStatus,
+                            G4double fGlobalTime,
+                            G4double currentTimeStep,
+                            G4double previousTimeStep,
+                            G4bool reachedUserTimeLimit,
+                            G4double fTimeTolerance,
+                            G4UserTimeStepAction* fpUserTimeStepAction,
+                            G4int fVerbose);
+
   //____________________________________________________________
   // Time stepper part
-  void InitializeStepper(const G4double& currentGlobalTime,
-                         const G4double& userMinTime);
+  void InitializeStepper(G4double currentGlobalTime,
+                         G4double userMinTime);
+
+  bool GetComputeTimeStep()
+  {
+    return fComputeTimeStep;
+  }
+
 protected:
 
   inline void SetTrack(const G4Track*);
@@ -124,7 +149,14 @@ public:
     return fpTrack;
   }
 
+  void SetTrackingManager(G4ITTrackingManager* trackingManager)
+  {
+    fpTrackingManager = trackingManager;
+  }
+
 protected:
+  void ExtractTimeStepperData();
+
   /** Copy constructor
    *  \param other Object to copy from
    */
@@ -137,28 +169,34 @@ protected:
 
   //_____________________________
   // Members
+
+  G4double fTSTimeStep;
+  G4ITReactionSet* fReactionSet;
+  G4ITTrackingManager* fpTrackingManager;
+  G4ITTrackHolder* fpTrackContainer;
+
   G4bool fInitialized;
   G4ITModelHandler* fpModelHandler;
 
   const G4Track* fpTrack;
   G4double fUserMinTimeStep;
 
-  // Attributes for interaction between many IT types
+  // Interactions between different IT types
   // eg : electron/proton
   std::vector<std::vector<G4VITStepModel*> > fCurrentModel;
 
-  // Attributes for interaction between one type of IT
+  // Interactions between ITs of the same type
   // eg : molecule/molecule or electron/electron
   G4VITStepModel* fpModel;
   G4ITModelManager* fpModelManager;
-//    G4double                    fNextTimeChangeModel ;
 
   G4ITType fCurrentType1;
   G4ITType fCurrentType2;
 
-  // Atribute for reactions
   std::vector<G4ITReactionChange*> fReactionInfo;
-  static G4ThreadLocal std::map<const G4Track*, G4bool> *fHasReacted;
+
+  bool fComputeTimeStep;
+  bool fComputeReaction;
 };
 
 ///

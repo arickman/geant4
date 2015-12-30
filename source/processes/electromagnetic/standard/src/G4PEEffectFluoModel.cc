@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4PEEffectFluoModel.cc 88979 2015-03-17 10:10:21Z gcosmo $
+// $Id: G4PEEffectFluoModel.cc 93362 2015-10-19 13:45:19Z gcosmo $
 //
 // -------------------------------------------------------------------
 //
@@ -70,8 +70,8 @@ G4PEEffectFluoModel::G4PEEffectFluoModel(const G4String& nam)
   theElectron = G4Electron::Electron();
   fminimalEnergy = 1.0*eV;
   SetDeexcitationFlag(true);
-  fParticleChange = 0;
-  fAtomDeexcitation = 0;
+  fParticleChange = nullptr;
+  fAtomDeexcitation = nullptr;
 
   fSandiaCof.resize(4,0.0);
 
@@ -90,7 +90,7 @@ void G4PEEffectFluoModel::Initialise(const G4ParticleDefinition*,
 				     const G4DataVector&)
 {
   fAtomDeexcitation = G4LossTableManager::Instance()->AtomDeexcitation();
-  if(!fParticleChange) { fParticleChange = GetParticleChangeForGamma(); }
+  if(nullptr == fParticleChange) { fParticleChange = GetParticleChangeForGamma(); }
   size_t nmat = G4Material::GetNumberOfMaterials();
   fMatEnergyTh.resize(nmat, 0.0);
   for(size_t i=0; i<nmat; ++i) { 
@@ -220,7 +220,7 @@ G4PEEffectFluoModel::SampleSecondaries(std::vector<G4DynamicParticle*>* fvect,
 		     << "  Eshell(keV)= " << shell->BindingEnergy()/keV 
 		     << G4endl;
 	    */
-	    // delete the rest of secondaries
+	    // delete the rest of secondaries (should not happens)
 	    for (G4int jj=nafter-1; jj>j; --jj) { 
 	      delete (*fvect)[jj]; 
 	      fvect->pop_back(); 

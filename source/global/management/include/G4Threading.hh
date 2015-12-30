@@ -205,6 +205,7 @@ namespace G4Threading
   G4int G4GetNumberOfCores();
   G4int G4GetThreadId();
   G4bool IsWorkerThread();
+  G4bool IsMasterThread();
   void G4SetThreadId( G4int aNewValue );
   G4bool G4SetPinAffinity( G4int idx , G4Thread& at);
   void SetMultithreadedApplication(G4bool value);

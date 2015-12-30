@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4DiscreteGammaDeexcitation.cc 88987 2015-03-17 10:39:50Z gcosmo $
+// $Id: G4DiscreteGammaDeexcitation.cc 88191 2015-02-02 17:27:37Z gcosmo $
 //
 // -------------------------------------------------------------------
 //      GEANT 4 class file 

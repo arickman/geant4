@@ -77,6 +77,11 @@ struct G4XmlRNtupleDescription
 
       }
 
+  // deleted copy constructor
+  G4XmlRNtupleDescription(const G4XmlRNtupleDescription& rhs) = delete;
+  // deleted assignement operator
+  G4XmlRNtupleDescription& operator=(G4XmlRNtupleDescription& rhs) = delete;
+
   tools::aida::ntuple* fNtuple; 
   tools::ntuple_binding* fNtupleBinding;
   std::map<tools::aida::ntuple*, std::vector<int>* >    fIVectorBindingMap;           
@@ -84,12 +89,6 @@ struct G4XmlRNtupleDescription
   std::map<tools::aida::ntuple*, std::vector<double>* > fDVectorBindingMap;           
 
   G4bool fIsInitialized;
-  
-  private:
-    // disabled (not implemented) copy constructor
-    G4XmlRNtupleDescription(const G4XmlRNtupleDescription& rhs);
-    // disabled (not implemented) assignement operator
-    G4XmlRNtupleDescription& operator=(G4XmlRNtupleDescription& rhs);
 };
 
 #endif  

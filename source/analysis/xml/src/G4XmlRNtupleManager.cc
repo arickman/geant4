@@ -91,7 +91,7 @@ G4XmlRNtupleDescription* G4XmlRNtupleManager::GetNtupleInFunction(G4int id,
       description << "      " << "ntuple " << id << " does not exist.";
       G4Exception(inFunction, "Analysis_WR011", JustWarning, description);
     }
-    return 0;         
+    return nullptr;         
   }
   
   return fNtupleVector[index];
@@ -134,7 +134,7 @@ tools::aida::ntuple* G4XmlRNtupleManager::GetNtuple(G4int ntupleId) const
   G4XmlRNtupleDescription* rntupleDescription
     = GetNtupleInFunction(ntupleId, "GetRNtuple");
 
-  if ( ! rntupleDescription ) return 0; 
+  if ( ! rntupleDescription ) return nullptr; 
     
   return rntupleDescription->fNtuple;  
 }  

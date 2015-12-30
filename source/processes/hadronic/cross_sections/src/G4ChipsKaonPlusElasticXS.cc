@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ChipsKaonPlusElasticXS.cc 88983 2015-03-17 10:24:43Z gcosmo $
+// $Id: G4ChipsKaonPlusElasticXS.cc 93260 2015-10-14 08:37:04Z gcosmo $
 //
 //
 // G4 Physics class: G4ChipsKaonPlusElasticXS for pA elastic cross sections
@@ -47,7 +47,6 @@
 #include "G4NucleiProperties.hh"
 #include "G4IonTable.hh"
 #include "G4AutoLock.hh"
-
 // factory
 #include "G4CrossSectionFactory.hh"
 //
@@ -156,6 +155,16 @@ G4ChipsKaonPlusElasticXS::~G4ChipsKaonPlusElasticXS()
   { delete [] *pos; }
   B4T.clear();
 }
+
+void
+G4ChipsKaonPlusElasticXS::CrossSectionDescription(std::ostream& outFile) const
+{
+    outFile << "G4ChipsKaonPlusElasticXS provides the elastic cross\n"
+            << "section for K+ nucleus scattering as a function of incident\n"
+            << "momentum. The cross section is calculated using M. Kossov's\n"
+            << "CHIPS parameterization of cross section data.\n";
+}
+
 
 G4bool G4ChipsKaonPlusElasticXS::IsIsoApplicable(const G4DynamicParticle*, G4int, G4int,    
 						 const G4Element*,

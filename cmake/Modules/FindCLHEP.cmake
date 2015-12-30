@@ -3,7 +3,7 @@
 #
 # == Using any header-only components of CLHEP: ==
 #
-#     find_package( CLHEP 2.0.4.2 )
+#     find_package( CLHEP 2.3.1.0 )
 #     if(CLHEP_FOUND)
 #         include_directories(${CLHEP_INCLUDE_DIRS})
 #         add_executable(foo foo.cc)
@@ -11,7 +11,7 @@
 #
 # == Using the binary CLHEP library ==
 #
-#     find_package( CLHEP 2.0.4.2 )
+#     find_package( CLHEP 2.3.1.0 )
 #     if(CLHEP_FOUND)
 #         include_directories(${CLHEP_INCLUDE_DIRS})
 #         add_executable(foo foo.cc)

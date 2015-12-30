@@ -330,10 +330,10 @@ if(getenv("NeutronHPNames"))    G4cout <<"HPWD 4b2c "<<*theName<<G4endl;
           }
 
        }
-       while( myZ == 0 || myA == 0 );  // No meaning 
+       while( myZ == 0 || myA == 0 );  // No meaning // Loop checking, 11.05.2015, T. Koi
 
     }
-    while((!check) || (!(*check)));
+    while((!check) || (!(*check))); // Loop checking, 11.05.2015, T. Koi
 
     if(getenv("NeutronHPNamesLogging") || getenv("NeutronHPNames")) 
     {
@@ -349,7 +349,7 @@ if(getenv("NeutronHPNames"))    G4cout <<"HPWD 4b2c "<<*theName<<G4endl;
           G4String reac = base;
           G4String dir = getenv("G4NEUTRONHPDATA"); 
           reac.erase ( 0 , dir.length() );
-          if ( getenv ( "G4NEUTRONHP_SKIP_MISSING_ISOTOPES" ) && !( Z == result.GetZ() && result.IsThisNaturalAbundance() ) )
+          if ( G4ParticleHPManager::GetInstance()->GetSkipMissingIsotopes() && !( Z == result.GetZ() && result.IsThisNaturalAbundance() ) )
           {
              if ( verboseLevel > 0 ) {
                 G4cout << "NeutronHP: " << reac << " file for Z = " << Z << ", A = " << A << " is not found and CrossSection set to 0." << G4endl;

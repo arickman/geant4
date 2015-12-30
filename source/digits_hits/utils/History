@@ -1,4 +1,4 @@
-$Id: History 89175 2015-03-23 15:22:54Z gcosmo $
+$Id: History 89185 2015-03-23 16:11:02Z gcosmo $
 -------------------------------------------------------------------
 
      =========================================================
@@ -17,13 +17,14 @@ committal in the CVS repository !
      * Reverse chronological order (last date on top), please *
      ----------------------------------------------------------
 
-March 20, 2015  A.Kimura (detutils-V10-00-02)
+March 20, 2015  A.Kimura (detutils-V10-01-02)
 - fixed type convertion warnigs at l.132 and l.157 of G4VScoreColorMap.cc
 
-March 11, 2015  A.Kimura (detutils-V10-00-01)
+March 11, 2015  A.Kimura (detutils-V10-01-01)
 - fine adjustment of the position drawing surfaces in G4ScoringBox::Draw(...)
 
-March 11, 2015  A.Kimura
+March 11, 2015  A.Kimura (detutils-V10-01-00)
+March 11, 2015  A.Kimura (detutils-V10-01-00)
 - Revised G4ScoringBox::Draw(...), ::DrawColumn(...), 
   G4ScoringCylinder::Draw(...) and ::DrawColumn(...) to spped up 
   drawing primitive scorers attached to the scoring meshes.

@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4GDMLWrite.hh 90766 2015-06-09 10:13:41Z gcosmo $
+// $Id: G4GDMLWrite.hh 89243 2015-03-27 16:24:39Z gcosmo $
 //
 //
 // class G4GDMLWrite
@@ -49,6 +49,8 @@
 
 #include "G4Transform3D.hh"
 
+#include "G4GDMLAuxStructType.hh"
+
 class G4LogicalVolume;
 class G4VPhysicalVolume;
 
@@ -72,6 +74,10 @@ class G4GDMLWrite
       //
       // Split geometry structure in modules, by volume subtree or level
 
+    void AddAuxiliary(G4GDMLAuxStructType myaux);
+      //
+      // Import auxiliary structure
+
     static void SetAddPointerToName(G4bool);
       //
       // Specify if to add or not memory addresses to IDs.
@@ -89,6 +95,7 @@ class G4GDMLWrite
       // Pure virtual methods implemented in concrete writer plugin's classes
 
     virtual void ExtensionWrite(xercesc::DOMElement*);
+    virtual void UserinfoWrite(xercesc::DOMElement*);
     virtual void AddExtension(xercesc::DOMElement*,
                               const G4LogicalVolume* const);
       //
@@ -113,6 +120,8 @@ class G4GDMLWrite
     G4String Modularize(const G4VPhysicalVolume* const topvol,
                         const G4int depth);
 
+    void AddAuxInfo(G4GDMLAuxListType* auxInfoList, xercesc::DOMElement* element);
+
     G4bool FileExists(const G4String&) const;
     PhysVolumeMapType& PvolumeMap();
     DepthMapType& DepthMap();
@@ -123,8 +132,9 @@ class G4GDMLWrite
     static G4bool addPointerToName;
     xercesc::DOMDocument* doc;
     xercesc::DOMElement* extElement;
+    xercesc::DOMElement* userinfoElement;
     XMLCh tempStr[10000];
-
+    G4GDMLAuxListType auxList;
 };
 
 #endif
