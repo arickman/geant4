@@ -24,13 +24,12 @@
 // ********************************************************************
 //
 //
-// $Id: G4CoupledTransportation.cc 88491 2015-02-24 11:05:22Z gcosmo $
+// $Id: G4CoupledTransportation.cc 86964 2014-11-21 11:47:44Z gcosmo $
 //
 // ------------------------------------------------------------
 //  GEANT 4 class implementation
 // =======================================================================
 // Modified:
-//   12 Jan  2015, M.Kelsey: Use G4DynamicParticle mass, NOT PDGMass
 //            13 May  2006, J. Apostolakis: Revised for parallel navigation (PathFinder)
 //            19 Jan  2006, P.MoraDeFreitas: Fix for suspended tracks (StartTracking)
 //            11 Aug  2004, M.Asai: Add G4VSensitiveDetector* for updating stepPoint.
@@ -59,27 +58,32 @@
 
 class G4VSensitiveDetector;
 
+G4bool G4CoupledTransportation::fUseMagneticMoment=false;
 //////////////////////////////////////////////////////////////////////////
 //
 // Constructor
 
 G4CoupledTransportation::G4CoupledTransportation( G4int verbosity )
   : G4VProcess( G4String("CoupledTransportation"), fTransportation ),
+    fTransportEndPosition(0.0, 0.0, 0.0),
+    fTransportEndMomentumDir(0.0, 0.0, 0.0),
+    fTransportEndKineticEnergy(0.0), 
+    fTransportEndSpin(0.0, 0.0, 0.0), // fTransportEndPolarization(0.0, 0.0, 0.0),
+    fMomentumChanged(false), 
+    fEndGlobalTimeComputed(false),
+    fCandidateEndGlobalTime(0.0),
     fParticleIsLooping( false ),
     fPreviousSftOrigin( 0.,0.,0. ),
     fPreviousMassSafety( 0.0 ),
     fPreviousFullSafety( 0.0 ),
-
     fMassGeometryLimitedStep( false ), 
     fAnyGeometryLimitedStep( false ), 
-    endpointDistance( -1.0 ),  // fEndPointDistance( -1.0 ), 
-
+    fEndpointDistance( -1.0 ), 
     fThreshold_Warning_Energy( 100 * MeV ),  
     fThreshold_Important_Energy( 250 * MeV ), 
     fThresholdTrials( 10 ), 
     fNoLooperTrials( 0 ),
     fSumEnergyKilled( 0.0 ), fMaxEnergyKilled( 0.0 ), 
-    fUseMagneticMoment( false ),  
     fVerboseLevel( verbosity )
 {
   // set Process Sub Type
@@ -111,9 +115,6 @@ G4CoupledTransportation::G4CoupledTransportation( G4int verbosity )
 
   G4FieldManager  *globalFieldMgr= transportMgr->GetFieldManager();
   fGlobalFieldExists= globalFieldMgr ? globalFieldMgr->GetDetectorField() : 0 ; 
-
-  fEndGlobalTimeComputed  = false;
-  fCandidateEndGlobalTime = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -209,7 +210,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
   //
   G4double particleCharge = pParticle->GetCharge() ;
   G4double magneticMoment = pParticle->GetMagneticMoment() ;
-  G4double       restMass = pParticle->GetMass() ; 
+  G4double       restMass = pParticleDef->GetPDGMass() ; 
 
   fMassGeometryLimitedStep = false ; //  Set default - alex
   fAnyGeometryLimitedStep = false; 
@@ -477,7 +478,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
       }
   }
 
-  endpointDistance   = (fTransportEndPosition - startPosition).mag() ;
+  fEndpointDistance   = (fTransportEndPosition - startPosition).mag() ;
   fParticleIsLooping = fFieldPropagator->IsParticleLooping() ;
 
   fTransportEndSpin = endTrackState.GetSpin();
@@ -488,7 +489,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
 
   // Update safety for the end-point, if becomes negative at the end-point.
 
-  if(   (startFullSafety < endpointDistance ) 
+  if(   (startFullSafety < fEndpointDistance ) 
         && ( particleCharge != 0.0 ) )        //  Only needed to prepare for Mult Scat.
    //   && !fAnyGeometryLimitedStep )          // To-Try:  No safety update if at a boundary
   {
@@ -513,7 +514,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
 
       // The convention (Stepping Manager's) is safety from the start point
       //
-      safetyProposal = endFullSafety + endpointDistance;
+      safetyProposal = endFullSafety + fEndpointDistance;
           //  --> was endMassSafety
       // Changed to accomodate processes that cannot update the safety -- JA 22 Nov 06
 
@@ -525,7 +526,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
       G4cout << "  Revised Safety at endpoint "  << fTransportEndPosition
              << "   give safety values: Mass= " << endMassSafety 
              << "  All= " << endFullSafety << G4endl ; 
-      G4cout << "  Adding endpoint distance " << endpointDistance 
+      G4cout << "  Adding endpoint distance " << fEndpointDistance 
              << "   to obtain pseudo-safety= " << safetyProposal << G4endl ; 
       G4cout.precision(prec); 
   }  
@@ -534,9 +535,9 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
       G4int prec= G4cout.precision(12) ;
       G4cout << "***Transportation::AlongStepGPIL ** " << G4endl  ;
       G4cout << "  Quick Safety estimate at endpoint "  << fTransportEndPosition
-             << "   gives safety endpoint value = " << startFullSafety - endpointDistance
+             << "   gives safety endpoint value = " << startFullSafety - fEndpointDistance
              << "  using start-point value " << startFullSafety 
-             << "  and endpointDistance " << endpointDistance << G4endl; 
+             << "  and endpointDistance " << fEndpointDistance << G4endl; 
       G4cout.precision(prec); 
 #endif
   }          
@@ -743,7 +744,8 @@ G4VParticleChange* G4CoupledTransportation::PostStepDoIt( const G4Track& track,
   // since call to AlongStepDoIt
 
 #ifdef G4DEBUG_TRANSPORT
-  if( ( fVerboseLevel > 0 ) && ((fTransportEndPosition - track.GetPosition()).mag2() >= 1.0e-16) )
+  if( ( fVerboseLevel > 0 )
+     && ((fTransportEndPosition - track.GetPosition()).mag2() >= 1.0e-16) )
   {
      ReportMove( track.GetPosition(), fTransportEndPosition, "End of Step Position" ); 
      G4cerr << " Problem in G4CoupledTransportation::PostStepDoIt " << G4endl; 
@@ -995,4 +997,13 @@ ReportInexactEnergy(G4double startEnergy, G4double endEnergy)
       }
     }
   }
+}
+
+#include "G4Transportation.hh"
+G4bool G4CoupledTransportation::EnableUseMagneticMoment(G4bool useMoment)
+{
+  G4bool lastValue= fUseMagneticMoment;
+  fUseMagneticMoment= useMoment;
+  G4Transportation::fUseMagneticMoment= useMoment;
+  return lastValue;
 }

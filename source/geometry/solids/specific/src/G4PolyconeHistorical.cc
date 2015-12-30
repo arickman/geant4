@@ -92,23 +92,25 @@ G4PolyconeHistorical::operator=( const G4PolyconeHistorical& right )
 {
   if ( &right == this ) return *this;
 
-  Start_angle   = right.Start_angle;
-  Opening_angle = right.Opening_angle;
-  Num_z_planes  = right.Num_z_planes;
-  
-  delete [] Z_values;
-  delete [] Rmin;
-  delete [] Rmax;
-  Z_values  = new G4double[Num_z_planes];
-  Rmin      = new G4double[Num_z_planes];
-  Rmax      = new G4double[Num_z_planes];
-  
-  for( G4int i = 0; i < Num_z_planes; i++)
+  if (&right)
   {
-    Z_values[i] = right.Z_values[i];
-    Rmin[i]     = right.Rmin[i];
-    Rmax[i]     = right.Rmax[i];
+    Start_angle   = right.Start_angle;
+    Opening_angle = right.Opening_angle;
+    Num_z_planes  = right.Num_z_planes;
+  
+    delete [] Z_values;
+    delete [] Rmin;
+    delete [] Rmax;
+    Z_values  = new G4double[Num_z_planes];
+    Rmin      = new G4double[Num_z_planes];
+    Rmax      = new G4double[Num_z_planes];
+  
+    for( G4int i = 0; i < Num_z_planes; i++)
+    {
+      Z_values[i] = right.Z_values[i];
+      Rmin[i]     = right.Rmin[i];
+      Rmax[i]     = right.Rmax[i];
+    }
   }
-
   return *this;
 }

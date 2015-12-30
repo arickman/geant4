@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4GDMLReadMaterials.cc 88498 2015-02-24 13:54:04Z gcosmo $
+// $Id: G4GDMLReadMaterials.cc 86379 2014-11-10 11:34:33Z gcosmo $
 // GEANT4 tag $ Name:$
 //
 // class G4GDMLReadMaterials Implementation

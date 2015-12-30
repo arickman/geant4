@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4LivermoreComptonModel.cc 84806 2014-10-21 09:16:33Z gcosmo $
+// $Id: G4LivermoreComptonModel.cc 84216 2014-10-10 14:51:51Z gcosmo $
 // GEANT4 tag $Name: not supported by cvs2svn $
 //
 //
@@ -70,8 +70,6 @@ G4LivermoreComptonModel::G4LivermoreComptonModel(const G4ParticleDefinition*,
 						 const G4String& nam)
   : G4VEmModel(nam),isInitialised(false)
 {  
-  lowestEnergy = 10 * eV;
-
   verboseLevel=1 ;
   // Verbosity scale:
   // 0 = nothing 
@@ -100,6 +98,12 @@ G4LivermoreComptonModel::~G4LivermoreComptonModel()
     shellData = 0;
     delete profileData;
     profileData = 0;
+    for(G4int i=0; i<maxZ; ++i) {
+      if(data[i]) { 
+	delete data[i];
+	data[i] = 0;
+      }
+    }
   }
 }
 
@@ -244,7 +248,7 @@ G4LivermoreComptonModel::ComputeCrossSectionPerAtom(const G4ParticleDefinition*,
   }
   G4double cs = 0.0; 
 
-  if (GammaEnergy < lowestEnergy) { return 0.0; }
+  if (GammaEnergy < LowEnergyLimit()) { return 0.0; }
 
   G4int intZ = G4lrint(Z);
   if(intZ < 1 || intZ > maxZ) { return cs; } 
@@ -303,14 +307,10 @@ void G4LivermoreComptonModel::SampleSecondaries(
 	   << G4endl;
   }
 
-  // low-energy gamma is absorpted by this process
-  if (photonEnergy0 <= lowestEnergy) 
-    {
-      fParticleChange->ProposeTrackStatus(fStopAndKill);
-      fParticleChange->SetProposedKineticEnergy(0.);
-      fParticleChange->ProposeLocalEnergyDeposit(photonEnergy0);
-      return ;
-    }
+  // do nothing below the threshold
+  // should never get here because the XS is zero below the limit
+  if (photonEnergy0 < LowEnergyLimit())     
+    return ;    
 
   G4double e0m = photonEnergy0 / electron_mass_c2 ;
   G4ParticleMomentum photonDirection0 = aDynamicGamma->GetMomentumDirection();
@@ -525,14 +525,12 @@ void G4LivermoreComptonModel::SampleSecondaries(
       }
     }
   }
-
   //This should never happen
   if(bindingE < 0.0) 
-    G4Exception("G4LowEPComptonModel::SampleSecondaries()",
-		"em2051",FatalException,"Negative local energy deposit");
+     G4Exception("G4LivermoreComptonModel::SampleSecondaries()",
+                 "em2050",FatalException,"Negative local energy deposit");	 
  
   fParticleChange->ProposeLocalEnergyDeposit(bindingE);
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

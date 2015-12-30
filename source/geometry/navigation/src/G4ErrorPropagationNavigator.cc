@@ -24,7 +24,7 @@
 // ********************************************************************
 //
 //
-// $Id: G4ErrorPropagationNavigator.cc 88518 2015-02-25 13:22:30Z gcosmo $
+// $Id: G4ErrorPropagationNavigator.cc 86987 2014-11-21 13:05:28Z gcosmo $
 //
 //
 // --------------------------------------------------------------------
@@ -63,11 +63,9 @@ ComputeStep ( const G4ThreeVector &pGlobalPoint,
               const G4double pCurrentProposedStepLength,
                     G4double &pNewSafety )
 {
-  G4double safetyGeom= DBL_MAX;
-   
   G4double Step = G4Navigator::ComputeStep(pGlobalPoint, pDirection,
                                            pCurrentProposedStepLength,
-                                           safetyGeom);
+                                           pNewSafety);
   
   G4ErrorPropagatorData * g4edata
     = G4ErrorPropagatorData::GetErrorPropagatorData();
@@ -112,9 +110,7 @@ ComputeStep ( const G4ThreeVector &pGlobalPoint,
       }
     }
   }
-  G4double safetyTarget = TargetSafetyFromPoint(pGlobalPoint);
-   // Avoid call to G4Navigator::ComputeSafety - which could have side effects
-  pNewSafety= std::min(safetyGeom, safetyTarget); 
+  pNewSafety = ComputeSafety(pGlobalPoint, pCurrentProposedStepLength);
 
 #ifdef G4VERBOSE
   if( G4ErrorPropagatorData::verbose() >= 3 )
@@ -131,9 +127,12 @@ ComputeStep ( const G4ThreeVector &pGlobalPoint,
 //-------------------------------------------------------------------
 
 G4double G4ErrorPropagationNavigator::
-TargetSafetyFromPoint( const G4ThreeVector &pGlobalpoint )
+ComputeSafety( const G4ThreeVector &pGlobalpoint,
+               const G4double pMaxLength,
+               const G4bool keepState )
 {
-  G4double safety= DBL_MAX;
+  G4double newSafety = G4Navigator::ComputeSafety(pGlobalpoint,
+                                                  pMaxLength, keepState);
 
   G4ErrorPropagatorData *g4edata
     = G4ErrorPropagatorData::GetErrorPropagatorData();
@@ -143,28 +142,16 @@ TargetSafetyFromPoint( const G4ThreeVector &pGlobalpoint )
     const G4ErrorTarget* target = g4edata->GetTarget();
     if( target != 0 )
     {
-       safety = target->GetDistanceFromPoint(pGlobalpoint);
+      G4double distance = target->GetDistanceFromPoint(pGlobalpoint);
+      
+      if(distance<newSafety)
+      {
+        newSafety = distance;
+      }
     }
   }
-  return safety;
+  return newSafety;
 }
-
-//-------------------------------------------------------------------
-
-G4double G4ErrorPropagationNavigator::
-ComputeSafety( const G4ThreeVector &pGlobalPoint,
-               const G4double pMaxLength,
-               const G4bool keepState )
-{
-  G4double safetyGeom = G4Navigator::ComputeSafety(pGlobalPoint,
-                                                  pMaxLength, keepState);
-
-  G4double safetyTarget = TargetSafetyFromPoint( pGlobalPoint ); 
-
-  return std::min(safetyGeom, safetyTarget); 
-}
-
-//-------------------------------------------------------------------
 
 G4ThreeVector G4ErrorPropagationNavigator::
 GetGlobalExitNormal(const G4ThreeVector& point, G4bool* valid)

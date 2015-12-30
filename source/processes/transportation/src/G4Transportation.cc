@@ -40,7 +40,6 @@
 //
 // =======================================================================
 // Modified:   
-//   12 Jan  2015, M.Kelsey: Use G4DynamicParticle mass, NOT PDGMass
 //   28 Oct  2011, P.Gumpl./J.Ap: Detect gravity field, use magnetic moment 
 //   20 Nov  2008, J.Apostolakis: Push safety to helper - after ComputeSafety
 //    9 Nov  2007, J.Apostolakis: Flag for short steps, push safety to helper
@@ -72,6 +71,7 @@
 
 class G4VSensitiveDetector;
 
+G4bool G4Transportation::fUseMagneticMoment=false;
 //////////////////////////////////////////////////////////////////////////
 //
 // Constructor
@@ -97,7 +97,6 @@ G4Transportation::G4Transportation( G4int verbosity )
     fNoLooperTrials( 0 ),
     fSumEnergyKilled( 0.0 ), fMaxEnergyKilled( 0.0 ), 
     fShortStepOptimisation( false ), // Old default: true (=fast short steps)
-    fUseMagneticMoment( false ),
     fVerboseLevel( verbosity )
 {
   // set Process Sub Type
@@ -202,7 +201,7 @@ AlongStepGetPhysicalInteractionLength( const G4Track&  track,
   //
   G4double particleCharge = pParticle->GetCharge() ; 
   G4double magneticMoment = pParticle->GetMagneticMoment() ;
-  G4double       restMass = pParticle->GetMass() ;
+  G4double       restMass = pParticleDef->GetPDGMass() ;
 
   fGeometryLimitedStep = false ;
   // fEndGlobalTimeComputed = false ;
@@ -811,4 +810,13 @@ G4Transportation::StartTracking(G4Track* aTrack)
   // Update the current touchable handle  (from the track's)
   //
   fCurrentTouchableHandle = aTrack->GetTouchableHandle();
+}
+
+#include "G4CoupledTransportation.hh"
+G4bool G4Transportation::EnableUseMagneticMoment(G4bool useMoment)
+{
+  G4bool lastValue= fUseMagneticMoment;
+  fUseMagneticMoment= useMoment;
+  G4CoupledTransportation::fUseMagneticMoment= useMoment;
+  return lastValue;
 }

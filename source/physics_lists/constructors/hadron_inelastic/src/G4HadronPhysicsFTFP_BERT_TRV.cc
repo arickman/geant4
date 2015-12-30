@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: G4HadronPhysicsFTFP_BERT_TRV.cc 88488 2015-02-24 10:46:32Z gcosmo $
+// $Id: G4HadronPhysicsFTFP_BERT_TRV.cc 83699 2014-09-10 07:18:25Z gcosmo $
 //
 //---------------------------------------------------------------------------
 //
@@ -155,28 +155,25 @@ void G4HadronPhysicsFTFP_BERT_TRV::CreateModels()
 
 G4HadronPhysicsFTFP_BERT_TRV::~G4HadronPhysicsFTFP_BERT_TRV()
 {
-  if (tpdata) {
-    delete tpdata->theNeutrons;
-    delete tpdata->theBertiniNeutron;
-    delete tpdata->theFTFPNeutron;
-    
-    delete tpdata->thePiK;
-    delete tpdata->theBertiniPiK;
-    delete tpdata->theFTFPPiK;
-    
-    delete tpdata->thePro;
-    delete tpdata->theBertiniPro;
-    delete tpdata->theFTFPPro;    
-    
-    delete tpdata->theHyperon;
-    delete tpdata->theAntiBaryon;
-    delete tpdata->theFTFPAntiBaryon;
-    
-    delete tpdata->xsNeutronInelasticXS;
-    delete tpdata->xsNeutronCaptureXS; 
+  if (!tpdata) return;
 
-    delete tpdata; tpdata = 0;
-  }
+  delete tpdata->theNeutrons;
+  delete tpdata->theBertiniNeutron;
+  delete tpdata->theFTFPNeutron;
+    
+  delete tpdata->thePiK;
+  delete tpdata->theBertiniPiK;
+  delete tpdata->theFTFPPiK;
+    
+  delete tpdata->thePro;
+  delete tpdata->theBertiniPro;
+  delete tpdata->theFTFPPro;    
+    
+  delete tpdata->theHyperon;
+  delete tpdata->theAntiBaryon;
+  delete tpdata->theFTFPAntiBaryon;
+
+  delete tpdata; tpdata = 0;
 }
 
 void G4HadronPhysicsFTFP_BERT_TRV::ConstructParticle()
@@ -216,7 +213,7 @@ void G4HadronPhysicsFTFP_BERT_TRV::ConstructProcess()
   G4PhysListUtil::FindInelasticProcess(G4KaonZeroLong::KaonZeroLong())->AddDataSet(tpdata->ChipsKaonZero);
 
   // --- Neutrons ---
-  tpdata->xsNeutronInelasticXS = new G4NeutronInelasticXS();  
+    tpdata->xsNeutronInelasticXS = (G4NeutronInelasticXS*)G4CrossSectionDataSetRegistry::Instance()->GetCrossSectionDataSet(G4NeutronInelasticXS::Default_Name());
   G4PhysListUtil::FindInelasticProcess(G4Neutron::Neutron())->AddDataSet(tpdata->xsNeutronInelasticXS);
 
   G4HadronicProcess* capture = 0;
@@ -231,7 +228,7 @@ void G4HadronPhysicsFTFP_BERT_TRV::ConstructProcess()
     capture = new G4HadronCaptureProcess("nCapture");
     pmanager->AddDiscreteProcess(capture);
   }
-  tpdata->xsNeutronCaptureXS = new G4NeutronCaptureXS();
+  tpdata->xsNeutronCaptureXS = (G4NeutronCaptureXS*)G4CrossSectionDataSetRegistry::Instance()->GetCrossSectionDataSet(G4NeutronCaptureXS::Default_Name());
   capture->AddDataSet(tpdata->xsNeutronCaptureXS);
   capture->RegisterMe(new G4NeutronRadCapture());
 }
